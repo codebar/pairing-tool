@@ -80,6 +80,16 @@ To run front-end unit tests run the provided script in the front end directory:
 npm run test:unit
 ```
 
+### Building
+
+To build the final html/css/js files, run the following command:
+
+```
+npm run build
+```
+
+The built files are located in `dist/` directory.
+
 ## End-to-end Tests
 
 The e2e tests are located with the front-end code, so they have to be run from the front-end directory:
