@@ -3,8 +3,8 @@
     <div class="col-12">
       <h1>Codebar's Super Great and Awesome: Pairing Tool!!!</h1>
       <hr />
-      <form>
-        <div class="form-group col-4">
+      <form class="mb-2">
+        <div class="form-group form-border col-4">
           <h3>Student's Form</h3>
           <label for="fname">First Name</label>
           <input
@@ -37,14 +37,15 @@
           <div class="m-2">
             <button
               id="add-student"
-              class="btn btn-primary"
+              class="btn btn-dark"
               @click.prevent="submitted"
             >
-              + Add Student!
+              + Add Student
             </button>
           </div>
         </div>
       </form>
+
       <div id="student-list" class="col-4">
         <h2>Student List</h2>
         <ul>
@@ -79,3 +80,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.form-border {
+  border-right: 3px dotted black;
+}
+</style>
