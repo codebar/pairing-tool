@@ -1,4 +1,4 @@
-# Contributing to Storybook
+# Contributing to the project
 
 If you want to contribute to any of the open tickets, please follow these steps
 
