@@ -53,9 +53,6 @@ import StudentList from "@/components/StudentList.vue";
 
 export default {
   name: "PairingScreen",
-  props: {
-    msg: String
-  },
   components: {
     StudentList
   }
