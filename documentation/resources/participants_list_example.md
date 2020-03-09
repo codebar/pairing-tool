@@ -1,3 +1,7 @@
+
+#### The text below is an example of the workshop participants list as it is imported from the codebar website.
+- The list is copied from the browser and saved into a .txt file.
+```text
 Students
 
 ___ 1.	 Drew Barrymore (she/her)			JS: Introduction to Testing
@@ -35,3 +39,4 @@ ___ 5.	 Sarah Paulson (she/her)
 ___ 6.	 Bella Thorne (her)
 
 I__ 7.	 Mara Wilson (her)
+```

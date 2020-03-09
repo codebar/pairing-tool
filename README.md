@@ -9,7 +9,7 @@
 Before you get started please do the following
 
 1. Join the [#barcelona-pairing-tool](https://codebar.slack.com/archives/GQQ5T8UCQ) slack channel.
-2. Read the [Contributing guidelines](.github/contributing.md).
+2. Read the [Contributing guidelines](.github/CONTRIBUTING.md).
 
 #### Technical Prerequisites
 
