@@ -21,6 +21,6 @@ python_version = "3.7"
 
 [scripts]
 start = "pipenv run uvicorn main:app"
-dev = " pipenv run start && pipenv run watch"
+dev = "pipenv run watch"
 lint_inspect = "pipenv run pylint"
 watch = "pipenv run watchmedo auto-restart -d . -p '*.py' pipenv run uvicorn main:app"
