@@ -6,15 +6,14 @@ verify_ssl = true
 [dev-packages]
 pycodestyle =  "*"
 pylint = "*"
-
-[packages]
-fastapi = "*"
-uvicorn = "*"
-pylint = "*"
 watchdog = "*"
 yaml = "*"
 pyyaml = "*"
 argh = "*"
+[packages]
+fastapi = "*"
+uvicorn = "*"
+
 
 [requires]
 python_version = "3.7"
