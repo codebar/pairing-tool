@@ -1,0 +1,23 @@
+.WorkshopAttendees {
+  display: flex;
+  flex-direction: row;
+
+  .Actions {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .Students {
+  }
+
+  .Coaches {
+  }
+}
+
+.omg {
+  min-width: 500px;
+}
+
+.Rating {
+  padding: 10px;
+}

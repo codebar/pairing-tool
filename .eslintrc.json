@@ -1,0 +1,9 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "semi": ["error", "never", { "beforeStatementContinuationChars": "never" }],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "jsx-quotes": ["error", "prefer-single"],
+    "eol-last": ["error", "always"]
+  }
+}
