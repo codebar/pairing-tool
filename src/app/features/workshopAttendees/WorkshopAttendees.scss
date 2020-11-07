@@ -18,6 +18,9 @@
   min-width: 500px;
 }
 
-.Rating {
-  padding: 10px;
+
+.Skill {
+  .SkillRating, .SkillLegend {
+    padding: 10px;
+  }
 }
