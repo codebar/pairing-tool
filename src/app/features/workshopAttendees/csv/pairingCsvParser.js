@@ -26,7 +26,7 @@ const parseCoach = entry => ({
   languages: parseLanguagesFrom(`${entry.Note} ${entry.Skills}`)
 })
 
-export const parse = csv => {
+const parse = csv => {
   const json = csvToJson(csv, {header: true})
   const data = json.data
 
@@ -54,3 +54,5 @@ export const parse = csv => {
     initialValue
   )
 }
+
+module.exports = { parse }

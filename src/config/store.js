@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from '../app/features/counter/counterSlice'
+import {configureStore} from '@reduxjs/toolkit'
+import {attendeesReducer as attendees} from '../app/features/workshopAttendees/attendees'
 
 export default configureStore({
   reducer: {
-    counter: counterReducer,
-  },
+    attendees
+  }
 })
