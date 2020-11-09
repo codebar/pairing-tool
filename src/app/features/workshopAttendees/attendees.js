@@ -30,7 +30,7 @@ const attendeesSlice = createSlice({
   }
 })
 export const attendeesReducer = attendeesSlice.reducer
-export const { addStudent, addCoach } = attendeesSlice.actions
+export const {addStudent, addCoach} = attendeesSlice.actions
 
 // SELECTORS
 export const studentsSelector = state => state.attendees.students
@@ -43,8 +43,7 @@ export const parseAttendeeList = file => async dispatch => {
     const result = parse(csv)
     result.students.forEach(student => dispatch(addStudent(student)))
     result.coaches.forEach(coach => dispatch(addCoach(coach)))
-  }
-  catch (e) {
+  } catch (e) {
     console.error(e)
   }
 }

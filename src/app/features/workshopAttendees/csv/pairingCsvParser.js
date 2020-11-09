@@ -1,4 +1,4 @@
-import {parse as csvToJson} from 'papaparse'
+const Papa = require('papaparse')
 
 // TODO: This should be coming from configuration
 const commonLanguages = ['HTML', 'CSS', 'JS', 'Python', 'Ruby', 'SQL', 'Java']
@@ -27,7 +27,7 @@ const parseCoach = entry => ({
 })
 
 const parse = csv => {
-  const json = csvToJson(csv, {header: true})
+  const json = Papa.parse(csv, {header: true})
   const data = json.data
 
   const initialValue = {

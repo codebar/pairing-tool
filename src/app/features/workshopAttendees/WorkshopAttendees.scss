@@ -1,26 +1,25 @@
 .WorkshopAttendees {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
+  justify-content: center;
 
-  .Actions {
-    display: flex;
-    flex-direction: column;
+  .FirstStep {
+    display:flex;
+    flex-flow: column nowrap;
   }
 
-  .Students {
+  .SecondStep {
+    display:flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+
+    .Students, .Coaches {
+      .Tablerone {
+        min-width: 650px;
+      }
+    }
   }
 
-  .Coaches {
-  }
-}
-
-.omg {
-  min-width: 500px;
-}
 
 
-.Skill {
-  .SkillRating, .SkillLegend {
-    padding: 10px;
-  }
 }
