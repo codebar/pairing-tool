@@ -1,21 +1,10 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
-
-import {CsvFileDropzone} from './CsvFileDropzone'
 import {coachesSelector, studentsSelector} from './attendees'
-
-import Checkbox from '@material-ui/core/Checkbox'
-import Paper from '@material-ui/core/Paper'
-import Table from '@material-ui/core/Table'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import TextField from '@material-ui/core/TextField'
-
+import {CsvFileDropzone} from './csv/CsvFileDropzone'
+import {Something} from './cards/AttendeeTable'
+import logo from './logo600.png'
 import './WorkshopAttendees.scss'
-
 
 export const WorkshopAttendees = () => {
   const students = useSelector(studentsSelector)
@@ -27,7 +16,8 @@ export const WorkshopAttendees = () => {
   const firstStep =
     <div className='FirstStep'>
       <header>
-        <h1>Codebar Pairing Tool</h1>
+        <img src={logo} />
+        <h1>Pairing Tool</h1>
       </header>
       <CsvFileDropzone/>
     </div>
@@ -46,36 +36,5 @@ export const WorkshopAttendees = () => {
 
   return (
     <div className='WorkshopAttendees'>{!initialized() ? firstStep : secondStep}</div>
-  )
-}
-
-const Something = ({skills, data}) => {
-  return (
-    <TableContainer component={Paper}>
-      <Table className={'Tablerone'} aria-label='simple table'>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            {skills.map(skill => (
-              <TableCell>{skill}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component='th' scope='row'>
-                <TextField id='standard-basic' label='Name' value={row.name}/>
-              </TableCell>
-              {skills.map(skill => (
-                <TableCell>
-                  <Checkbox checked={row.languages.includes(skill)}/>
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
   )
 }
