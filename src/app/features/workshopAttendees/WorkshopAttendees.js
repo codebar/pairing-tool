@@ -1,15 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
 import {coachesSelector, studentsSelector} from './attendees'
 import {CsvFileDropzone} from './csv/CsvFileDropzone'
-import {Something} from './cards/AttendeeTable'
+import {AttendeesList} from './cards/AttendeeTable'
 import logo from './logo600.png'
 import './WorkshopAttendees.scss'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
 
 export const WorkshopAttendees = () => {
   const students = useSelector(studentsSelector)
   const coaches = useSelector(coachesSelector)
-  const skills = ['HTML', 'CSS', 'JS', 'Python', 'SQL', 'Java']
+  const [compact, setCompact] = useState(false)
+  const skills = ['HTML', 'CSS', 'JS', 'Python', 'Ruby', 'SQL', 'Java']
 
   const initialized = () => students.length > 0 || coaches.length > 0
 
@@ -24,13 +27,26 @@ export const WorkshopAttendees = () => {
 
   const secondStep =
     <div className='SecondStep'>
+      <div>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={compact}
+              onChange={() => setCompact(!compact)}
+              name='compact'
+              color='primary'
+            />
+          }
+          label='Compact'
+        />
+      </div>
       <div className='Students'>
         <h3>Students</h3>
-        <Something skills={skills} data={students}/>
+        <AttendeesList skills={skills} data={students} role={'Student'} compact={compact}/>
       </div>
       <div className='Coaches'>
         <h3>Coaches</h3>
-        <Something skills={skills} data={coaches}/>
+        <AttendeesList skills={skills} data={coaches} role={'Coach'} compact={compact}/>
       </div>
     </div>
 
