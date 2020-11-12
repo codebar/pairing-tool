@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople'
 import firstTimer from './firstTimer.jpg'
 import './AttendeeTable.scss'
+import {toggleAttendance} from '../attendees'
 
 export const AttendeesList = ({skills, data, compact}) => {
   return (
@@ -28,13 +29,9 @@ const AttendeeCard = ({skills, data}) => {
           <h4 className='CardName'>{data.name}</h4>
           {data.new && <img className='CardNew' src={firstTimer} alt='First Timer'/>}
           <Button
+            className={`CardAttending ${data.attendance ? 'Show' : 'NoShow'}`}
             variant='outlined'
-            // onClick={() => {
-            //   if (role === 'Coach')
-            //     dispatch(toggleAttendanceForCoach(data.id))
-            //   if (role === 'Student')
-            //     dispatch(toggleAttendanceForStudent(data.id))
-            // }}
+            onClick={() => dispatch(toggleAttendance(data.id))}
           ><EmojiPeopleIcon/></Button>
         </header>
         <section>

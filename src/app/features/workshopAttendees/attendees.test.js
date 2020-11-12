@@ -6,7 +6,7 @@ import {
   addStudent,
   studentsSelector,
   coachesSelector,
-  parseAttendeeList
+  parseAttendeeList, toggleAttendance
 } from './attendees'
 import pairingCsvParser from './csv/pairingCsvParser'
 
@@ -66,6 +66,21 @@ describe('The Attendees Slice', () => {
         const thirdState = attendeesReducer(secondState, addCoachAction)
         const fourthState = attendeesReducer(thirdState, addCoachAction)
         expect(coachesSelector({attendees: fourthState}).length).toBe(1)
+      })
+    })
+
+    describe('Toggle attendance', () => {
+
+      it('changes the attendance of a student', () => {
+        const student = {id: 1, attendance: false, role: 'Student'}
+        const nextState = attendeesReducer({...initialState, list: [student]}, toggleAttendance(1))
+        expect(studentsSelector({attendees: nextState})[0]).toMatchObject({attendance: true})
+      })
+
+      it('changes the attendance of a coach', () => {
+        const coach = {id: 1, attendance: true, role: 'Coach'}
+        const nextState = attendeesReducer({...initialState, list: [coach]}, toggleAttendance(1))
+        expect(coachesSelector({attendees: nextState})[0]).toMatchObject({attendance: false})
       })
     })
 

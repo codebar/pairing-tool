@@ -22,10 +22,15 @@ const attendeesSlice = createSlice({
         state.nextId += 1
       }
     },
+    toggleAttendance: (state, action) => {
+      const index = state.list.findIndex(attendee => attendee.id === action.payload)
+      const attendee = state.list[index]
+      state.list[index] = {...attendee, attendance: !attendee.attendance}
+    },
   }
 })
 export const attendeesReducer = attendeesSlice.reducer
-export const {addAttendee} = attendeesSlice.actions
+export const {addAttendee, toggleAttendance} = attendeesSlice.actions
 
 // SELECTORS
 export const studentsSelector = state => state.attendees.list.filter(x => x.role === 'Student')
