@@ -37,11 +37,11 @@ export const WorkshopAttendees = () => {
       <div className='SecondStepContent'>
         <div className='Students'>
           <h3>Students</h3>
-          <AttendeesList skills={skills} data={students} role={'Student'} compact={compact}/>
+          <AttendeesList skills={skills} data={students} compact={compact}/>
         </div>
         <div className='Coaches'>
           <h3>Coaches</h3>
-          <AttendeesList skills={skills} data={coaches} role={'Coach'} compact={compact}/>
+          <AttendeesList skills={skills} data={coaches} compact={compact}/>
         </div>
       </div>
 

@@ -8,20 +8,17 @@ import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople'
 import firstTimer from './firstTimer.jpg'
 import './AttendeeTable.scss'
 
-export const AttendeesList = ({skills, data, role, compact}) => {
+export const AttendeesList = ({skills, data, compact}) => {
   return (
-    // <>
-    //   {data.map(row => <AttendeeCard skills={skills} data={row} role={role}/>)}
-    // </>
     <>
       {data.map(row => compact
-        ? <AttendeeCompactCard skills={skills} data={row} role={role}/>
-        : <AttendeeCard skills={skills} data={row} role={role}/>)}
+        ? <AttendeeCompactCard skills={skills} data={row}/>
+        : <AttendeeCard skills={skills} data={row}/>)}
     </>
   )
 }
 
-const AttendeeCard = ({skills, data, role}) => {
+const AttendeeCard = ({skills, data}) => {
   const dispatch = useDispatch()
 
   return (
