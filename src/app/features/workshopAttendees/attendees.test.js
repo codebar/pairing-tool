@@ -51,6 +51,13 @@ describe('The Attendees Slice', () => {
         expect(coachesSelector({attendees: secondState})[0]).toMatchObject({id: 2})
         expect(secondState.nextId).toBe(3)
       })
+      it('initializes attendance to no', () => {
+        const firstState = attendeesReducer(initialState, addStudentAction)
+        const secondState = attendeesReducer(firstState, addCoachAction)
+
+        expect(studentsSelector({attendees: secondState})[0]).toMatchObject({attendance: false})
+        expect(coachesSelector({attendees: secondState})[0]).toMatchObject({attendance: false})
+      })
       it('ignores duplicates', () => {
         const firstState = attendeesReducer(initialState, addStudentAction)
         const secondState = attendeesReducer(firstState, addStudentAction)

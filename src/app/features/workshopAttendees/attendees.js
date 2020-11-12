@@ -12,9 +12,13 @@ const attendeesSlice = createSlice({
   initialState,
   reducers: {
     addAttendee: (state, action) => {
-      const attendeeExists = ({id, ...fields}) => deepEqual(fields, action.payload)
+      const attendeeExists = ({id, attendance, ...fields}) => deepEqual(fields, action.payload)
       if (!state.list.some(attendeeExists)) {
-        state.list.push({id: state.nextId, ...action.payload})
+        state.list.push({
+          id: state.nextId,
+          attendance: false,
+          ...action.payload
+        })
         state.nextId += 1
       }
     },
