@@ -12,6 +12,7 @@ const parseLanguagesFrom = information => commonLanguages.reduce(
 
 const parseStudent = entry => ({
   name: entry.Name,
+  role: 'Student',
   new: entry['New attendee'] === 'true',
   tutorial: entry.Tutorial,
   notes: entry.Note,
@@ -20,6 +21,7 @@ const parseStudent = entry => ({
 
 const parseCoach = entry => ({
   name: entry.Name,
+  role: 'Coach',
   new: entry['New attendee'] === 'true',
   skills: entry.Skills,
   notes: entry.Note,
@@ -27,26 +29,14 @@ const parseCoach = entry => ({
 })
 
 const parse = csv => {
-  const json = Papa.parse(csv, {header: true})
-  const data = json.data
-
-  const initialValue = {
-    students: [],
-    coaches: []
-  }
-
+  const data = Papa.parse(csv, {header: true}).data
+  const initialValue = []
   return data.reduce((acc, entry) => {
       switch (entry.Role) {
         case 'Student':
-          return {
-            students: [...acc.students, parseStudent(entry)],
-            coaches: acc.coaches
-          }
+          return [...acc, parseStudent(entry)]
         case 'Coach':
-          return {
-            students: acc.students,
-            coaches: [...acc.coaches, parseCoach(entry)]
-          }
+          return [...acc, parseCoach(entry)]
         default:
           return acc
       }

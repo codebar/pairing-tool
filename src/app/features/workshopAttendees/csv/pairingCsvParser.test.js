@@ -5,12 +5,12 @@ describe('Pairing CSV parser', () => {
   describe('Parsing Students', () => {
     const csv = 'New attendee,Name,Role,Tutorial,Note,Skills\n' +
       'false,Jennifer Jolie (she),Student,JS: Building your own app,"I am learning HTML, CSS and Javascript",N/A\n'
-    const result = parse(csv)
-    const student = result.students[0]
+    const student = (parse(csv))[0]
 
     it('copies the available information', () => {
       expect(student).toMatchObject({
         name: 'Jennifer Jolie (she)',
+        role: 'Student',
         new: false,
         tutorial: 'JS: Building your own app',
         notes: 'I am learning HTML, CSS and Javascript'
@@ -31,12 +31,12 @@ describe('Pairing CSV parser', () => {
   describe('Parsing Coaches', () => {
     const csv = 'New attendee,Name,Role,Tutorial,Note,Skills\n' +
       'false,Andrew Dicaprio (he),Coach,N/A,"Git, Python and Java would be good for me to do pair.","heroku, ruby, Test, nodejs, javascript, docker, testing, TDD, java, shellscript, deploy"\n'
-    const result = parse(csv)
-    const coach = result.coaches[0]
+    const coach = (parse(csv))[0]
 
     it('copies the available information', () => {
       expect(coach).toMatchObject({
         name: 'Andrew Dicaprio (he)',
+        role: 'Coach',
         new: false,
         notes: 'Git, Python and Java would be good for me to do pair.',
         skills: 'heroku, ruby, Test, nodejs, javascript, docker, testing, TDD, java, shellscript, deploy'

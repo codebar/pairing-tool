@@ -3,46 +3,35 @@ import deepEqual from 'deep-equal'
 import {parse} from './csv/pairingCsvParser'
 
 export const initialState = {
-  students: [],
-  coaches: [],
-  nextStudentId: 1,
-  nextCoachId: 1
+  list: [],
+  nextId: 1,
 }
 
 const attendeesSlice = createSlice({
   name: 'attendees',
   initialState,
   reducers: {
-    addStudent: (state, action) => {
-      const studentExists = ({id, ...fields}) => deepEqual(fields, action.payload)
-      if (!state.students.some(studentExists)) {
-        state.students.push({...action.payload, id: state.nextStudentId})
-        state.nextStudentId += 1
+    addAttendee: (state, action) => {
+      const attendeeExists = ({id, ...fields}) => deepEqual(fields, action.payload)
+      if (!state.list.some(attendeeExists)) {
+        state.list.push({id: state.nextId, ...action.payload})
+        state.nextId += 1
       }
     },
-    addCoach: (state, action) => {
-      const coachExists = ({id, ...fields}) => deepEqual(fields, action.payload)
-      if (!state.coaches.some(coachExists)) {
-        state.coaches.push({...action.payload, id: state.nextCoachId})
-        state.nextCoachId += 1
-      }
-    }
   }
 })
 export const attendeesReducer = attendeesSlice.reducer
-export const {addStudent, addCoach} = attendeesSlice.actions
+export const {addAttendee} = attendeesSlice.actions
 
 // SELECTORS
-export const studentsSelector = state => state.attendees.students
-export const coachesSelector = state => state.attendees.coaches
+export const studentsSelector = state => state.attendees.list.filter(x => x.role === 'Student')
+export const coachesSelector = state => state.attendees.list.filter(x => x.role === 'Coach')
 
 // THUNKS
 export const parseAttendeeList = file => async dispatch => {
   try {
     const csv = await file.text()
-    const result = parse(csv)
-    result.students.forEach(student => dispatch(addStudent(student)))
-    result.coaches.forEach(coach => dispatch(addCoach(coach)))
+    parse(csv).forEach(attendee => dispatch(addAttendee(attendee)))
   } catch (e) {
     console.error(e)
   }

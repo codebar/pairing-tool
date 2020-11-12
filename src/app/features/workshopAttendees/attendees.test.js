@@ -1,6 +1,7 @@
 import {
   attendeesReducer,
   initialState,
+  addAttendee,
   addCoach,
   addStudent,
   studentsSelector,
@@ -14,57 +15,53 @@ describe('The Attendees Slice', () => {
 
   describe('Actions', () => {
 
-    describe('Adding a new student', () => {
+    describe('Adding a new attendee', () => {
       const newStudent = {
         name: 'Pedro',
+        role: 'Student',
         new: false,
         tutorial: 'JS: Building your own app',
         notes: 'I am learning to build websites with HTML, CSS and Javascript',
         languages: ['HTML', 'CSS', 'JS']
       }
-      const action = addStudent(newStudent)
+      const newCoach = {
+        name: 'Alina',
+        role: 'Coach',
+        new: false,
+        skills: 'web development with html, css and js',
+        notes: 'I am a senior web developer with experience in js and frameworks',
+        languages: ['HTML', 'CSS', 'JS']
+      }
+      const addStudentAction = addAttendee(newStudent)
+      const addCoachAction = addAttendee(newCoach)
 
-      it('copies the available information', () => {
-        const nextState = attendeesReducer(initialState, action)
+      it('copies the available information for students', () => {
+        const nextState = attendeesReducer(initialState, addStudentAction)
         expect(studentsSelector({attendees: nextState})[0]).toMatchObject(newStudent)
       })
-
-      it('generates an id', () => {
-        const state = {...initialState, nextStudentId: 1}
-        const nextState = attendeesReducer(state, action)
-        expect(studentsSelector({attendees: nextState})[0]).toMatchObject({id: 1})
-        expect(nextState.nextStudentId).toBe(2)
-      })
-
-      it('ignore duplicates', () => {
-        const firstState = attendeesReducer(initialState, action)
-        const secondState = attendeesReducer(firstState, action)
-        expect(studentsSelector({attendees: secondState}).length).toBe(1)
-      })
-    })
-
-    describe('Adding a new coach', () => {
-      const newCoach = {name: 'Pedro', languages: ['HTML', 'CSS']}
-      const action = addCoach(newCoach)
-
-      it('copies the available information', () => {
-        const nextState = attendeesReducer(initialState, action)
+      it('copies the available information for coaches', () => {
+        const nextState = attendeesReducer(initialState, addCoachAction)
         expect(coachesSelector({attendees: nextState})[0]).toMatchObject(newCoach)
       })
-
       it('generates an id', () => {
-        const state = {...initialState, nextCoachId: 1}
-        const nextState = attendeesReducer(state, action)
-        expect(coachesSelector({attendees: nextState})[0]).toMatchObject({id: 1})
-        expect(nextState.nextCoachId).toBe(2)
-      })
+        const firstState = attendeesReducer(initialState, addStudentAction)
+        const secondState = attendeesReducer(firstState, addCoachAction)
 
-      it('ignore duplicates', () => {
-        const firstState = attendeesReducer(initialState, action)
-        const secondState = attendeesReducer(firstState, action)
-        expect(coachesSelector({attendees: secondState}).length).toBe(1)
+        expect(studentsSelector({attendees: secondState})[0]).toMatchObject({id: 1})
+        expect(coachesSelector({attendees: secondState})[0]).toMatchObject({id: 2})
+        expect(secondState.nextId).toBe(3)
+      })
+      it('ignores duplicates', () => {
+        const firstState = attendeesReducer(initialState, addStudentAction)
+        const secondState = attendeesReducer(firstState, addStudentAction)
+        expect(studentsSelector({attendees: secondState}).length).toBe(1)
+
+        const thirdState = attendeesReducer(secondState, addCoachAction)
+        const fourthState = attendeesReducer(thirdState, addCoachAction)
+        expect(coachesSelector({attendees: fourthState}).length).toBe(1)
       })
     })
+
   })
 
   describe('Thunks', () => {
@@ -80,17 +77,19 @@ describe('The Attendees Slice', () => {
       }
 
       it('adds the students and coaches from the input', async () => {
-        pairingCsvParser.parse = jest.fn(() => ({
-          students: [{name: 'Angelina Jolie (she)', new: false}],
-          coaches: [{name: 'Leonardo Dicaprio (he)', new: false}]
-        }))
+        pairingCsvParser.parse = jest.fn(() => [
+          {name: 'Angelina Jolie (she)', role: 'Coach', new: false},
+          {name: 'Leonardo Dicaprio (he)', role: 'Student', new: false}
+        ])
 
         await parseAttendeeList(file)(dispatch)
 
-        expect(dispatch).toHaveBeenNthCalledWith(1, addStudent({name: 'Angelina Jolie (she)', new: false}))
-        expect(dispatch).toHaveBeenNthCalledWith(2, addCoach({name: 'Leonardo Dicaprio (he)', new: false}))
+        expect(dispatch).toHaveBeenNthCalledWith(1, addAttendee({name: 'Angelina Jolie (she)', role: 'Coach', new: false}))
+        expect(dispatch).toHaveBeenNthCalledWith(2, addAttendee({name: 'Leonardo Dicaprio (he)', role: 'Student', new: false}))
       })
+
     })
+
   })
 
 })
