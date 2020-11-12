@@ -2,24 +2,26 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-
   .FirstStep {
     display:flex;
     flex-flow: column nowrap;
   }
-
   .SecondStep {
     display:flex;
-    flex-flow: row nowrap;
-    justify-content: space-evenly;
+    flex-direction: column;
+    .SecondStepHeader{
+      border: 1px solid black;
+      border-radius: 10px;
+    }
+    .SecondStepContent {
+      display: flex;
+      flex-flow: row nowrap;
+      padding: 1%;
 
-    .Students, .Coaches {
-      .Tablerone {
-        min-width: 650px;
+      .Students,
+      .Coaches {
+        width: 50%;
       }
     }
   }
-
-
-
 }
