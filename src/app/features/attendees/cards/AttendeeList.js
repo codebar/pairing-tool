@@ -1,27 +1,29 @@
 import React from 'react'
-import {useDispatch} from 'react-redux'
-import {toggleAttendance, toggleSkill} from '../attendees'
+import {useDispatch, useSelector} from 'react-redux'
+import {toggleAttendance, toggleLanguage} from '../attendeesSlice'
+import {languagesSelector} from '../../configuration/configurationSlice'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople'
+
 import firstTimer from './firstTimer.jpg'
 import './AttendeeList.scss'
 
-export const AttendeesList = ({skills, data, compact}) => {
+export const AttendeesList = ({data, compact}) => {
   return (
     <>
-      {data.map(row => compact
-        ? <AttendeeCompactCard skills={skills} data={row}/>
-        : <AttendeeCard skills={skills} data={row}/>)}
+      {data.map(attendee => compact
+        ? <AttendeeCompactCard data={attendee}/>
+        : <AttendeeCard data={attendee}/>)}
     </>
   )
 }
 
-const AttendeeCard = ({skills, data}) => {
+const AttendeeCard = ({data}) => {
+  const languages = useSelector(languagesSelector)
   const dispatch = useDispatch()
-
   return (
     <Card className='AttendeeCard'>
       <CardContent>
@@ -41,12 +43,12 @@ const AttendeeCard = ({skills, data}) => {
         </section>
       </CardContent>
       <CardActions className='CardLanguages'>
-        {skills.map(language =>
+        {languages.map(language =>
           <Button
             className={`${language}Button ${data.languages.includes(language) ? 'Active' : 'Inactive'}`}
             variant='contained'
             color='primary'
-            onClick={() => dispatch(toggleSkill({id: data.id, language}))}
+            onClick={() => dispatch(toggleLanguage({id: data.id, language}))}
           >
             {language}
           </Button>
@@ -56,21 +58,20 @@ const AttendeeCard = ({skills, data}) => {
   )
 }
 
-
-const AttendeeCompactCard = ({skills, data}) => {
+const AttendeeCompactCard = ({data}) => {
+  const languages = useSelector(languagesSelector)
   const dispatch = useDispatch()
-
   return (
     <Card className='AttendeeCompactCard'>
       <CardContent className='CardContent'>
         <span className='CardName'>{data.name}</span>
         <section>
-          {skills.map(language =>
+          {languages.map(language =>
             <Button
               className={`${language}Button ${data.languages.includes(language) ? 'Active' : 'Inactive'}`}
               variant='contained'
               color='primary'
-              onClick={() => dispatch(toggleSkill({id: data.id, language}))}
+              onClick={() => dispatch(toggleLanguage({id: data.id, language}))}
             >
               {language}
             </Button>
