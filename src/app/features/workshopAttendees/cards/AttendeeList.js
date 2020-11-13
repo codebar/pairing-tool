@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople'
 import firstTimer from './firstTimer.jpg'
-import './AttendeeTable.scss'
+import './AttendeeList.scss'
 
 export const AttendeesList = ({skills, data, compact}) => {
   return (
