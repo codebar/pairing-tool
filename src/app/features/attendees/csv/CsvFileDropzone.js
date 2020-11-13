@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo} from 'react'
 import {useDispatch} from 'react-redux'
 import {useDropzone} from 'react-dropzone'
-import {parseAttendeeList} from '../attendees'
+import {parseAttendeeList} from '../attendeesSlice'
 
 const baseStyle = {
   flex: 1,
