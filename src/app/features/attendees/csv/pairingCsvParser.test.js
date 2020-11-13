@@ -1,11 +1,12 @@
-import {parse} from './pairingCsvParser'
+import pairingCsvParser from './pairingCsvParser'
 
 describe('Pairing CSV parser', () => {
+  const languages = ['HTML', 'CSS', 'JS', 'Python', 'Ruby', 'Java']
 
   describe('Parsing Students', () => {
     const csv = 'New attendee,Name,Role,Tutorial,Note,Skills\n' +
       'false,Jennifer Jolie (she),Student,JS: Building your own app,"I am learning HTML, CSS and Javascript",N/A\n'
-    const student = (parse(csv))[0]
+    const student = (pairingCsvParser.parse(csv, languages))[0]
 
     it('copies the available information', () => {
       expect(student).toMatchObject({
@@ -31,7 +32,7 @@ describe('Pairing CSV parser', () => {
   describe('Parsing Coaches', () => {
     const csv = 'New attendee,Name,Role,Tutorial,Note,Skills\n' +
       'false,Andrew Dicaprio (he),Coach,N/A,"Git, Python and Java would be good for me to do pair.","heroku, ruby, Test, nodejs, javascript, docker, testing, TDD, java, shellscript, deploy"\n'
-    const coach = (parse(csv))[0]
+    const coach = (pairingCsvParser.parse(csv, languages))[0]
 
     it('copies the available information', () => {
       expect(coach).toMatchObject({
