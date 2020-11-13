@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 import deepEqual from 'deep-equal'
-import {parse} from './csv/pairingCsvParser'
+import pairingCsvParser from './csv/pairingCsvParser'
+import {languagesSelector} from '../configuration/configurationSlice'
 
 export const initialState = {
   list: [],
@@ -27,7 +28,7 @@ const attendeesSlice = createSlice({
       const attendee = state.list[index]
       state.list[index] = {...attendee, attendance: !attendee.attendance}
     },
-    toggleSkill: (state, action) => {
+    toggleLanguage: (state, action) => {
       const index = state.list.findIndex(attendee => attendee.id === action.payload.id)
       const attendee = state.list[index]
       const updatedLanguages = attendee.languages.includes(action.payload.language)
@@ -38,17 +39,19 @@ const attendeesSlice = createSlice({
   }
 })
 export const attendeesReducer = attendeesSlice.reducer
-export const {addAttendee, toggleAttendance, toggleSkill} = attendeesSlice.actions
+export const {addAttendee, toggleAttendance, toggleLanguage} = attendeesSlice.actions
 
 // SELECTORS
 export const studentsSelector = state => state.attendees.list.filter(x => x.role === 'Student')
 export const coachesSelector = state => state.attendees.list.filter(x => x.role === 'Coach')
+export const attendeesInitializedSelector = state => state.attendees.list.length > 0
 
 // THUNKS
-export const parseAttendeeList = file => async dispatch => {
+export const parseAttendeeList = file => async (dispatch, getState) => {
   try {
     const csv = await file.text()
-    parse(csv).forEach(attendee => dispatch(addAttendee(attendee)))
+    const languages = languagesSelector(getState())
+    pairingCsvParser.parse(csv, languages).forEach(attendee => dispatch(addAttendee(attendee)))
   } catch (e) {
     console.error(e)
   }
