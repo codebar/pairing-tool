@@ -38,7 +38,7 @@ export const CsvFileDropzone = () => {
   const dispatch = useDispatch()
   const onDrop = useCallback(
     acceptedFiles => acceptedFiles.forEach(file => dispatch(parseAttendeeList(file))),
-    []
+    [dispatch]
   )
   const {getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject} = useDropzone({
     onDrop, accept: 'text/csv', maxFiles: 1
