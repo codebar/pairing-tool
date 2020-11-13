@@ -5,8 +5,7 @@ import {CsvFileDropzone} from './csv/CsvFileDropzone'
 import {AttendeesList} from './cards/AttendeeList'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
-
-import logo from './logo600.png'
+import pairingCsvImg from './pairingCsvImg.png'
 import './Attendees.scss'
 
 export const Attendees = () => {
@@ -21,8 +20,10 @@ export const Attendees = () => {
 const FirstStep = () => {
   return (
     <div className='FirstStep'>
-      <img src={logo} alt='Codebar'/>
       <h1>Pairing Tool</h1>
+      <span>Step 1: Download the pairing CSV from the workshop page</span>
+      <img src={pairingCsvImg} alt='Pairing CSV Image' />
+      <span>Step 2: Process the CSV file here</span>
       <CsvFileDropzone/>
     </div>
   )

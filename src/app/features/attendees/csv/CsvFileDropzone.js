@@ -55,8 +55,9 @@ export const CsvFileDropzone = () => {
   return (
     <div {...getRootProps({style})}>
       <input {...getInputProps()} />
-      <p>To start, download the "Pairing CSV" from the Workshop in the Codebar website</p>
-      <p>Drag and Drop it here or Click to select the file</p>
+      <span>Drag and Drop the CSV here</span>
+      <span>or</span>
+      <span>Click here to select the file</span>
     </div>
   )
 }
