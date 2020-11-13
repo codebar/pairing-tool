@@ -2,11 +2,11 @@ import {
   attendeesReducer,
   initialState,
   addAttendee,
-  addCoach,
-  addStudent,
+  toggleAttendance,
+  toggleSkill,
   studentsSelector,
   coachesSelector,
-  parseAttendeeList, toggleAttendance
+  parseAttendeeList
 } from './attendees'
 import pairingCsvParser from './csv/pairingCsvParser'
 
@@ -70,18 +70,42 @@ describe('The Attendees Slice', () => {
     })
 
     describe('Toggle attendance', () => {
+      const action = toggleAttendance(1)
 
       it('changes the attendance of a student', () => {
         const student = {id: 1, attendance: false, role: 'Student'}
-        const nextState = attendeesReducer({...initialState, list: [student]}, toggleAttendance(1))
+        const nextState = attendeesReducer({...initialState, list: [student]}, action)
         expect(studentsSelector({attendees: nextState})[0]).toMatchObject({attendance: true})
       })
 
       it('changes the attendance of a coach', () => {
         const coach = {id: 1, attendance: true, role: 'Coach'}
-        const nextState = attendeesReducer({...initialState, list: [coach]}, toggleAttendance(1))
+        const nextState = attendeesReducer({...initialState, list: [coach]}, action)
         expect(coachesSelector({attendees: nextState})[0]).toMatchObject({attendance: false})
       })
+    })
+
+    describe('Toggle language', () => {
+      const action = toggleSkill({id:1, language:'HTML'})
+      
+      it('adds a skill to the attendee if the attendee did not had it', () => {
+        const state = {
+          ...initialState,
+          list: [{id: 1, role: 'Student', languages: ['CSS', 'JS']}]
+        }
+        const nextState = attendeesReducer(state, action)
+        expect(studentsSelector({attendees: nextState})[0].languages).toContain('HTML')
+      })
+
+      it('removes a skill from the attendee if the attendee had it', () => {
+        const state = {
+          ...initialState,
+          list: [{id: 1, role: 'Coach', languages: ['HTML', 'JS', 'Java']}]
+        }
+        const nextState = attendeesReducer(state, action)
+        expect(coachesSelector({attendees: nextState})[0].languages).not.toContain('HTML')
+      })
+
     })
 
   })
