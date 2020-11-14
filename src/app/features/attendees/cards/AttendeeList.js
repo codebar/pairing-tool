@@ -14,7 +14,7 @@ import './AttendeeList.scss'
 export const AttendeesList = ({data, compact}) => {
   return (
     <>
-      {data.map(attendee => compact
+      {data.slice().reverse().map(attendee => compact
         ? <AttendeeCompactCard data={attendee}/>
         : <AttendeeCard data={attendee}/>)}
     </>

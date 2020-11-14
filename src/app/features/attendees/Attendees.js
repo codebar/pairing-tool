@@ -1,12 +1,13 @@
 import React, {useState} from 'react'
-import {useSelector} from 'react-redux'
-import {attendeesInitializedSelector, coachesSelector, studentsSelector} from './attendeesSlice'
+import {useDispatch, useSelector} from 'react-redux'
+import {addAttendee, attendeesInitializedSelector, coachesSelector, studentsSelector} from './attendeesSlice'
 import {CsvFileDropzone} from './csv/CsvFileDropzone'
 import {AttendeesList} from './cards/AttendeeList'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
+import DoneIcon from '@material-ui/icons/Done'
+import Button from '@material-ui/core/Button'
 import pairingCsvImg from './pairingCsvImg.png'
 import './Attendees.scss'
+import TextField from '@material-ui/core/TextField'
 
 export const Attendees = () => {
   const initialized = useSelector(attendeesInitializedSelector)
@@ -30,25 +31,55 @@ const FirstStep = () => {
 }
 
 const SecondStep = () => {
+  const [newStudent, setNewStudent] = useState('')
+  const [newCoach, setNewCoach] = useState('')
   const students = useSelector(studentsSelector)
   const coaches = useSelector(coachesSelector)
-  const [compact, setCompact] = useState(false)
+  const dispatch = useDispatch()
+
+  const createNewCoach = () => {
+    if (newCoach !== '') {
+      dispatch(addAttendee({name: newCoach, role: 'Coach', languages: [], attendance: true}))
+      setNewCoach('')
+    }
+  }
+
+  const createNewStudent = () => {
+    if (newStudent !== '') {
+      dispatch(addAttendee({name: newStudent, role: 'Student', languages: [], attendance: true}))
+      setNewStudent('')
+    }
+  }
+
   return (
     <div className='SecondStep'>
       <div className='SecondStepHeader'>
-        <FormControlLabel
-          control={<Switch checked={compact} onChange={() => setCompact(!compact)} name='compact' color='primary'/>}
-          label='Compact'
-        />
+        <span>Step 3: Update attendance, skills and add new students or coaches</span>
+        <Button
+          className='SecondStepDone'
+          variant='contained'
+          endIcon={<DoneIcon/>}
+          // onClick={() => dispatch(closeAttendeeList())}
+        >
+          Continue to pairings
+        </Button>
       </div>
       <div className='SecondStepContent'>
         <div className='Students'>
           <h3>Students</h3>
-          <AttendeesList data={students} compact={compact}/>
+          <div>
+            <TextField label='Name' value={newStudent} onChange={e => setNewStudent(e.target.value)}/>
+            <Button variant='outlined' color='primary' onClick={createNewStudent}>New Student</Button>
+          </div>
+          <AttendeesList data={students} />
         </div>
         <div className='Coaches'>
           <h3>Coaches</h3>
-          <AttendeesList data={coaches} compact={compact}/>
+          <div>
+            <TextField label='Name' value={newCoach} onChange={e => setNewCoach(e.target.value)}/>
+            <Button variant='outlined' color='primary' onClick={createNewCoach}>New Coach</Button>
+          </div>
+          <AttendeesList data={coaches} />
         </div>
       </div>
     </div>

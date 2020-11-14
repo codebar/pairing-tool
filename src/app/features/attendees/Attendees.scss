@@ -25,9 +25,24 @@
   .SecondStep {
     display:flex;
     flex-direction: column;
+
     .SecondStepHeader{
-      border: 1px solid black;
-      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      &>span {
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 36px;
+      }
+      .SecondStepDone {
+        color: white;
+        background-color: green;
+        width: 300px;
+        margin: 0 auto;
+        &:hover{
+          background-color: darkgreen;
+        }
+      }
     }
     .SecondStepContent {
       display: flex;
