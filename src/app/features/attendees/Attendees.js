@@ -1,19 +1,31 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {addAttendee, attendeesInitializedSelector, coachesSelector, studentsSelector} from './attendeesSlice'
+import {
+  addAttendee,
+  selectStudents,
+  selectCoaches,
+  selectReadyForAttendanceReview,
+  selectReadyForPairing,
+  readyForPairing,
+  reviewAttendeesAgain
+} from './attendeesSlice'
 import {CsvFileDropzone} from './csv/CsvFileDropzone'
 import {AttendeesList} from './cards/AttendeeList'
-import DoneIcon from '@material-ui/icons/Done'
+import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
+import SkipNextIcon from '@material-ui/icons/SkipNext'
 import Button from '@material-ui/core/Button'
 import pairingCsvImg from './pairingCsvImg.png'
 import './Attendees.scss'
 import TextField from '@material-ui/core/TextField'
 
 export const Attendees = () => {
-  const initialized = useSelector(attendeesInitializedSelector)
+  const initialized = useSelector(selectReadyForAttendanceReview)
+  const readyForPairing = useSelector(selectReadyForPairing)
   return (
     <div className='Attendees'>
-      {!initialized ? <FirstStep/> : <SecondStep/>}
+      {readyForPairing && <ThirdStep/>}
+      {!readyForPairing && initialized && <SecondStep/>}
+      {!readyForPairing && !initialized && <FirstStep/>}
     </div>
   )
 }
@@ -33,8 +45,8 @@ const FirstStep = () => {
 const SecondStep = () => {
   const [newStudent, setNewStudent] = useState('')
   const [newCoach, setNewCoach] = useState('')
-  const students = useSelector(studentsSelector)
-  const coaches = useSelector(coachesSelector)
+  const students = useSelector(selectStudents)
+  const coaches = useSelector(selectCoaches)
   const dispatch = useDispatch()
 
   const createNewCoach = () => {
@@ -58,8 +70,9 @@ const SecondStep = () => {
         <Button
           className='SecondStepDone'
           variant='contained'
-          endIcon={<DoneIcon/>}
-          // onClick={() => dispatch(closeAttendeeList())}
+          color='primary'
+          endIcon={<SkipNextIcon/>}
+          onClick={() => dispatch(readyForPairing())}
         >
           Continue to pairings
         </Button>
@@ -80,6 +93,36 @@ const SecondStep = () => {
             <Button variant='outlined' color='primary' onClick={createNewCoach}>New Coach</Button>
           </div>
           <AttendeesList data={coaches} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const ThirdStep = () => {
+  const dispatch = useDispatch()
+
+  return (
+    <div className='ThirdStep'>
+      <div className='ThirdStepHeader'>
+        <span>Step 4: Let the pairings begin!!!</span>
+        <Button
+          className='ThirdStepBack'
+          variant='contained'
+          color='primary'
+          startIcon={<SkipPreviousIcon/>}
+          onClick={() => dispatch(reviewAttendeesAgain())}
+        >
+          Review attendance and skills
+        </Button>
+      </div>
+      <div className='ThirdStepContent'>
+        <div className='Attendees'>
+          <h4>Students</h4>
+          <h4>Coaches</h4>
+        </div>
+        <div className='Pairs'>
+          <h4>Pairs</h4>
         </div>
       </div>
     </div>

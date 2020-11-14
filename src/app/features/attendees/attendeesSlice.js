@@ -6,6 +6,7 @@ import {languagesSelector} from '../configuration/configurationSlice'
 export const initialState = {
   list: [],
   nextId: 1,
+  readyForPairing: false
 }
 
 const attendeesSlice = createSlice({
@@ -35,16 +36,25 @@ const attendeesSlice = createSlice({
         ? attendee.languages.filter(lang => lang !== action.payload.language)
         : attendee.languages.concat(action.payload.language)
       state.list[index] = {...attendee, languages: updatedLanguages }
+    },
+    readyForPairing: state => {
+      state.readyForPairing = true
+    },
+    reviewAttendeesAgain: state => {
+      state.readyForPairing = false
     }
   }
 })
 export const attendeesReducer = attendeesSlice.reducer
-export const {addAttendee, toggleAttendance, toggleLanguage} = attendeesSlice.actions
+export const {addAttendee, toggleAttendance, toggleLanguage, readyForPairing, reviewAttendeesAgain} = attendeesSlice.actions
 
 // SELECTORS
-export const studentsSelector = state => state.attendees.list.filter(x => x.role === 'Student')
-export const coachesSelector = state => state.attendees.list.filter(x => x.role === 'Coach')
-export const attendeesInitializedSelector = state => state.attendees.list.length > 0
+export const selectStudents = state => state.attendees.list.filter(x => x.role === 'Student')
+export const selectCoaches = state => state.attendees.list.filter(x => x.role === 'Coach')
+export const selectPresentStudents = state => selectStudents(state).filter(x => x.attendance === true)
+export const selectPresentCoaches = state => selectCoaches(state).filter(x => x.attendance === true)
+export const selectReadyForAttendanceReview = state => state.attendees.list.length > 0
+export const selectReadyForPairing = state => state.attendees.readyForPairing
 
 // THUNKS
 export const parseAttendeeList = file => async (dispatch, getState) => {

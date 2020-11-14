@@ -35,13 +35,8 @@
         line-height: 36px;
       }
       .SecondStepDone {
-        color: white;
-        background-color: green;
         width: 300px;
         margin: 0 auto;
-        &:hover{
-          background-color: darkgreen;
-        }
       }
     }
     .SecondStepContent {
@@ -53,6 +48,38 @@
       .Coaches {
         width: 50%;
       }
+    }
+  }
+
+  .ThirdStep {
+    display: flex;
+    flex-direction: column;
+
+    .ThirdStepHeader {
+      display: flex;
+      flex-direction: column;
+      &>span {
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 36px;
+      }
+      .ThirdStepBack {
+        width: 300px;
+        margin: 0 auto;
+      }
+    }
+    .ThirdStepContent {
+      display: flex;
+      flex-flow: row nowrap;
+      padding: 1%;
+
+      .Attendees,
+      .Pairs {
+        display: flex;
+        flex-direction: column;
+      }
+
+
     }
   }
 }

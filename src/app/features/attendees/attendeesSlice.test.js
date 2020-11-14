@@ -1,10 +1,10 @@
 import {
   addAttendee,
   attendeesReducer,
-  coachesSelector,
+  selectCoaches,
   initialState,
-  parseAttendeeList,
-  studentsSelector,
+  parseAttendeeList, readyForPairing, selectReadyForPairing,
+  selectStudents,
   toggleAttendance,
   toggleLanguage
 } from './attendeesSlice'
@@ -34,35 +34,35 @@ describe('The Attendees Slice', () => {
 
     it('copies the available information for students', () => {
       const nextState = attendeesReducer(initialState, addStudentAction)
-      expect(studentsSelector({attendees: nextState})[0]).toMatchObject(newStudent)
+      expect(selectStudents({attendees: nextState})[0]).toMatchObject(newStudent)
     })
     it('copies the available information for coaches', () => {
       const nextState = attendeesReducer(initialState, addCoachAction)
-      expect(coachesSelector({attendees: nextState})[0]).toMatchObject(newCoach)
+      expect(selectCoaches({attendees: nextState})[0]).toMatchObject(newCoach)
     })
     it('generates an id', () => {
       const firstState = attendeesReducer(initialState, addStudentAction)
       const secondState = attendeesReducer(firstState, addCoachAction)
 
-      expect(studentsSelector({attendees: secondState})[0]).toMatchObject({id: 1})
-      expect(coachesSelector({attendees: secondState})[0]).toMatchObject({id: 2})
+      expect(selectStudents({attendees: secondState})[0]).toMatchObject({id: 1})
+      expect(selectCoaches({attendees: secondState})[0]).toMatchObject({id: 2})
       expect(secondState.nextId).toBe(3)
     })
     it('initializes attendance to no', () => {
       const firstState = attendeesReducer(initialState, addStudentAction)
       const secondState = attendeesReducer(firstState, addCoachAction)
 
-      expect(studentsSelector({attendees: secondState})[0]).toMatchObject({attendance: false})
-      expect(coachesSelector({attendees: secondState})[0]).toMatchObject({attendance: false})
+      expect(selectStudents({attendees: secondState})[0]).toMatchObject({attendance: false})
+      expect(selectCoaches({attendees: secondState})[0]).toMatchObject({attendance: false})
     })
     it('ignores duplicates', () => {
       const firstState = attendeesReducer(initialState, addStudentAction)
       const secondState = attendeesReducer(firstState, addStudentAction)
-      expect(studentsSelector({attendees: secondState}).length).toBe(1)
+      expect(selectStudents({attendees: secondState}).length).toBe(1)
 
       const thirdState = attendeesReducer(secondState, addCoachAction)
       const fourthState = attendeesReducer(thirdState, addCoachAction)
-      expect(coachesSelector({attendees: fourthState}).length).toBe(1)
+      expect(selectCoaches({attendees: fourthState}).length).toBe(1)
     })
   })
 
@@ -72,12 +72,12 @@ describe('The Attendees Slice', () => {
     it('changes the attendance to true when it was false', () => {
       const student = {id: 1, attendance: false, role: 'Student'}
       const nextState = attendeesReducer({...initialState, list: [student]}, action)
-      expect(studentsSelector({attendees: nextState})[0]).toMatchObject({attendance: true})
+      expect(selectStudents({attendees: nextState})[0]).toMatchObject({attendance: true})
     })
     it('changes the attendance to false when it was true', () => {
       const coach = {id: 1, attendance: true, role: 'Coach'}
       const nextState = attendeesReducer({...initialState, list: [coach]}, action)
-      expect(coachesSelector({attendees: nextState})[0]).toMatchObject({attendance: false})
+      expect(selectCoaches({attendees: nextState})[0]).toMatchObject({attendance: false})
     })
   })
 
@@ -90,7 +90,7 @@ describe('The Attendees Slice', () => {
         list: [{id: 1, role: 'Student', languages: ['CSS', 'JS']}]
       }
       const nextState = attendeesReducer(state, action)
-      expect(studentsSelector({attendees: nextState})[0].languages).toContain('HTML')
+      expect(selectStudents({attendees: nextState})[0].languages).toContain('HTML')
     })
     it('removes a skill from the attendee if the attendee had it', () => {
       const state = {
@@ -98,7 +98,16 @@ describe('The Attendees Slice', () => {
         list: [{id: 1, role: 'Coach', languages: ['HTML', 'JS', 'Java']}]
       }
       const nextState = attendeesReducer(state, action)
-      expect(coachesSelector({attendees: nextState})[0].languages).not.toContain('HTML')
+      expect(selectCoaches({attendees: nextState})[0].languages).not.toContain('HTML')
+    })
+  })
+
+  describe('Ready for Pairing', () => {
+    const action = readyForPairing()
+
+    it('sets the flag as ready for pairing to true', () => {
+      const nextState = attendeesReducer(initialState, action)
+      expect(selectReadyForPairing({attendees: nextState})).toBeTruthy()
     })
   })
 
