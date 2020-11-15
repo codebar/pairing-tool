@@ -3,7 +3,7 @@ import {PairingTool} from './pairingTool/PairingTool'
 import smallLogo from './logo200.png'
 import './App.scss'
 
-const App = () => (
+export const App = () => (
   <div className='App'>
     <div className='AppHeader'>
       <img alt='Codebar' src={smallLogo} />
@@ -14,5 +14,3 @@ const App = () => (
     </div>
   </div>
 )
-
-export default App

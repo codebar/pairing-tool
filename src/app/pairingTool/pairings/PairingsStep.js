@@ -1,4 +1,6 @@
 import React from 'react'
+import {DndProvider} from 'react-dnd'
+import {HTML5Backend} from 'react-dnd-html5-backend'
 import {useDispatch, useSelector} from 'react-redux'
 import {useDrag, useDrop} from 'react-dnd'
 import {DraggableType} from '../../../config/dnd'
@@ -15,38 +17,40 @@ export const PairingsStep = () => {
   const dispatch = useDispatch()
 
   return (
-    <div className='PairingsStep'>
-      <div className='PairingsStepHeader'>
-        <span>Step 3: Let the pairings begin!!!</span>
-        <Button
-          className='PairingsStepBack'
-          variant='contained'
-          color='primary'
-          startIcon={<SkipPreviousIcon/>}
-          onClick={() => dispatch(reviewAttendeesAgain())}
-        >
-          Review attendance and skills
-        </Button>
-      </div>
-      <div className='PairingsStepContent'>
-        <div className='Attendees'>
-          <h4>Students</h4>
-          {availableStudents.map(student => <DraggableStudent student={student}/>)}
-          <h4>Coaches</h4>
-          {availableCoaches.map(coach => <DraggableCoach coach={coach} />)}
+    <DndProvider backend={HTML5Backend}>
+      <div className='PairingsStep'>
+        <div className='PairingsStepHeader'>
+          <span>Step 3: Let the pairings begin!!!</span>
+          <Button
+            className='PairingsStepBack'
+            variant='contained'
+            color='primary'
+            startIcon={<SkipPreviousIcon/>}
+            onClick={() => dispatch(reviewAttendeesAgain())}
+          >
+            Review attendance and skills
+          </Button>
         </div>
-        <div className='Pairs'>
-          <h4>Pairs</h4>
-          {groups.map(group =>
-            <div className='PairingGroup'>
-              {group.id}
-              <StudentDrop groupId={group.id}/>
-              <CoachDrop groupId={group.id}/>
-            </div>
-          )}
+        <div className='PairingsStepContent'>
+          <div className='Attendees'>
+            <h4>Students</h4>
+            {availableStudents.map(student => <DraggableStudent student={student}/>)}
+            <h4>Coaches</h4>
+            {availableCoaches.map(coach => <DraggableCoach coach={coach} />)}
+          </div>
+          <div className='Pairs'>
+            <h4>Pairs</h4>
+            {groups.map(group =>
+              <div className='PairingGroup'>
+                {group.id}
+                <StudentDrop groupId={group.id}/>
+                <CoachDrop groupId={group.id}/>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </DndProvider>
   )
 }
 
