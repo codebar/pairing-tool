@@ -7,12 +7,10 @@ const App = () => (
   <div className='App'>
     <div className='AppHeader'>
       <img alt='Codebar' src={smallLogo} />
+      <span>Pairing Tool</span>
     </div>
     <div className='AppContent'>
       <Attendees/>
-    </div>
-    <div className='AppFooter'>
-      <p>Codebar - Pairing Tool</p>
     </div>
   </div>
 )
