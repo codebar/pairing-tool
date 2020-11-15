@@ -6,8 +6,8 @@ import {
   selectCoaches,
   selectReadyForAttendanceReview,
   selectReadyForPairing,
-  readyForPairing,
-  reviewAttendeesAgain
+  reviewAttendeesAgain,
+  goToPairingStep
 } from './attendeesSlice'
 import {CsvFileDropzone} from './csv/CsvFileDropzone'
 import {AttendeesList} from './cards/AttendeeList'
@@ -17,6 +17,7 @@ import Button from '@material-ui/core/Button'
 import pairingCsvImg from './pairingCsvImg.png'
 import './Attendees.scss'
 import TextField from '@material-ui/core/TextField'
+import {selectAvailableCoaches, selectAvailableStudents, selectPairingGroups} from '../pairings/pairingsSlice'
 
 export const Attendees = () => {
   const initialized = useSelector(selectReadyForAttendanceReview)
@@ -72,7 +73,7 @@ const SecondStep = () => {
           variant='contained'
           color='primary'
           endIcon={<SkipNextIcon/>}
-          onClick={() => dispatch(readyForPairing())}
+          onClick={() => dispatch(goToPairingStep())}
         >
           Continue to pairings
         </Button>
@@ -100,6 +101,9 @@ const SecondStep = () => {
 }
 
 const ThirdStep = () => {
+  const availableStudents = useSelector(selectAvailableStudents)
+  const availableCoaches = useSelector(selectAvailableCoaches)
+  const groups = useSelector(selectPairingGroups)
   const dispatch = useDispatch()
 
   return (
@@ -119,10 +123,19 @@ const ThirdStep = () => {
       <div className='ThirdStepContent'>
         <div className='Attendees'>
           <h4>Students</h4>
+          {availableStudents.map(student => <div className='AvailableStudent'>{student.name}</div>)}
           <h4>Coaches</h4>
+          {availableCoaches.map(coach => <div className='AvailableCoach'>{coach.name}</div>)}
         </div>
         <div className='Pairs'>
           <h4>Pairs</h4>
+          {groups.map(group =>
+            <div className='PairingGroup'>
+              {group.id}
+              <div className='StudentsDrop'>&nbsp;</div>
+              <div className='CoachesDrop'>&nbsp;</div>
+            </div>
+          )}
         </div>
       </div>
     </div>

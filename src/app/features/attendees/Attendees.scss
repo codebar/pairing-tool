@@ -77,6 +77,28 @@
       .Pairs {
         display: flex;
         flex-direction: column;
+        border: 1px solid black;
+        border-radius: 5px;
+      }
+      .Attendees {
+        .AvailableStudent {
+          border: 1px solid pink;
+        }
+        .AvailableCoach {
+          border: 1px solid orange;
+        }
+      }
+
+      .Pairs {
+        .PairingGroup {
+          border: 1px solid #4e555b;
+          .StudentsDrop {
+            border: 1px solid blue;
+          }
+          .CoachesDrop {
+            border: 1px solid green;
+          }
+        }
       }
 
 

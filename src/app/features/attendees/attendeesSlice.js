@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit'
 import deepEqual from 'deep-equal'
 import pairingCsvParser from './csv/pairingCsvParser'
 import {languagesSelector} from '../configuration/configurationSlice'
+import {addPeopleForPairings} from '../pairings/pairingsSlice'
 
 export const initialState = {
   list: [],
@@ -65,4 +66,13 @@ export const parseAttendeeList = file => async (dispatch, getState) => {
   } catch (e) {
     console.error(e)
   }
+}
+
+export const goToPairingStep = () => (dispatch, getState) => {
+  const state = getState()
+  dispatch(readyForPairing())
+  dispatch(addPeopleForPairings({
+    students: selectPresentStudents(state),
+    coaches: selectPresentCoaches(state)
+  }))
 }

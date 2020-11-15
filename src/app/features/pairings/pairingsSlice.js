@@ -13,8 +13,9 @@ const pairingsSlice = createSlice({
   name: 'pairings',
   initialState,
   reducers: {
-    initialise: (state, action) => {
-      // populate students and coaches
+    addPeopleForPairings: (state, action) => {
+      state.students = action.payload.students
+      state.coaches = action.payload.coaches
     },
     moveCoachToGroup: (state, action) => {
 
@@ -31,7 +32,7 @@ const pairingsSlice = createSlice({
 export const pairingsReducer = pairingsSlice.reducer
 
 export const {
-  initialise,
+  addPeopleForPairings,
   createNewGroup,
   moveCoachToGroup,
   moveStudentToGroup
@@ -42,5 +43,4 @@ export const selectAvailableCoaches = state => state.pairings.coaches
 export const selectPairingGroups = state => state.pairings.groups
 
 export const resolveSingleOptionPairings = () => dispatch => {
-
 }
