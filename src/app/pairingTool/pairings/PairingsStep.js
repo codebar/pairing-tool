@@ -5,10 +5,17 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useDrag, useDrop} from 'react-dnd'
 import {DraggableType} from '../../../config/dnd'
 import {reviewAttendeesAgain} from '../attendees/attendeesSlice'
-import {dragCoachToGroup, selectAvailableCoaches, selectAvailableStudents, selectPairingGroups} from './pairingsSlice'
+import {
+  dragCoachToGroup,
+  dragStudentToGroup,
+  selectAvailableCoaches,
+  selectAvailableStudents,
+  selectPairingGroups
+} from './pairingsSlice'
 import Button from '@material-ui/core/Button'
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
 import './PairingsStep.scss'
+import {AttendeeCompactCard} from './AttendeeCompactCard'
 
 export const PairingsStep = () => {
   const availableStudents = useSelector(selectAvailableStudents)
@@ -34,15 +41,14 @@ export const PairingsStep = () => {
         <div className='PairingsStepContent'>
           <div className='Attendees'>
             <h4>Students</h4>
-            {availableStudents.map(student => <DraggableStudent student={student}/>)}
+            {availableStudents.map(student => <DraggableCard attendee={student}/>)}
             <h4>Coaches</h4>
-            {availableCoaches.map(coach => <DraggableCoach coach={coach} />)}
+            {availableCoaches.map(coach => <DraggableCard attendee={coach} />)}
           </div>
           <div className='Pairs'>
             <h4>Pairs</h4>
             {groups.map(group =>
               <div className='PairingGroup'>
-                {group.id}
                 <StudentDrop groupId={group.id}/>
                 <CoachDrop groupId={group.id}/>
               </div>
@@ -54,41 +60,36 @@ export const PairingsStep = () => {
   )
 }
 
-const DraggableStudent = ({student}) => {
+
+const DraggableCard = ({attendee}) => {
   const [{isDragging}, drag] = useDrag({
-    item: { type: DraggableType.STUDENT },
+    item: { type: attendee.role, id: attendee.id },
     collect: monitor => ({
       isDragging: !!monitor.isDragging()
     })
   })
   return (
-    <div ref={drag} className={`AvailableStudent${isDragging && ' Dragging'}`}>{student.name}</div>
-  )
-}
-
-const DraggableCoach = ({coach}) => {
-  const [{isDragging}, drag] = useDrag({
-    item: { type: DraggableType.COACH, coachId: coach.id },
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  })
-
-  return(
-    <div ref={drag} className={`AvailableCoach${isDragging && ' Dragging'}`}>{coach.name}</div>
+    <div ref={drag} className={`Available${attendee.role}${isDragging && ' Dragging'}`}>
+      <AttendeeCompactCard data={attendee}/>
+    </div>
   )
 }
 
 const StudentDrop = ({groupId}) => {
+  const dispatch = useDispatch()
+  const students = useSelector(state => state.pairings.groups.find(group => group.id === groupId).students)
   const [{ isOver }, drop] = useDrop({
     accept: DraggableType.STUDENT,
-    drop: () => {},
+    drop: item => dispatch(dragStudentToGroup(item.id, groupId)),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
   })
   return (
-    <div ref={drop} className='StudentsDrop'>&nbsp;</div>
+    <div ref={drop} className='StudentsDrop'>
+      {students.length > 0 && students.map(student => <div>{student.name}</div>)}
+      {students.length <= 0 && <span>Drag a student here</span>}
+    </div>
   )
 }
 
@@ -97,7 +98,7 @@ const CoachDrop = ({groupId}) => {
   const coaches = useSelector(state => state.pairings.groups.find(group => group.id === groupId).coaches)
   const [{ isOver }, drop] = useDrop({
     accept: DraggableType.COACH,
-    drop: item => dispatch(dragCoachToGroup(item.coachId, groupId)),
+    drop: item => dispatch(dragCoachToGroup(item.id, groupId)),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
@@ -105,7 +106,7 @@ const CoachDrop = ({groupId}) => {
   return (
     <div ref={drop} className='CoachesDrop'>
       {coaches.length > 0 && coaches.map(coach => <div>{coach.name}</div>)}
-      {coaches.length <= 0 && '&nbsp;'}
+      {coaches.length <= 0 && <span>Drag a coach here</span>}
     </div>
   )
 }

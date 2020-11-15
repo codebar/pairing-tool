@@ -24,10 +24,9 @@
     .Pairs {
       display: flex;
       flex-direction: column;
-      border: 1px solid black;
-      border-radius: 5px;
     }
     .Attendees {
+      width: 60%;
       .AvailableStudent {
         border: 1px solid pink;
         cursor: move;
@@ -45,13 +44,21 @@
     }
 
     .Pairs {
+      width: 40%;
+      padding: 20px;
       .PairingGroup {
-        border: 1px solid #4e555b;
-        .StudentsDrop {
-          border: 1px solid blue;
-        }
+        padding: 10px;
+        border: 1px dashed #4e555b;
+        border-radius: 10px;
+        display: flex;
+        flex-flow: row nowrap;
+        .StudentsDrop,
         .CoachesDrop {
-          border: 1px solid green;
+          min-height: 60px;
+          width: 50%;
+          border: 1px dashed #4e555b;
+          border-radius: 10px;
+          background-color: #bac8d2;
         }
       }
     }
