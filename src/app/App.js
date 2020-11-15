@@ -1,5 +1,5 @@
 import React from 'react'
-import {Attendees} from './features/attendees/Attendees'
+import {PairingTool} from './pairingTool/PairingTool'
 import smallLogo from './logo200.png'
 import './App.scss'
 
@@ -10,7 +10,7 @@ const App = () => (
       <span>Pairing Tool</span>
     </div>
     <div className='AppContent'>
-      <Attendees/>
+      <PairingTool/>
     </div>
   </div>
 )

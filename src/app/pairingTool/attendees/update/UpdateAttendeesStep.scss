@@ -1,0 +1,28 @@
+.UpdateAttendeesStep {
+  display:flex;
+  flex-direction: column;
+
+  .UpdateAttendeesStepHeader{
+    display: flex;
+    flex-direction: column;
+    &>span {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 36px;
+    }
+    .UpdateAttendeesStepDone {
+      width: 300px;
+      margin: 0 auto;
+    }
+  }
+  .UpdateAttendeesStepContent {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 1%;
+
+    .Students,
+    .Coaches {
+      width: 50%;
+    }
+  }
+}

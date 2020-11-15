@@ -1,0 +1,59 @@
+.PairingsStep {
+  display: flex;
+  flex-direction: column;
+
+  .PairingsStepHeader {
+    display: flex;
+    flex-direction: column;
+    &>span {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 36px;
+    }
+    .PairingsStepBack {
+      width: 300px;
+      margin: 0 auto;
+    }
+  }
+  .PairingsStepContent {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 1%;
+
+    .Attendees,
+    .Pairs {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid black;
+      border-radius: 5px;
+    }
+    .Attendees {
+      .AvailableStudent {
+        border: 1px solid pink;
+        cursor: move;
+        &.Dragging {
+          background-color: lightpink;
+        }
+      }
+      .AvailableCoach {
+        border: 1px solid orange;
+        cursor: move;
+        &.Dragging {
+          background-color: lightsalmon;
+        }
+      }
+    }
+
+    .Pairs {
+      .PairingGroup {
+        border: 1px solid #4e555b;
+        .StudentsDrop {
+          border: 1px solid blue;
+        }
+        .CoachesDrop {
+          border: 1px solid green;
+        }
+      }
+    }
+  }
+}

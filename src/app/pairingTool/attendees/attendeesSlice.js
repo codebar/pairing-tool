@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 import deepEqual from 'deep-equal'
 import pairingCsvParser from './csv/pairingCsvParser'
-import {languagesSelector} from '../configuration/configurationSlice'
+import {languagesSelector} from '../../configuration/configurationSlice'
 import {addPeopleForPairings} from '../pairings/pairingsSlice'
 
 export const initialState = {

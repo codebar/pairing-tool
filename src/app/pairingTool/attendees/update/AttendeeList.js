@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {toggleAttendance, toggleLanguage} from '../attendeesSlice'
-import {languagesSelector} from '../../configuration/configurationSlice'
+import {languagesSelector} from '../../../configuration/configurationSlice'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'

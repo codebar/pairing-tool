@@ -18,7 +18,10 @@ const pairingsSlice = createSlice({
       state.coaches = action.payload.coaches
     },
     moveCoachToGroup: (state, action) => {
-
+      const coach = state.coaches.find(coach => coach.id === action.payload.coachId)
+      state.coaches = state.coaches.filter(coach => coach.id !== action.payload.coachId)
+      const groupIndex = state.groups.findIndex(group => group.id === action.payload.groupId)
+      state.groups[groupIndex].coaches.push(coach)
     },
     moveStudentToGroup: (state, action) => {
 
@@ -41,6 +44,15 @@ export const {
 export const selectAvailableStudents = state => state.pairings.students
 export const selectAvailableCoaches = state => state.pairings.coaches
 export const selectPairingGroups = state => state.pairings.groups
+
+
+export const dragCoachToGroup = (coachId, groupId) => (dispatch, getState) => {
+  dispatch(moveCoachToGroup({coachId, groupId}))
+  const state = getState()
+  const weDoNeedANewGroup = state.pairings.groups.some(group => group.students.length === 0 && group.coaches.length === 0)
+  if (weDoNeedANewGroup) dispatch(createNewGroup())
+}
+
 
 export const resolveSingleOptionPairings = () => dispatch => {
 }

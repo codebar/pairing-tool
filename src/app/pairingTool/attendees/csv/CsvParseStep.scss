@@ -1,0 +1,20 @@
+.CsvParseStep {
+  display:flex;
+  flex-flow: column nowrap;
+  margin: 0 auto;
+  width: 800px;
+
+  span {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  img {
+    width: 798px;
+    height: 160px;
+    margin-bottom: 20px;
+    border: 1px solid grey;
+    border-radius: 10px;
+  }
+}
