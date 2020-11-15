@@ -1,13 +1,18 @@
 import {
-  addAttendee,
   attendeesReducer,
-  selectCoaches,
   initialState,
-  parseAttendeeList, readyForPairing, selectReadyForPairing,
   selectStudents,
+  selectCoaches,
+  selectReadyForPairing,
+  addAttendee,
   toggleAttendance,
-  toggleLanguage
+  toggleLanguage,
+  readyForPairing,
+  reviewAttendeesAgain,
+  parseAttendeeList,
+  goToPairingStep
 } from './attendeesSlice'
+import {addPeopleForPairings} from '../pairings/pairingsSlice'
 import pairingCsvParser from './csv/pairingCsvParser'
 
 describe('The Attendees Slice', () => {
@@ -82,7 +87,7 @@ describe('The Attendees Slice', () => {
   })
 
   describe('Toggle language of an attendee', () => {
-    const action = toggleLanguage({id:1, language:'HTML'})
+    const action = toggleLanguage({id: 1, language: 'HTML'})
 
     it('adds a skill to the attendee if the attendee did not had it', () => {
       const state = {
@@ -102,7 +107,7 @@ describe('The Attendees Slice', () => {
     })
   })
 
-  describe('Ready for Pairing', () => {
+  describe('Ready for pairing', () => {
     const action = readyForPairing()
 
     it('sets the flag as ready for pairing to true', () => {
@@ -111,26 +116,72 @@ describe('The Attendees Slice', () => {
     })
   })
 
+  describe('Review attendees again', () => {
+    const action = reviewAttendeesAgain()
+
+    it('sets the flag as ready for pairing to false', () => {
+      const nextState = attendeesReducer(initialState, action)
+      expect(selectReadyForPairing({attendees: nextState})).toBeFalsy()
+    })
+  })
+
   describe('Parsing the attendees list file', () => {
     const dispatch = jest.fn()
-    const file = {
-      text: () => Promise.resolve(
-        'New attendee,Name,Role,Tutorial,Note,Skills\n' +
-        'false,Angelina Jolie (she),Student,JS: Building your own app,"I am learning HTML, CSS and Javascript",N/A\n' +
-        'false,Leonardo Dicaprio (he),Coach,N/A,"Git, Python and Java would be good for me to do pair.","heroku, ruby, Test, nodejs, javascript, docker, testing, TDD, java, shellscript, deploy"\n'
-      )
-    }
+    const getState = () => ({configuration: {languages: []}})
 
     it('adds a new attendee for each input in the file', async () => {
+      const file = {
+        text: () => Promise.resolve(
+          'New attendee,Name,Role,Tutorial,Note,Skills\n' +
+          'false,Angelina Jolie (she),Student,JS: Building your own app,"I am learning HTML, CSS and Javascript",N/A\n' +
+          'false,Leonardo Dicaprio (he),Coach,N/A,"Git, Python and Java would be good for me to do pair.","heroku, ruby, Test, nodejs, javascript, docker, testing, TDD, java, shellscript, deploy"\n'
+        )
+      }
       pairingCsvParser.parse = jest.fn(() => [
         {name: 'Angelina Jolie (she)', role: 'Coach', new: false},
         {name: 'Leonardo Dicaprio (he)', role: 'Student', new: false}
       ])
 
-      await parseAttendeeList(file)(dispatch, () => ({configuration: {languages: []}}))
+      await parseAttendeeList(file)(dispatch, getState)
 
-      expect(dispatch).toHaveBeenNthCalledWith(1, addAttendee({name: 'Angelina Jolie (she)', role: 'Coach', new: false}))
-      expect(dispatch).toHaveBeenNthCalledWith(2, addAttendee({name: 'Leonardo Dicaprio (he)', role: 'Student', new: false}))
+      expect(dispatch).toHaveBeenNthCalledWith(1, addAttendee({
+        name: 'Angelina Jolie (she)',
+        role: 'Coach',
+        new: false
+      }))
+      expect(dispatch).toHaveBeenNthCalledWith(2, addAttendee({
+        name: 'Leonardo Dicaprio (he)',
+        role: 'Student',
+        new: false
+      }))
+    })
+  })
+
+  describe('Go to pairings step', () => {
+    const dispatch = jest.fn()
+    const getState = () => ({
+      attendees: {
+        list: [
+          {name: 'Carmen San Diego', role: 'Student', attendance: false},
+          {name: 'Bugs Bunny', role: 'Student', attendance: true},
+          {name: 'Roger Rabbit', role: 'Coach', attendance: false},
+          {name: 'Jessica Rabbit', role: 'Coach', attendance: true}
+        ]
+      }
+    })
+
+    it('marks the app as ready to go to the pairing step', () => {
+      goToPairingStep()(dispatch, getState)
+      expect(dispatch).toHaveBeenNthCalledWith(1, readyForPairing())
+    })
+
+    it('pass the list of coaches who showed up to the pairing step', () => {
+      goToPairingStep()(dispatch, getState)
+      const expectedListForPairings = {
+        students: [{name: 'Bugs Bunny', role: 'Student', attendance: true}],
+        coaches: [{name: 'Jessica Rabbit', role: 'Coach', attendance: true}]
+      }
+      expect(dispatch).toHaveBeenNthCalledWith(2, addPeopleForPairings(expectedListForPairings))
     })
   })
 

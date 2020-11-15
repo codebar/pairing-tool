@@ -36,7 +36,7 @@ const attendeesSlice = createSlice({
       const updatedLanguages = attendee.languages.includes(action.payload.language)
         ? attendee.languages.filter(lang => lang !== action.payload.language)
         : attendee.languages.concat(action.payload.language)
-      state.list[index] = {...attendee, languages: updatedLanguages }
+      state.list[index] = {...attendee, languages: updatedLanguages}
     },
     readyForPairing: state => {
       state.readyForPairing = true
@@ -46,8 +46,15 @@ const attendeesSlice = createSlice({
     }
   }
 })
+
 export const attendeesReducer = attendeesSlice.reducer
-export const {addAttendee, toggleAttendance, toggleLanguage, readyForPairing, reviewAttendeesAgain} = attendeesSlice.actions
+export const {
+  addAttendee,
+  toggleAttendance,
+  toggleLanguage,
+  readyForPairing,
+  reviewAttendeesAgain
+} = attendeesSlice.actions
 
 // SELECTORS
 export const selectStudents = state => state.attendees.list.filter(x => x.role === 'Student')
@@ -67,7 +74,6 @@ export const parseAttendeeList = file => async (dispatch, getState) => {
     console.error(e)
   }
 }
-
 export const goToPairingStep = () => (dispatch, getState) => {
   const state = getState()
   dispatch(readyForPairing())
