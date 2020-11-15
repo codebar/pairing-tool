@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {toggleAttendance, toggleLanguage} from '../attendeesSlice'
-import {languagesSelector} from '../../../configuration/configurationSlice'
+import {selectLanguages} from '../../../configuration/configurationSlice'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
@@ -22,7 +22,7 @@ export const AttendeesList = ({data, compact}) => {
 }
 
 const AttendeeCard = ({data}) => {
-  const languages = useSelector(languagesSelector)
+  const languages = useSelector(selectLanguages)
   const dispatch = useDispatch()
   return (
     <Card className='AttendeeCard'>
@@ -59,7 +59,7 @@ const AttendeeCard = ({data}) => {
 }
 
 const AttendeeCompactCard = ({data}) => {
-  const languages = useSelector(languagesSelector)
+  const languages = useSelector(selectLanguages)
   const dispatch = useDispatch()
   return (
     <Card className='AttendeeCompactCard'>

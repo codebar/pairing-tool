@@ -7,8 +7,11 @@ export const initialState = {
 const configurationSlice = createSlice({
   name: 'configuration',
   initialState,
-  reducers: {}
+  reducers: {
+    // todo: future steps add a config UI where languages can be added
+    // colors for each language could also be configured
+  }
 })
 export const configurationReducer = configurationSlice.reducer
 
-export const languagesSelector = state => state.configuration.languages
+export const selectLanguages = state => state.configuration.languages
