@@ -8,7 +8,7 @@ export const CsvParseStep = () => {
     <div className='CsvParseStep'>
       <h1>Pairing Tool</h1>
       <span>Step 1: Download the pairing CSV from the workshop page</span>
-      <img src={pairingCsvImg} alt='Pairing CSV Image' />
+      <img alt='Pairing CSV' src={pairingCsvImg} />
       <span>And process the CSV file here</span>
       <CsvFileDropzone/>
     </div>
