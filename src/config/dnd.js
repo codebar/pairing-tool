@@ -1,4 +1,4 @@
 export const DraggableType = {
-  STUDENT: 'STUDENT',
-  COACH: 'COACH'
+  STUDENT: 'Student',
+  COACH: 'Coach'
 }
