@@ -1,0 +1,25 @@
+@mixin LanguageButton($color) {
+  &.Inactive {
+    color: $color;
+    background-color: transparent;
+    &:hover{
+      background-color: transparent;
+    }
+  }
+  &.Active {
+    color: white;
+    background-color: $color;
+    &:hover{
+      background-color: $color;
+    }
+  }
+}
+
+.HTMLButton {@include LanguageButton(#DC4B26)}
+.CSSButton{@include LanguageButton(#026DB3)}
+.JSButton{@include LanguageButton(#E8A22A)}
+.PythonButton{@include LanguageButton(#F8D248)}
+.RubyButton{@include LanguageButton(#A21401)}
+.SQLButton{@include LanguageButton(#30638B)}
+.JavaButton{@include LanguageButton(#E52B29)}
+.OtherButton{@include LanguageButton(#000000)}

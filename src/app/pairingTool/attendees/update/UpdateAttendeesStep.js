@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {addAttendee, goToPairingStep, selectCoaches, selectStudents} from '../attendeesSlice'
-import {AttendeesList} from './AttendeeList'
+import {AttendeeCard} from './AttendeeCard'
 import Button from '@material-ui/core/Button'
 import SkipNextIcon from '@material-ui/icons/SkipNext'
 import TextField from '@material-ui/core/TextField'
@@ -49,7 +49,7 @@ export const UpdateAttendeesStep = () => {
             <TextField label='Name' value={newStudent} onChange={e => setNewStudent(e.target.value)}/>
             <Button variant='outlined' color='primary' onClick={createNewStudent}>New Student</Button>
           </div>
-          <AttendeesList data={students} />
+          {students.slice().reverse().map(attendee => <AttendeeCard data={attendee}/>)}
         </div>
         <div className='Coaches'>
           <h3>Coaches</h3>
@@ -57,7 +57,7 @@ export const UpdateAttendeesStep = () => {
             <TextField label='Name' value={newCoach} onChange={e => setNewCoach(e.target.value)}/>
             <Button variant='outlined' color='primary' onClick={createNewCoach}>New Coach</Button>
           </div>
-          <AttendeesList data={coaches} />
+          {coaches.slice().reverse().map(attendee => <AttendeeCard data={attendee}/>)}
         </div>
       </div>
     </div>

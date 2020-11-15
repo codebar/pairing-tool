@@ -1,0 +1,9 @@
+@import '../../configuration/Languages.scss';
+
+.AttendeeCompactCard {
+  .CardContent {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+}

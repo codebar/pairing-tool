@@ -1,27 +1,16 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {toggleAttendance, toggleLanguage} from '../attendeesSlice'
 import {selectLanguages} from '../../../configuration/configurationSlice'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
+import {toggleAttendance, toggleLanguage} from '../attendeesSlice'
 import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople'
-
 import firstTimer from './firstTimer.jpg'
-import './AttendeeList.scss'
+import './AttendeeCard.scss'
 
-export const AttendeesList = ({data, compact}) => {
-  return (
-    <>
-      {data.slice().reverse().map(attendee => compact
-        ? <AttendeeCompactCard data={attendee}/>
-        : <AttendeeCard data={attendee}/>)}
-    </>
-  )
-}
-
-const AttendeeCard = ({data}) => {
+export const AttendeeCard = ({data}) => {
   const languages = useSelector(selectLanguages)
   const dispatch = useDispatch()
   return (
@@ -54,30 +43,6 @@ const AttendeeCard = ({data}) => {
           </Button>
         )}
       </CardActions>
-    </Card>
-  )
-}
-
-const AttendeeCompactCard = ({data}) => {
-  const languages = useSelector(selectLanguages)
-  const dispatch = useDispatch()
-  return (
-    <Card className='AttendeeCompactCard'>
-      <CardContent className='CardContent'>
-        <span className='CardName'>{data.name}</span>
-        <section>
-          {languages.map(language =>
-            <Button
-              className={`${language}Button ${data.languages.includes(language) ? 'Active' : 'Inactive'}`}
-              variant='contained'
-              color='primary'
-              onClick={() => dispatch(toggleLanguage({id: data.id, language}))}
-            >
-              {language}
-            </Button>
-          )}
-        </section>
-      </CardContent>
     </Card>
   )
 }
