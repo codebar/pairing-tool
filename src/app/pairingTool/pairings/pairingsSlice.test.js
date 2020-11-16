@@ -103,12 +103,14 @@ describe('The Pairings Slice', () => {
   })
 
   describe('Selecting pairing groups', () => {
+    const rootState = pairings => ({pairings, configuration: {languages: ['HTML', 'CSS', 'JS', 'Python', 'Ruby', 'SQL', 'Java', 'Other']}})
+
     it('excludes entries from group 0', () => {
       const state = {
         students: [{id: 1, name: 'A', languages: [], group: 0}],
         coaches: [{id: 10, name: 'X', languages: [], group: 0}]
       }
-      const groups = selectPairingGroups({pairings: state})
+      const groups = selectPairingGroups(rootState(state))
 
       expect(groups.find(group => group.id === 0)).toBe(undefined)
     })
@@ -117,10 +119,10 @@ describe('The Pairings Slice', () => {
         students: [{id: 1, name: 'A', languages: [], group: 1}],
         coaches: [{id: 10, name: 'X', languages: [], group: 2}]
       }
-      const groups = selectPairingGroups({pairings: state})
+      const groups = selectPairingGroups(rootState(state))
 
-      expect(groups).toContainEqual({id: 1, students: [{id: 1, name: 'A'}], coaches: []})
-      expect(groups).toContainEqual({id: 2, students: [], coaches: [{id: 10, name: 'X'}]})
+      expect(groups).toContainEqual({id: 1, students: [{id: 1, name: 'A'}], coaches: [], languages: []})
+      expect(groups).toContainEqual({id: 2, students: [], coaches: [{id: 10, name: 'X'}], languages: []})
     })
     it('collects multiple students/coaches in the same group', () => {
       const state = {
@@ -139,18 +141,42 @@ describe('The Pairings Slice', () => {
           {id: 15, name: 'Z', languages: [], group: 1},
         ]
       }
-      const groups = selectPairingGroups({pairings: state})
+      const groups = selectPairingGroups(rootState(state))
 
       expect(groups).toContainEqual({
         id: 1,
         students: [{id: 1, name: 'A'}, {id: 3, name: 'C'}, {id: 5, name: 'E'}],
-        coaches: [{id: 13, name: 'X'}, {id: 14, name: 'Y'}, {id: 15, name: 'Z'}]
+        coaches: [{id: 13, name: 'X'}, {id: 14, name: 'Y'}, {id: 15, name: 'Z'}],
+        languages: []
       })
       expect(groups).toContainEqual({
         id: 2,
         students: [{id: 2, name: 'B'}, {id: 4, name: 'D'}],
-        coaches: [{id: 11, name: 'V'}, {id: 12, name: 'W'}]
+        coaches: [{id: 11, name: 'V'}, {id: 12, name: 'W'}],
+        languages: []
       })
+    })
+    it('returns the group sorted by id in ascending order', () => {
+      const state = {
+        students: [
+          {id: 1, name: 'A', languages: [], group: 0},
+          {id: 2, name: 'B', languages: [], group: 2},
+          {id: 3, name: 'C', languages: [], group: 3},
+          {id: 4, name: 'D', languages: [], group: 0},
+          {id: 5, name: 'E', languages: [], group: 1},
+        ],
+        coaches: [
+          {id: 11, name: 'V', languages: [], group: 2},
+          {id: 12, name: 'W', languages: [], group: 0},
+          {id: 13, name: 'X', languages: [], group: 0},
+          {id: 14, name: 'Y', languages: [], group: 3},
+          {id: 15, name: 'Z', languages: [], group: 1},
+        ]
+      }
+      const groups = selectPairingGroups(rootState(state))
+      const groupIds = groups.map(x => x.id)
+      expect(groupIds[0] < groupIds[1]).toBeTruthy()
+      expect(groupIds[1] < groupIds[2]).toBeTruthy()
     })
     it('always add an empty group with the next available ID', () => {
       const state = {
@@ -165,9 +191,23 @@ describe('The Pairings Slice', () => {
           {id: 13, name: 'Z', languages: [], group: 1}
         ]
       }
-      const groups = selectPairingGroups({pairings: state})
+      const groups = selectPairingGroups(rootState(state))
 
-      expect(groups).toContainEqual({id: 4, students: [], coaches: []})
+      expect(groups).toContainEqual({id: 4, students: [], coaches: [], languages: []})
+    })
+    it('shows the languages in common that the coaches and students share', () => {
+      const state = {
+        students: [{id: 1, name: 'A', languages: ['HTML', 'CSS', 'JS', 'Python'], group: 1}],
+        coaches: [{id: 10, name: 'X', languages: ['JS', 'Python', 'Java', 'SQL'], group: 1}]
+      }
+      const groups = selectPairingGroups(rootState(state))
+
+      expect(groups).toContainEqual({
+        id: 1,
+        students: [{id: 1, name: 'A'}],
+        coaches: [{id: 10, name: 'X'}],
+        languages: ['JS', 'Python']
+      })
     })
   })
 })

@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
+import {selectLanguages} from '../../configuration/configurationSlice'
 
 export const initialState = {
   students: [],
@@ -41,48 +42,78 @@ export const {
 export const selectAvailableStudents = state => state.pairings.students.filter(student => student.group === 0)
 export const selectAvailableCoaches = state => state.pairings.coaches.filter(coach => coach.group === 0)
 export const selectPairingGroups = state =>
-  addEmptyGroup(
-    merge(
-      pairings(state.pairings, 'students'),
-      pairings(state.pairings, 'coaches')
+  sortByIdAscending(
+    calculateCommonLanguages(
+      state.pairings,
+      selectLanguages(state),
+      addEmptyGroup(
+        mergePairingGroups(
+          organizePairingGroups(state.pairings, 'students'),
+          organizePairingGroups(state.pairings, 'coaches')
+        )
+      )
     )
   )
+
+const sortByIdAscending = groups => groups.sort((a, b) => a.id > b.id ? 1 : -1)
+
+const calculateCommonLanguages = (pairingsState, allLanguages, groups) => {
+  const findLanguagesByRole = (group, key) => group[key]
+    .map(x => pairingsState[key].find(y => y.id === x.id).languages || [])
+  return groups.map(group => {
+    const groupLanguages = findLanguagesByRole(group, 'students').concat(findLanguagesByRole(group, 'coaches'))
+    const sharedLanguages = groupLanguages.length > 0
+      ? allLanguages.reduce((acc, value) => groupLanguages.every(array => array.includes(value)) ? [...acc, value] : acc, [])
+      : []
+    return {...group, languages: sharedLanguages}
+  })
+}
 
 const addEmptyGroup = groups => {
   const nextId = groups
     .map(x => x.id)
     .reduce((acc, id) => id > acc ? id : acc, 0) + 1
-  return [...groups, {id: nextId, students: [], coaches: []}]
+  return [...groups, {id: nextId, students: [], coaches: [], languages: []}]
 }
 
-const merge = (pairings1, pairings2) => pairings1
+const mergePairingGroups = (pairings1, pairings2) => pairings1
   .concat(pairings2)
   .reduce((acc, group) => {
     const index = acc.findIndex(x => x.id === group.id)
     return index > -1
-      ? [
-        ...dropIndex(acc, index),
+      ? [...dropIndex(acc, index),
         {
           id: acc[index].id,
           students: [...acc[index].students, ...group.students],
-          coaches: [...acc[index].coaches, ...group.coaches]
+          coaches: [...acc[index].coaches, ...group.coaches],
+          languages: []
         }
       ]
       : [...acc, group]
   }, [])
 
-const pairings = (collection, key) => collection[key]
+const organizePairingGroups = (collection, key) => collection[key]
   .filter(person => person.group > 0)
   .reduce((acc, person) => {
     const newPerson = {id: person.id, name: person.name}
     const index = acc.findIndex(group => group.id === person.group)
     if (index > -1) {
       const group = acc[index]
-      const newGroup = {id: group.id, students: group.students || [], coaches: group.coaches || []}
+      const newGroup = {
+        id: group.id,
+        students: group.students || [],
+        coaches: group.coaches || [],
+        languages: group.languages || []
+      }
       newGroup[key] = [...group[key], newPerson]
       return [...dropIndex(acc, index), newGroup]
     } else {
-      const newGroup = {id: person.group, students: [], coaches: []}
+      const newGroup = {
+        id: person.group,
+        students: [],
+        coaches: [],
+        languages: []
+      }
       newGroup[key] = [newPerson]
       return [...acc, newGroup]
     }

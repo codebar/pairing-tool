@@ -21,7 +21,6 @@
     padding: 1%;
 
     .EmptyDropzone {
-      line-height: 50px;
       padding: 10px;
       color: #757575;
     }
@@ -43,16 +42,23 @@
         border: 1px dashed #4e555b;
         border-radius: 10px;
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
+        margin-bottom: 10px;
 
         & > * {
-          width: 50%;
+          width: 45%;
           overflow: hidden;
+        }
+        .PairingGroupLanguages {
+          width: 100%;
+          padding: 10px;
         }
 
         .AttendeeName {
           background-color: whitesmoke;
-          border: 1px solid black;
+          border: 1px solid #a0a0a0;
+          border-radius: 5px;
+          box-shadow: 2px 2px 1px 1px #a5a5a5;
           padding: 5px;
           margin-bottom: 5px;
           overflow: hidden;

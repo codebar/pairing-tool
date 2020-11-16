@@ -69,6 +69,17 @@ export const PairingsStep = () => {
                   )}
                   {group.coaches.length === 0 && <span className='EmptyDropzone'>Drag a coach here</span>}
                 </CoachDropzone>
+                <div className='PairingGroupLanguages'>
+                  {group.languages.map(language =>
+                    <Button
+                      className={`${language}Button Active`}
+                      variant='contained'
+                      color='primary'
+                    >
+                      {language}
+                    </Button>
+                  )}
+                </div>
               </div>
             )}
           </div>
