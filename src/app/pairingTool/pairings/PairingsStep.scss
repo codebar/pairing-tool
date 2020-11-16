@@ -20,30 +20,15 @@
     flex-flow: row nowrap;
     padding: 1%;
 
-    .Attendees,
-    .Pairs {
+    .Attendees {
       display: flex;
       flex-direction: column;
-    }
-    .Attendees {
       width: 60%;
-      .AvailableStudent {
-        border: 1px solid pink;
-        cursor: move;
-        &.Dragging {
-          background-color: lightpink;
-        }
-      }
-      .AvailableCoach {
-        border: 1px solid orange;
-        cursor: move;
-        &.Dragging {
-          background-color: lightsalmon;
-        }
-      }
     }
 
     .Pairs {
+      display: flex;
+      flex-direction: column;
       width: 40%;
       padding: 20px;
       .PairingGroup {
@@ -52,14 +37,6 @@
         border-radius: 10px;
         display: flex;
         flex-flow: row nowrap;
-        .StudentsDrop,
-        .CoachesDrop {
-          min-height: 60px;
-          width: 50%;
-          border: 1px dashed #4e555b;
-          border-radius: 10px;
-          background-color: #bac8d2;
-        }
       }
     }
   }

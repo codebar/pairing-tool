@@ -1,0 +1,14 @@
+.AvailableStudent {
+  border: 1px solid pink;
+  cursor: move;
+  &.Dragging {
+    background-color: lightpink;
+  }
+}
+.AvailableCoach {
+  border: 1px solid orange;
+  cursor: move;
+  &.Dragging {
+    background-color: lightsalmon;
+  }
+}

@@ -2,20 +2,16 @@ import React from 'react'
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 import {useDispatch, useSelector} from 'react-redux'
-import {useDrag, useDrop} from 'react-dnd'
 import {DraggableType} from '../../../config/dnd'
 import {reviewAttendeesAgain} from '../attendees/attendeesSlice'
-import {
-  moveStudentToGroup,
-  moveCoachToGroup,
-  selectAvailableCoaches,
-  selectAvailableStudents,
-  selectPairingGroups
-} from './pairingsSlice'
+import {selectAvailableCoaches, selectAvailableStudents, selectPairingGroups} from './pairingsSlice'
+import {AttendeeCompactCard} from './dragAndDrop/AttendeeCompactCard'
+import {DraggableName} from './dragAndDrop/DraggableName'
+import {StudentDropzone} from './dragAndDrop/StudentDropzone'
+import {CoachDropzone} from './dragAndDrop/CoachDropzone'
 import Button from '@material-ui/core/Button'
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
 import './PairingsStep.scss'
-import {AttendeeCompactCard} from './AttendeeCompactCard'
 
 export const PairingsStep = () => {
   const availableStudents = useSelector(selectAvailableStudents)
@@ -27,7 +23,7 @@ export const PairingsStep = () => {
     <DndProvider backend={HTML5Backend}>
       <div className='PairingsStep'>
         <div className='PairingsStepHeader'>
-          <span>Step 3: Let the pairings begin!!!</span>
+          <span>Step 3: Start organising the pairs by dragging the names of the participants to groups</span>
           <Button
             className='PairingsStepBack'
             variant='contained'
@@ -43,12 +39,12 @@ export const PairingsStep = () => {
           <div className='Attendees'>
             <h4>Students</h4>
             <StudentDropzone groupId={0}>
-              {availableStudents.map(student => <DraggableCard attendee={student} type={DraggableType.STUDENT}/>)}
+              {availableStudents.map(student => <AttendeeCompactCard data={student} type={DraggableType.STUDENT}/>)}
               {availableStudents.length === 0 && <span>Drag a student here</span>}
             </StudentDropzone>
             <h4>Coaches</h4>
             <CoachDropzone groupId={0}>
-              {availableCoaches.map(coach => <DraggableCard attendee={coach} type={DraggableType.COACH}/>)}
+              {availableCoaches.map(coach => <AttendeeCompactCard data={coach} type={DraggableType.COACH}/>)}
               {availableCoaches.length === 0 && <span>Drag a coach here</span>}
             </CoachDropzone>
           </div>
@@ -73,53 +69,4 @@ export const PairingsStep = () => {
       </div>
     </DndProvider>
   )
-}
-
-
-const DraggableCard = ({attendee, type}) => {
-  const [{isDragging}, drag] = useDrag({
-    item: {type, id: attendee.id},
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging()
-    })
-  })
-  return (
-    <div ref={drag} className={`Available${type}${isDragging && ' Dragging'}`}>
-      <AttendeeCompactCard data={attendee}/>
-    </div>
-  )
-}
-
-const DraggableName = ({attendee, type}) => {
-  const [{isDragging}, drag] = useDrag({
-    item: {type, id: attendee.id},
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging()
-    })
-  })
-  return (
-    <div ref={drag} className={`Available${type}${isDragging && ' Dragging'}`}>
-      <span>{attendee.name}</span>
-    </div>
-  )
-}
-
-const StudentDropzone = ({groupId, children}) => {
-  const dispatch = useDispatch()
-  const [{isOver}, drop] = useDrop({
-    accept: DraggableType.STUDENT,
-    drop: item => dispatch(moveStudentToGroup({studentId: item.id, groupId})),
-    collect: monitor => ({isOver: !!monitor.isOver()}),
-  })
-  return (<div ref={drop} className='StudentsDrop'>{children}</div>)
-}
-
-const CoachDropzone = ({groupId, children}) => {
-  const dispatch = useDispatch()
-  const [{isOver}, drop] = useDrop({
-    accept: DraggableType.COACH,
-    drop: item => dispatch(moveCoachToGroup({coachId: item.id, groupId})),
-    collect: monitor => ({isOver: !!monitor.isOver()}),
-  })
-  return (<div ref={drop} className='CoachesDrop'>{children}</div>)
 }
