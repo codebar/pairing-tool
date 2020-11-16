@@ -42,9 +42,15 @@ export const PairingsStep = () => {
 
           <div className='Attendees'>
             <h4>Students</h4>
-            {availableStudents.map(student => <DraggableCard attendee={student} type={DraggableType.STUDENT}/>)}
+            <StudentDropzone groupId={0}>
+              {availableStudents.map(student => <DraggableCard attendee={student} type={DraggableType.STUDENT}/>)}
+              {availableStudents.length === 0 && <span>Drag a student here</span>}
+            </StudentDropzone>
             <h4>Coaches</h4>
-            {availableCoaches.map(coach => <DraggableCard attendee={coach} type={DraggableType.COACH}/>)}
+            <CoachDropzone groupId={0}>
+              {availableCoaches.map(coach => <DraggableCard attendee={coach} type={DraggableType.COACH}/>)}
+              {availableCoaches.length === 0 && <span>Drag a coach here</span>}
+            </CoachDropzone>
           </div>
 
           <div className='Pairs'>
