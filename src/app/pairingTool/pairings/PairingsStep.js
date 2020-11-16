@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 import {useDispatch, useSelector} from 'react-redux'
@@ -6,8 +6,8 @@ import {useDrag, useDrop} from 'react-dnd'
 import {DraggableType} from '../../../config/dnd'
 import {reviewAttendeesAgain} from '../attendees/attendeesSlice'
 import {
-  dragCoachToGroup,
-  dragStudentToGroup,
+  moveStudentToGroup,
+  moveCoachToGroup,
   selectAvailableCoaches,
   selectAvailableStudents,
   selectPairingGroups
@@ -41,16 +41,16 @@ export const PairingsStep = () => {
         <div className='PairingsStepContent'>
           <div className='Attendees'>
             <h4>Students</h4>
-            {availableStudents.map(student => <DraggableCard attendee={student}/>)}
+            {availableStudents.map(student => <DraggableCard attendee={student} type={DraggableType.STUDENT}/>)}
             <h4>Coaches</h4>
-            {availableCoaches.map(coach => <DraggableCard attendee={coach} />)}
+            {availableCoaches.map(coach => <DraggableCard attendee={coach} type={DraggableType.COACH}/>)}
           </div>
           <div className='Pairs'>
             <h4>Pairs</h4>
             {groups.map(group =>
               <div className='PairingGroup'>
-                <StudentDrop groupId={group.id}/>
-                <CoachDrop groupId={group.id}/>
+                <StudentDrop groupId={group.id} students={group.students}/>
+                <CoachDrop groupId={group.id} coaches={group.coaches}/>
               </div>
             )}
           </div>
@@ -61,51 +61,63 @@ export const PairingsStep = () => {
 }
 
 
-const DraggableCard = ({attendee}) => {
+const DraggableCard = ({attendee, type}) => {
   const [{isDragging}, drag] = useDrag({
-    item: { type: attendee.role, id: attendee.id },
+    item: {type, id: attendee.id},
     collect: monitor => ({
       isDragging: !!monitor.isDragging()
     })
   })
   return (
-    <div ref={drag} className={`Available${attendee.role}${isDragging && ' Dragging'}`}>
+    <div ref={drag} className={`Available${type}${isDragging && ' Dragging'}`}>
       <AttendeeCompactCard data={attendee}/>
     </div>
   )
 }
 
-const StudentDrop = ({groupId}) => {
+const DraggableName = ({attendee, type}) => {
+  const [{isDragging}, drag] = useDrag({
+    item: {type, id: attendee.id},
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging()
+    })
+  })
+  return (
+    <div ref={drag} className={`Available${type}${isDragging && ' Dragging'}`}>
+      <span>{attendee.name}</span>
+    </div>
+  )
+}
+
+const StudentDrop = ({groupId, students = []}) => {
   const dispatch = useDispatch()
-  const students = useSelector(state => state.pairings.groups.find(group => group.id === groupId).students)
-  const [{ isOver }, drop] = useDrop({
+    const [{isOver}, drop] = useDrop({
     accept: DraggableType.STUDENT,
-    drop: item => dispatch(dragStudentToGroup(item.id, groupId)),
+    drop: item => dispatch(moveStudentToGroup({studentId: item.id, groupId})),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
   })
   return (
     <div ref={drop} className='StudentsDrop'>
-      {students.length > 0 && students.map(student => <div>{student.name}</div>)}
+      {students.length > 0 && students.map(student => <DraggableName attendee={student} type={DraggableType.STUDENT}/>)}
       {students.length <= 0 && <span>Drag a student here</span>}
     </div>
   )
 }
 
-const CoachDrop = ({groupId}) => {
+const CoachDrop = ({groupId, coaches = []}) => {
   const dispatch = useDispatch()
-  const coaches = useSelector(state => state.pairings.groups.find(group => group.id === groupId).coaches)
-  const [{ isOver }, drop] = useDrop({
+  const [{isOver}, drop] = useDrop({
     accept: DraggableType.COACH,
-    drop: item => dispatch(dragCoachToGroup(item.id, groupId)),
+    drop: item => dispatch(moveCoachToGroup({coachId: item.id, groupId})),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
   })
   return (
     <div ref={drop} className='CoachesDrop'>
-      {coaches.length > 0 && coaches.map(coach => <div>{coach.name}</div>)}
+      {coaches.length > 0 && coaches.map(coach => <DraggableName attendee={coach} type={DraggableType.COACH}/>)}
       {coaches.length <= 0 && <span>Drag a coach here</span>}
     </div>
   )
