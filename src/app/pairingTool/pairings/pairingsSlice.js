@@ -40,10 +40,13 @@ export const {
 
 export const selectAvailableStudents = state => state.pairings.students.filter(student => student.group === 0)
 export const selectAvailableCoaches = state => state.pairings.coaches.filter(coach => coach.group === 0)
-export const selectPairingGroups = state => addEmptyGroup(merge(
-  pairings(state.pairings, 'students'),
-  pairings(state.pairings, 'coaches')
-))
+export const selectPairingGroups = state =>
+  addEmptyGroup(
+    merge(
+      pairings(state.pairings, 'students'),
+      pairings(state.pairings, 'coaches')
+    )
+  )
 
 const addEmptyGroup = groups => {
   const nextId = groups

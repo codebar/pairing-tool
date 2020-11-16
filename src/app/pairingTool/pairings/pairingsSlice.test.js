@@ -5,7 +5,7 @@ import {
   moveStudentToGroup,
   pairingsReducer,
   selectAvailableCoaches,
-  selectAvailableStudents, selectNextPairingGroupId,
+  selectAvailableStudents,
   selectPairingGroups
 } from './pairingsSlice'
 
