@@ -45,16 +45,16 @@ export const UpdateAttendeesStep = () => {
       <div className='UpdateAttendeesStepContent'>
         <div className='Students'>
           <h3>Students</h3>
-          <div>
-            <TextField label='Name' value={newStudent} onChange={e => setNewStudent(e.target.value)}/>
+          <div className='AddNew'>
+            <TextField className='AddNewName' label='Name' value={newStudent} onChange={e => setNewStudent(e.target.value)} fullWidth/>
             <Button variant='outlined' color='primary' onClick={createNewStudent}>New Student</Button>
           </div>
           {students.slice().reverse().map(attendee => <AttendeeCard data={attendee}/>)}
         </div>
         <div className='Coaches'>
           <h3>Coaches</h3>
-          <div>
-            <TextField label='Name' value={newCoach} onChange={e => setNewCoach(e.target.value)}/>
+          <div className='AddNew'>
+            <TextField className='AddNewName' label='Name' value={newCoach} onChange={e => setNewCoach(e.target.value)} fullWidth/>
             <Button variant='outlined' color='primary' onClick={createNewCoach}>New Coach</Button>
           </div>
           {coaches.slice().reverse().map(attendee => <AttendeeCard data={attendee}/>)}

@@ -23,6 +23,16 @@
     .Students,
     .Coaches {
       width: 50%;
+      .AddNew {
+        display:flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+        width: 90%;
+        margin: 0 auto;
+        .AddNewName {
+          margin: 0 30px;
+        }
+      }
     }
   }
 }
