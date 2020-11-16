@@ -39,21 +39,30 @@ export const PairingsStep = () => {
           </Button>
         </div>
         <div className='PairingsStepContent'>
+
           <div className='Attendees'>
             <h4>Students</h4>
             {availableStudents.map(student => <DraggableCard attendee={student} type={DraggableType.STUDENT}/>)}
             <h4>Coaches</h4>
             {availableCoaches.map(coach => <DraggableCard attendee={coach} type={DraggableType.COACH}/>)}
           </div>
+
           <div className='Pairs'>
             <h4>Pairs</h4>
             {groups.map(group =>
               <div className='PairingGroup'>
-                <StudentDrop groupId={group.id} students={group.students}/>
-                <CoachDrop groupId={group.id} coaches={group.coaches}/>
+                <StudentDropzone groupId={group.id}>
+                  {group.students.length > 0 && group.students.map(student => <DraggableName attendee={student} type={DraggableType.STUDENT}/>)}
+                  {group.students.length <= 0 && <span>Drag a student here</span>}
+                </StudentDropzone>
+                <CoachDropzone groupId={group.id}>
+                  {group.coaches.length > 0 && group.coaches.map(coach => <DraggableName attendee={coach} type={DraggableType.COACH}/>)}
+                  {group.coaches.length <= 0 && <span>Drag a coach here</span>}
+                </CoachDropzone>
               </div>
             )}
           </div>
+
         </div>
       </div>
     </DndProvider>
@@ -89,36 +98,22 @@ const DraggableName = ({attendee, type}) => {
   )
 }
 
-const StudentDrop = ({groupId, students = []}) => {
+const StudentDropzone = ({groupId, children}) => {
   const dispatch = useDispatch()
-    const [{isOver}, drop] = useDrop({
+  const [{isOver}, drop] = useDrop({
     accept: DraggableType.STUDENT,
     drop: item => dispatch(moveStudentToGroup({studentId: item.id, groupId})),
-    collect: monitor => ({
-      isOver: !!monitor.isOver(),
-    }),
+    collect: monitor => ({isOver: !!monitor.isOver()}),
   })
-  return (
-    <div ref={drop} className='StudentsDrop'>
-      {students.length > 0 && students.map(student => <DraggableName attendee={student} type={DraggableType.STUDENT}/>)}
-      {students.length <= 0 && <span>Drag a student here</span>}
-    </div>
-  )
+  return (<div ref={drop} className='StudentsDrop'>{children}</div>)
 }
 
-const CoachDrop = ({groupId, coaches = []}) => {
+const CoachDropzone = ({groupId, children}) => {
   const dispatch = useDispatch()
   const [{isOver}, drop] = useDrop({
     accept: DraggableType.COACH,
     drop: item => dispatch(moveCoachToGroup({coachId: item.id, groupId})),
-    collect: monitor => ({
-      isOver: !!monitor.isOver(),
-    }),
+    collect: monitor => ({isOver: !!monitor.isOver()}),
   })
-  return (
-    <div ref={drop} className='CoachesDrop'>
-      {coaches.length > 0 && coaches.map(coach => <DraggableName attendee={coach} type={DraggableType.COACH}/>)}
-      {coaches.length <= 0 && <span>Drag a coach here</span>}
-    </div>
-  )
+  return (<div ref={drop} className='CoachesDrop'>{children}</div>)
 }
