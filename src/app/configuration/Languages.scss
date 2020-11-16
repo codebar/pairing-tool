@@ -1,19 +1,4 @@
-@mixin LanguageButton($color) {
-  &.Inactive {
-    color: $color;
-    background-color: transparent;
-    &:hover{
-      background-color: transparent;
-    }
-  }
-  &.Active {
-    color: white;
-    background-color: $color;
-    &:hover{
-      background-color: $color;
-    }
-  }
-}
+@import "../Mixins.scss";
 
 .HTMLButton {@include LanguageButton(#DC4B26)}
 .CSSButton{@include LanguageButton(#026DB3)}

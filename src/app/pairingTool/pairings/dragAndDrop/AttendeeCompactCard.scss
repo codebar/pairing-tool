@@ -1,9 +1,12 @@
 @import '../../../configuration/Languages';
 
 .AttendeeCompactCard {
+  margin-bottom: 5px;
+
   .CardContent {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    align-items: center;
   }
 }

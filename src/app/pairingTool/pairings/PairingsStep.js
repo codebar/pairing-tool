@@ -40,12 +40,12 @@ export const PairingsStep = () => {
             <h4>Students</h4>
             <StudentDropzone groupId={0}>
               {availableStudents.map(student => <AttendeeCompactCard data={student} type={DraggableType.STUDENT}/>)}
-              {availableStudents.length === 0 && <span>Drag a student here</span>}
+              {availableStudents.length === 0 && <span className='EmptyDropzone'>Drag a student here</span>}
             </StudentDropzone>
             <h4>Coaches</h4>
             <CoachDropzone groupId={0}>
               {availableCoaches.map(coach => <AttendeeCompactCard data={coach} type={DraggableType.COACH}/>)}
-              {availableCoaches.length === 0 && <span>Drag a coach here</span>}
+              {availableCoaches.length === 0 && <span className='EmptyDropzone'>Drag a coach here</span>}
             </CoachDropzone>
           </div>
 
@@ -54,12 +54,20 @@ export const PairingsStep = () => {
             {groups.map(group =>
               <div className='PairingGroup'>
                 <StudentDropzone groupId={group.id}>
-                  {group.students.length > 0 && group.students.map(student => <DraggableName attendee={student} type={DraggableType.STUDENT}/>)}
-                  {group.students.length <= 0 && <span>Drag a student here</span>}
+                  {group.students.map(student =>
+                    <div className='AttendeeName'>
+                      <DraggableName attendee={student} type={DraggableType.STUDENT}/>
+                    </div>
+                  )}
+                  {group.students.length === 0 && <span className='EmptyDropzone'>Drag a student here</span>}
                 </StudentDropzone>
                 <CoachDropzone groupId={group.id}>
-                  {group.coaches.length > 0 && group.coaches.map(coach => <DraggableName attendee={coach} type={DraggableType.COACH}/>)}
-                  {group.coaches.length <= 0 && <span>Drag a coach here</span>}
+                  {group.coaches.map(coach =>
+                    <div className='AttendeeName'>
+                      <DraggableName attendee={coach} type={DraggableType.COACH}/>
+                    </div>
+                  )}
+                  {group.coaches.length === 0 && <span className='EmptyDropzone'>Drag a coach here</span>}
                 </CoachDropzone>
               </div>
             )}

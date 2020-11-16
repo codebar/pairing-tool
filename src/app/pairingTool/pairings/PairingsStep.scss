@@ -20,6 +20,12 @@
     flex-flow: row nowrap;
     padding: 1%;
 
+    .EmptyDropzone {
+      line-height: 50px;
+      padding: 10px;
+      color: #757575;
+    }
+
     .Attendees {
       display: flex;
       flex-direction: column;
@@ -31,12 +37,27 @@
       flex-direction: column;
       width: 40%;
       padding: 20px;
+
       .PairingGroup {
         padding: 10px;
         border: 1px dashed #4e555b;
         border-radius: 10px;
         display: flex;
         flex-flow: row nowrap;
+
+        & > * {
+          width: 50%;
+          overflow: hidden;
+        }
+
+        .AttendeeName {
+          background-color: whitesmoke;
+          border: 1px solid black;
+          padding: 5px;
+          margin-bottom: 5px;
+          overflow: hidden;
+        }
+
       }
     }
   }
