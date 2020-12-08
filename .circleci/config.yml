@@ -1,0 +1,58 @@
+
+version: 2.1
+
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+      - run_tests:
+          filters:
+            branches:
+              only: main
+      - publish_github_page:
+          filters:
+            branches:
+              only: main
+          requires:
+            - run_tests
+
+jobs:
+  run_tests:
+    working_directory: ~/saljuama.github.io
+    docker:
+      - image: circleci/node:14.15.1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn test
+
+  publish_github_page:
+    working_directory: ~/saljuama.github.io
+    docker:
+      - image: circleci/node:14.15.1
+    steps:
+      - setup_github_write_access
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: yarn deploy
+
+commands:
+  setup_github_write_access:
+    description: "Setup Github write access"
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "ec:17:24:93:a2:07:f7:25:90:4f:af:26:c6:25:1a:c3"
+      - run: git config --global user.email "circleci@saljuama.dev"
+      - run: git config --global user.name "saljuama (Circle CI)"
