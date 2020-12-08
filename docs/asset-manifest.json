@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/codebar-pairing-tool/static/css/main.16485440.chunk.css",
+    "main.js": "/codebar-pairing-tool/static/js/main.2a8c976e.chunk.js",
+    "main.js.map": "/codebar-pairing-tool/static/js/main.2a8c976e.chunk.js.map",
+    "runtime-main.js": "/codebar-pairing-tool/static/js/runtime-main.c29eab98.js",
+    "runtime-main.js.map": "/codebar-pairing-tool/static/js/runtime-main.c29eab98.js.map",
+    "static/js/2.e57ac0c8.chunk.js": "/codebar-pairing-tool/static/js/2.e57ac0c8.chunk.js",
+    "static/js/2.e57ac0c8.chunk.js.map": "/codebar-pairing-tool/static/js/2.e57ac0c8.chunk.js.map",
+    "index.html": "/codebar-pairing-tool/index.html",
+    "static/css/main.16485440.chunk.css.map": "/codebar-pairing-tool/static/css/main.16485440.chunk.css.map",
+    "static/js/2.e57ac0c8.chunk.js.LICENSE.txt": "/codebar-pairing-tool/static/js/2.e57ac0c8.chunk.js.LICENSE.txt",
+    "static/media/firstTimer.ada51372.jpg": "/codebar-pairing-tool/static/media/firstTimer.ada51372.jpg",
+    "static/media/pairingCsvImg.d0d3fc48.png": "/codebar-pairing-tool/static/media/pairingCsvImg.d0d3fc48.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c29eab98.js",
+    "static/js/2.e57ac0c8.chunk.js",
+    "static/css/main.16485440.chunk.css",
+    "static/js/main.2a8c976e.chunk.js"
+  ]
+}
