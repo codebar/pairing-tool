@@ -53,6 +53,6 @@ commands:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "ec:17:24:93:a2:07:f7:25:90:4f:af:26:c6:25:1a:c3"
+            - "08:05:c7:18:e2:e6:83:8e:f6:26:37:b9:3b:f3:e4:8b"
       - run: git config --global user.email "circleci@saljuama.dev"
       - run: git config --global user.name "saljuama (Circle CI)"
