@@ -3,6 +3,10 @@
   border: 5px dashed #c8c8c8;
   border-radius: 10px;
   padding: 10px;
+
+  &.IsOver {
+    background-color: aquamarine;
+  }
 }
 
 @mixin LanguageButton($color) {

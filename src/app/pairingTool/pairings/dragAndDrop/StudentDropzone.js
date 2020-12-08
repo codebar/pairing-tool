@@ -12,5 +12,9 @@ export const StudentDropzone = ({groupId, children}) => {
     drop: item => dispatch(moveStudentToGroup({studentId: item.id, groupId})),
     collect: monitor => ({isOver: !!monitor.isOver()}),
   })
-  return (<div ref={drop} className='StudentDropzone'>{children}</div>)
+  return (
+      <div ref={drop} className={`StudentDropzone ${isOver && 'IsOver'}`}>
+        {children}
+      </div>
+  )
 }
