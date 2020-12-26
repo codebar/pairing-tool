@@ -57,6 +57,7 @@ export const {
 } = attendeesSlice.actions
 
 // SELECTORS
+export const selectAttendees = state => state.attendees.list
 export const selectStudents = state => state.attendees.list.filter(x => x.role === 'Student')
 export const selectCoaches = state => state.attendees.list.filter(x => x.role === 'Coach')
 export const selectPresentStudents = state => selectStudents(state).filter(x => x.attendance === true)

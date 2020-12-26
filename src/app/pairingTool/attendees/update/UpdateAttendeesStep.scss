@@ -20,11 +20,28 @@
     flex-flow: row nowrap;
     padding: 1%;
 
+    .AttendeeDisplayName {
+      text-align: left;
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: 1px solid #333333;
+      cursor: default;
+
+      &:hover {
+        background-color: #9fc5c9;
+      }
+
+      &.SelectedToEdit {
+        background-color: #4e96d0;
+      }
+    }
+
     .Students,
     .Coaches {
       width: 50%;
+
       .AddNew {
-        display:flex;
+        display: flex;
         flex-flow: row nowrap;
         justify-content: space-around;
         width: 90%;
