@@ -9,7 +9,8 @@ const togglesSlice = createSlice({
     initialState,
     reducers: {
         overrideToggle: (state, action) => {
-            state[action.payload.toggle] = action.payload.value === 'true'
+            if (action.payload.toggle in state)
+                state[action.payload.toggle] = action.payload.value === 'true'
         }
     }
 })
