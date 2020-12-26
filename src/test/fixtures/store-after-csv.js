@@ -1,4 +1,5 @@
-export const storeState = {
+export const storeAfterCsv = {
+  toggles: {updateAttendeesNewScreen: false},
   configuration: {languages: ['HTML', 'CSS', 'JS', 'Python', 'Ruby', 'SQL', 'Java', 'Other']},
   attendees: {
     list: [
