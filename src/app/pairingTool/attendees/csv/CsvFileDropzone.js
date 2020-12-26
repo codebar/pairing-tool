@@ -44,12 +44,12 @@ export const CsvFileDropzone = () => {
     onDrop, accept: 'text/csv', maxFiles: 1
   })
   const style = useMemo(() => ({
-      ...baseStyle,
-      ...(isDragActive ? activeStyle : {}),
-      ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {})
-    }),
-    [isDragActive, isDragReject, isDragAccept]
+    ...baseStyle,
+    ...(isDragActive ? activeStyle : {}),
+    ...(isDragAccept ? acceptStyle : {}),
+    ...(isDragReject ? rejectStyle : {})
+  }),
+  [isDragActive, isDragReject, isDragAccept]
   )
 
   return (

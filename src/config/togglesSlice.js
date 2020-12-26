@@ -1,18 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 export const initialState = {
-    updateAttendeesNewScreen: false
+  updateAttendeesNewScreen: false
 }
 
 const togglesSlice = createSlice({
-    name: 'toggles',
-    initialState,
-    reducers: {
-        overrideToggle: (state, action) => {
-            if (action.payload.toggle in state)
-                state[action.payload.toggle] = action.payload.value === 'true'
-        }
+  name: 'toggles',
+  initialState,
+  reducers: {
+    overrideToggle: (state, action) => {
+      if (action.payload.toggle in state)
+        state[action.payload.toggle] = action.payload.value === 'true'
     }
+  }
 })
 
 export const togglesReducer = togglesSlice.reducer

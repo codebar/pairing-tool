@@ -4,7 +4,7 @@ import {createStore, storeInitialState} from '../config/store'
 import {render} from '@testing-library/react'
 
 export const testStore = (initialState = storeInitialState) =>
-    createStore(initialState)
+  createStore(initialState)
 
 export const renderComponent = (component, store = testStore()) =>
-    render(<Provider store={store}>{component}</Provider>)
+  render(<Provider store={store}>{component}</Provider>)

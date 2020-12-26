@@ -35,16 +35,16 @@ const parse = (csv, languages) => {
   const data = Papa.parse(csv, {header: true}).data
   const initialValue = []
   return data.reduce((acc, entry) => {
-      switch (entry.Role) {
-        case 'Student':
-          return [...acc, parseStudent(entry, languages)]
-        case 'Coach':
-          return [...acc, parseCoach(entry, languages)]
-        default:
-          return acc
-      }
-    },
-    initialValue
+    switch (entry.Role) {
+    case 'Student':
+      return [...acc, parseStudent(entry, languages)]
+    case 'Coach':
+      return [...acc, parseCoach(entry, languages)]
+    default:
+      return acc
+    }
+  },
+  initialValue
   )
 }
 

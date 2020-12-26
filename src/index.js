@@ -10,15 +10,15 @@ import './index.scss'
 const reduxStore = createStore()
 
 new URLSearchParams(window.location.search)
-    .forEach((value, key) => reduxStore.dispatch(overrideToggle({toggle: key, value})))
+  .forEach((value, key) => reduxStore.dispatch(overrideToggle({toggle: key, value})))
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={reduxStore}>
-            <App/>
-        </Provider>
-    </React.StrictMode>,
-    document.getElementById('root')
+  <React.StrictMode>
+    <Provider store={reduxStore}>
+      <App/>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
 )
 
 // If you want your app to work offline and load faster, you can change
