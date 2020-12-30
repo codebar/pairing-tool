@@ -1,12 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {
-  addAttendee,
-  goToPairingStep,
-  selectAttendees,
-  selectCoaches,
-  selectStudents
-} from '../attendeesSlice'
+import {addAttendee, goToPairingStep, selectAttendees, selectCoaches, selectStudents} from '../attendeesSlice'
 import {featureEnabled} from '../../../../config/togglesSlice'
 import {AttendeeCard} from './AttendeeCard'
 import Button from '@material-ui/core/Button'
@@ -15,6 +9,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import SkipNextIcon from '@material-ui/icons/SkipNext'
 import TextField from '@material-ui/core/TextField'
 import './UpdateAttendeesStep.scss'
+import {AttendeeEditor} from './editor/AttendeeEditor'
 
 export const UpdateAttendeesStep = () => {
   const newScreenEnabled = useSelector(featureEnabled('updateAttendeesNewScreen'))
@@ -97,14 +92,6 @@ export const UpdateAttendeesStep = () => {
         </Button>
       </div>
       {newScreenEnabled ? newScreen : currentScreen}
-    </div>
-  )
-}
-
-export const AttendeeEditor = ({attendee}) => {
-  return (
-    <div className='AttendeeEditor' data-test-id='attendee-edit-form'>
-      <TextField label='Name' value={attendee.name} onChange={() => {}} data-test-id='attendee-edit-name-input' />
     </div>
   )
 }

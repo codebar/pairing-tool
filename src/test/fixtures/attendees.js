@@ -1,4 +1,26 @@
-export const storeAfterCsv = {
+export const student = {
+  id: 1,
+  attendance: false,
+  name: 'Darth Maul',
+  role: 'Student',
+  'new': false,
+  tutorial: 'JS: Beginning JavaScript',
+  notes: 'Good programming practice, interested in learning how to make code efficient',
+  languages: ['JS', 'Java']
+}
+
+export const coach = {
+  id: 2,
+  attendance: false,
+  name: 'Han Solo',
+  role: 'Coach',
+  'new': false,
+  skills: '',
+  notes: 'Junior developer, can help with HTML/CSS, JavaScript, React, Express, MongoDB',
+  languages: ['HTML', 'CSS', 'Java']
+}
+
+export const stateAfterParsingCsv = {
   toggles: {updateAttendeesNewScreen: false},
   configuration: {languages: ['HTML', 'CSS', 'JS', 'Python', 'Ruby', 'SQL', 'Java', 'Other']},
   attendees: {

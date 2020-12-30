@@ -1,16 +1,16 @@
 import {renderComponent, testStore} from '../../../../test/testUtils'
 import {screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import {storeAfterCsv} from '../../../../test/fixtures/store-after-csv'
+import {stateAfterParsingCsv} from '../../../../test/fixtures/attendees'
+import {overrideToggle} from '../../../../config/togglesSlice'
 import {selectAttendees} from '../attendeesSlice'
 import {UpdateAttendeesStep} from './UpdateAttendeesStep'
-import {overrideToggle} from '../../../../config/togglesSlice'
 
 describe('The Update Attendees Step', () => {
-  const render = (toggle = {toggle: 'updateAttendeesNewScreen', value: 'false'}) => {
-    const store = testStore(storeAfterCsv)
-    store.dispatch(overrideToggle(toggle))
 
+  const render = (toggle = {toggle: 'updateAttendeesNewScreen', value: 'false'}) => {
+    const store = testStore(stateAfterParsingCsv)
+    store.dispatch(overrideToggle(toggle))
     const renderResult = renderComponent(<UpdateAttendeesStep/>, store)
     return {
       ...renderResult,
