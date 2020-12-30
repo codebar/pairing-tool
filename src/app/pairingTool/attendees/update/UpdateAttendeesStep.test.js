@@ -1,4 +1,5 @@
 import {renderComponent, testStore} from '../../../../test/testUtils'
+import {screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {storeAfterCsv} from '../../../../test/fixtures/store-after-csv'
 import {selectAttendees} from '../attendeesSlice'
@@ -16,8 +17,8 @@ describe('The Update Attendees Step', () => {
       store,
       addNewAttendeeButton: () => renderResult.getByTestId('add-new-attendee-button'),
       attendeesList: () => renderResult.getByTestId('attendees-list'),
+      attendeeDisplayNames: () => renderResult.getAllByTestId('attendee-display-name'),
       attendeeEditForm: () => renderResult.getByTestId('attendee-edit-form'),
-      attendeeDisplayNames: () => renderResult.getAllByTestId('attendee-display-name')
     }
   }
 
@@ -25,20 +26,27 @@ describe('The Update Attendees Step', () => {
     const withNewScreenEnabled = {toggle: 'updateAttendeesNewScreen', value: 'true'}
 
     it('renders initial elements and controls', () => {
-      const {addNewAttendeeButton, attendeesList, attendeeEditForm} = render(withNewScreenEnabled)
+      const {addNewAttendeeButton, attendeesList} = render(withNewScreenEnabled)
 
       expect(addNewAttendeeButton()).toBeInTheDocument()
       expect(attendeesList()).toBeInTheDocument()
-      expect(attendeeEditForm()).toBeInTheDocument()
     })
-
     it('can add a new attendee', () => {
       const {addNewAttendeeButton, attendeeDisplayNames, store} = render(withNewScreenEnabled)
       const numberOfAttendees = selectAttendees(store.getState()).length
-
       expect(attendeeDisplayNames().length).toBe(numberOfAttendees)
+
       userEvent.click(addNewAttendeeButton())
+
       expect(attendeeDisplayNames().length).toBe(numberOfAttendees + 1)
+    })
+    it('can select an attendee for modification', () => {
+      const {attendeeEditForm} = render(withNewScreenEnabled)
+
+      userEvent.click(screen.getByText('Chewbacca'))
+
+      expect(attendeeEditForm()).toBeInTheDocument()
+      expect(attendeeEditForm().innerHTML).toContain('Chewbacca')
     })
   })
 })
