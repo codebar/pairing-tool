@@ -1,3 +1,9 @@
 .AttendeeEditor {
-
+  width: 80%;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
 }
