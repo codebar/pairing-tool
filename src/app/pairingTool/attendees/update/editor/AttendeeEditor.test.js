@@ -44,7 +44,6 @@ describe('The Attendee Editor', () => {
     expect(editor.tutorialInput().value).toBe(attendee.tutorial)
     expect(editor.languageButton('JS')).toHaveClass('Active')
 
-    expect(editor.firstTimerIcon()).not.toBeInTheDocument()
     expect(editor.coachRadioButton()).not.toBeChecked()
     expect(editor.skillsTextarea().value).toBe('')
     expect(editor.languageButton('HTML')).toHaveClass('Inactive')
@@ -59,7 +58,6 @@ describe('The Attendee Editor', () => {
 
     const editor = render(attendee)
 
-    expect(editor.firstTimerIcon()).toBeInTheDocument()
     expect(editor.attendanceSwitch()).not.toBeChecked()
     expect(editor.coachRadioButton()).toBeChecked()
     expect(editor.notesTextarea().value).toBe(attendee.notes)
@@ -72,10 +70,8 @@ describe('The Attendee Editor', () => {
   })
 
   describe('The name input', () => {
-    const attendee = {
-      ...student,
-      name: 'Anakin Skywalker'
-    }
+    const attendee = {...student, name: 'Anakin Skywalker'}
+
     it('renders with the name of the attendee', () => {
       const {nameInput} = render(attendee)
       expect(nameInput().value).toBe('Anakin Skywalker')
@@ -91,13 +87,32 @@ describe('The Attendee Editor', () => {
   })
 
   describe('The first timer icon', () => {
-    it('renders when the attendee is a first timer', () => {})
-    it('does not render when the attendee is not a first timer', () => {})
+    it('renders when the attendee is a first timer', () => {
+      const {firstTimerIcon} = render({...student, 'new': true})
+      expect(firstTimerIcon()).toBeInTheDocument()
+    })
+    it('does not render when the attendee is not a first timer', () => {
+      const {firstTimerIcon} = render({...student, 'new': false})
+      expect(firstTimerIcon()).not.toBeInTheDocument()
+    })
   })
 
   describe('The attendance switch', () => {
-    it('renders with the attendee attendance', () => {})
-    it('toggles the attendance', () => {})
+    it('renders with the attendee attendance when its off', () => {
+      const {attendanceSwitch} = render({ ...student, attendance: false })
+      expect(attendanceSwitch()).not.toBeChecked()
+    })
+    it('renders with the attendance when its on', () => {
+      const {attendanceSwitch} = render({ ...student, attendance: true })
+      expect(attendanceSwitch()).toBeChecked()
+    })
+    it('toggles the attendance', () => {
+      const attendee = { ...student, attendance: false }
+      const {attendanceSwitch, store} = render(attendee)
+      userEvent.click(attendanceSwitch())
+      expect(attendanceSwitch()).toBeChecked()
+      expect(selectAttendeeById(attendee.id)(store.getState()).attendance).toBeTruthy()
+    })
   })
 
 })

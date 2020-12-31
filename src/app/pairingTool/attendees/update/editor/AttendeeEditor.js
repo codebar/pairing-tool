@@ -13,17 +13,19 @@ import {
 } from '@material-ui/core'
 import firstTimer from '../firstTimer.jpg'
 import './AttendeeEditor.scss'
-import {updateAttendeeName} from '../../attendeesSlice'
+import {toggleAttendance, updateAttendeeName} from '../../attendeesSlice'
 
 
 export const AttendeeEditor = ({attendee}) => {
   const languages = useSelector(selectLanguages)
   const [name, setName] = useState('')
+  const [attendance, setAttendance] = useState(false)
   const dispatch = useDispatch()
   const testId = name => `attendee-editor-${name}`
 
   useEffect(() => {
     setName(attendee.name)
+    setAttendance(attendee.attendance)
   }, [attendee])
 
   const firstTimerIcon =
@@ -55,8 +57,11 @@ export const AttendeeEditor = ({attendee}) => {
           data-test-id={testId('attendance')}
           name='attendance'
           color='primary'
-          checked={attendee.attendance}
-          onChange={() => {}}
+          checked={attendance}
+          onChange={() => {
+            setAttendance(!attendance)
+            dispatch(toggleAttendance(attendee.id))
+          }}
         />
       }
     />
