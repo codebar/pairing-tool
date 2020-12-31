@@ -3,9 +3,13 @@ import {
   initialState,
   selectStudents,
   selectCoaches,
+  selectAttendeeById,
   selectReadyForPairing,
   addAttendee,
   updateAttendeeName,
+  updateAttendeeNotes,
+  updateAttendeeSkills,
+  updateAttendeeTutorial,
   toggleAttendance,
   toggleRole,
   toggleLanguage,
@@ -77,9 +81,39 @@ describe('The Attendees Slice', () => {
     const action = updateAttendeeName({id: 1, name: 'New name'})
 
     it('overrides the attendee name with the new one', () => {
-      const student = {id: 1, name: 'Old name', role: 'Student'}
-      const nextState = attendeesReducer({...initialState, list: [student]}, action)
-      expect(selectStudents({attendees: nextState})[0].name).toBe('New name')
+      const attendee = {id: 1, name: 'Old name'}
+      const nextState = attendeesReducer({...initialState, list: [attendee]}, action)
+      expect(selectAttendeeById(1)({attendees: nextState}).name).toBe('New name')
+    })
+  })
+
+  describe('Updating the notes of an attendee', () => {
+    const action = updateAttendeeNotes({id: 1, notes: 'New notes'})
+
+    it('overrides the attendee notes with the new ones', () => {
+      const attendee = {id: 1, notes: 'Old notes'}
+      const nextState = attendeesReducer({...initialState, list: [attendee]}, action)
+      expect(selectAttendeeById(1)({attendees: nextState}).notes).toBe('New notes')
+    })
+  })
+
+  describe('Updating the skills of an attendee', () => {
+    const action = updateAttendeeSkills({id: 1, skills: 'New skills'})
+
+    it('overrides the attendee skills with the new ones', () => {
+      const attendee = {id:1, skills: 'Old skills'}
+      const nextState = attendeesReducer({...initialState, list: [attendee]}, action)
+      expect(selectAttendeeById(1)({attendees: nextState}).skills).toBe('New skills')
+    })
+  })
+
+  describe('Updating the tutorial of an attendee', () => {
+    const action = updateAttendeeTutorial({id: 1, tutorial: 'New tutorial'})
+
+    it('overrides the attendee tutorial with the new one', () => {
+      const attendee = {id:1, tutorial: 'Old tutorial'}
+      const nextState = attendeesReducer({...initialState, list: [attendee]}, action)
+      expect(selectAttendeeById(1)({attendees: nextState}).tutorial).toBe('New tutorial')
     })
   })
 

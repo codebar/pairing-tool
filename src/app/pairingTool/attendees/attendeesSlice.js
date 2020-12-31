@@ -30,6 +30,21 @@ const attendeesSlice = createSlice({
       const attendee = state.list[index]
       state.list[index] = {...attendee, name: action.payload.name}
     },
+    updateAttendeeNotes: (state, action) => {
+      const index = state.list.findIndex(attendee => attendee.id === action.payload.id)
+      const attendee = state.list[index]
+      state.list[index] = {...attendee, notes: action.payload.notes}
+    },
+    updateAttendeeSkills: (state, action) => {
+      const index = state.list.findIndex(attendee => attendee.id === action.payload.id)
+      const attendee = state.list[index]
+      state.list[index] = {...attendee, skills: action.payload.skills}
+    },
+    updateAttendeeTutorial: (state, action) => {
+      const index = state.list.findIndex(attendee => attendee.id === action.payload.id)
+      const attendee = state.list[index]
+      state.list[index] = {...attendee, tutorial: action.payload.tutorial}
+    },
     toggleAttendance: (state, action) => {
       const index = state.list.findIndex(attendee => attendee.id === action.payload)
       const attendee = state.list[index]
@@ -62,6 +77,9 @@ export const attendeesReducer = attendeesSlice.reducer
 export const {
   addAttendee,
   updateAttendeeName,
+  updateAttendeeNotes,
+  updateAttendeeSkills,
+  updateAttendeeTutorial,
   toggleAttendance,
   toggleRole,
   toggleLanguage,

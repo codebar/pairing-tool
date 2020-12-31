@@ -13,14 +13,26 @@ import {
 } from '@material-ui/core'
 import firstTimer from '../firstTimer.jpg'
 import './AttendeeEditor.scss'
-import {toggleAttendance, toggleRole, updateAttendeeName} from '../../attendeesSlice'
+import {
+  toggleAttendance,
+  toggleLanguage,
+  toggleRole,
+  updateAttendeeName,
+  updateAttendeeNotes,
+  updateAttendeeSkills,
+  updateAttendeeTutorial
+} from '../../attendeesSlice'
 
 
 export const AttendeeEditor = ({attendee}) => {
-  const languages = useSelector(selectLanguages)
+  const globalLanguages = useSelector(selectLanguages)
   const [name, setName] = useState('')
   const [attendance, setAttendance] = useState(false)
   const [role, setRole] = useState('')
+  const [notes, setNotes] = useState('')
+  const [skills, setSkills] = useState('')
+  const [tutorial, setTutorial] = useState('')
+  const [languages, setLanguages] = useState([])
   const dispatch = useDispatch()
   const testId = name => `attendee-editor-${name}`
 
@@ -28,6 +40,10 @@ export const AttendeeEditor = ({attendee}) => {
     setName(attendee.name)
     setAttendance(attendee.attendance)
     setRole(attendee.role)
+    setNotes(attendee.notes)
+    if (attendee.skills !== undefined) setSkills(attendee.skills)
+    if (attendee.tutorial !== undefined) setTutorial(attendee.tutorial)
+    setLanguages(attendee.languages)
   }, [attendee])
 
   const firstTimerIcon =
@@ -98,8 +114,9 @@ export const AttendeeEditor = ({attendee}) => {
       label='Notes'
       multiline
       rowsMax={2}
-      value={attendee.notes}
-      onChange={() => {}}
+      value={notes}
+      onChange={e => setNotes(e.target.value)}
+      onBlur={() => dispatch(updateAttendeeNotes({id: attendee.id, notes}))}
     />
 
   const skillsTextarea =
@@ -108,30 +125,43 @@ export const AttendeeEditor = ({attendee}) => {
       label='Skills'
       multiline
       rowsMax={2}
-      value={attendee.role === 'Coach' ? attendee.skills : ''}
-      onChange={() => {}}
-      InputProps={{readOnly: true}}
+      value={skills}
+      onChange={e => setSkills(e.target.value)}
+      onBlur={() => dispatch(updateAttendeeSkills({id: attendee.id, skills}))}
     />
 
   const tutorialInput =
     <TextField
       data-test-id={testId('tutorial')}
       label='Tutorial'
-      value={attendee.role === 'Student' ? attendee.tutorial : ''}
-      onChange={() => {}}
-      InputProps={{readOnly: true}}
+      value={tutorial}
+      onChange={e => setTutorial(e.target.value)}
+      onBlur={() => dispatch(updateAttendeeTutorial({id: attendee.id, tutorial}))}
     />
 
   const languageButtons =
     <div className='LanguageButtons'>
-      {languages.map(language =>
+      {globalLanguages.map(language =>
         <Button
           data-test-id={testId(`language-${language}`)}
           key={language}
-          className={`${language}Button ${attendee.languages.includes(language) ? 'Active' : 'Inactive'}`}
+          className={`${language}Button ${languages.includes(language) ? 'Active' : 'Inactive'}`}
           variant='contained'
           color='primary'
-          onClick={() => {}}
+          onClick={() => {
+            if (!languages.includes(language))
+              setLanguages([...languages, language])
+            else {
+              const index = languages.indexOf(language)
+              setLanguages([
+                ...languages.slice(0, index),
+                ...languages.slice(index + 1)
+              ])
+            }
+
+
+            dispatch(toggleLanguage({id: attendee.id, language}))
+          }}
         >
           {language}
         </Button>
