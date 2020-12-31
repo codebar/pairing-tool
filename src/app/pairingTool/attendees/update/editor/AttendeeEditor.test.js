@@ -14,15 +14,15 @@ describe('The Attendee Editor', () => {
     return {
       ...renderResult,
       store,
-      firstTimerIcon: () => renderResult.getByTestId(testId('new')),
-      nameInput: () => extractHtmlTagFrom('input')(renderResult.getByTestId(testId('name'))),
-      attendanceSwitch: () => extractHtmlTagFrom('input')(renderResult.getByTestId(testId('attendance'))),
-      studentRadioButton: () => extractHtmlTagFrom('input')(renderResult.getByTestId(testId('role-student'))),
-      coachRadioButton: () => extractHtmlTagFrom('input')(renderResult.getByTestId(testId('role-coach'))),
-      notesTextarea: () => extractHtmlTagFrom('textarea')(renderResult.getByTestId(testId('notes'))),
-      skillsTextarea: () => extractHtmlTagFrom('textarea')(renderResult.getByTestId(testId('skills'))),
-      tutorialInput: () => extractHtmlTagFrom('input')(renderResult.getByTestId(testId('tutorial'))),
-      languageButton: language => renderResult.getByTestId(testId(`language-${language}`))
+      firstTimerIcon: () => renderResult.queryByTestId(testId('new')),
+      nameInput: () => extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('name'))),
+      attendanceSwitch: () => extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('attendance'))),
+      studentRadioButton: () => extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('role-student'))),
+      coachRadioButton: () => extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('role-coach'))),
+      notesTextarea: () => extractHtmlTagFrom('textarea')(renderResult.queryByTestId(testId('notes'))),
+      skillsTextarea: () => extractHtmlTagFrom('textarea')(renderResult.queryByTestId(testId('skills'))),
+      tutorialInput: () => extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('tutorial'))),
+      languageButton: language => renderResult.queryByTestId(testId(`language-${language}`))
     }
   }
 
@@ -43,6 +43,7 @@ describe('The Attendee Editor', () => {
     expect(editor.tutorialInput().value).toBe(attendee.tutorial)
     expect(editor.languageButton('JS')).toHaveClass('Active')
 
+    expect(editor.firstTimerIcon()).not.toBeInTheDocument()
     expect(editor.coachRadioButton()).not.toBeChecked()
     expect(editor.skillsTextarea().value).toBe('')
     expect(editor.languageButton('HTML')).toHaveClass('Inactive')
