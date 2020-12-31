@@ -35,6 +35,12 @@ const attendeesSlice = createSlice({
       const attendee = state.list[index]
       state.list[index] = {...attendee, attendance: !attendee.attendance}
     },
+    toggleRole: (state, action) => {
+      const index = state.list.findIndex(attendee => attendee.id === action.payload)
+      const attendee = state.list[index]
+      const role = attendee.role === 'Student' ? 'Coach' : 'Student'
+      state.list[index] = {...attendee, role}
+    },
     toggleLanguage: (state, action) => {
       const index = state.list.findIndex(attendee => attendee.id === action.payload.id)
       const attendee = state.list[index]
@@ -57,6 +63,7 @@ export const {
   addAttendee,
   updateAttendeeName,
   toggleAttendance,
+  toggleRole,
   toggleLanguage,
   readyForPairing,
   reviewAttendeesAgain

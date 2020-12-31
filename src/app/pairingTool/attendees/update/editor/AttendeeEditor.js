@@ -13,19 +13,21 @@ import {
 } from '@material-ui/core'
 import firstTimer from '../firstTimer.jpg'
 import './AttendeeEditor.scss'
-import {toggleAttendance, updateAttendeeName} from '../../attendeesSlice'
+import {toggleAttendance, toggleRole, updateAttendeeName} from '../../attendeesSlice'
 
 
 export const AttendeeEditor = ({attendee}) => {
   const languages = useSelector(selectLanguages)
   const [name, setName] = useState('')
   const [attendance, setAttendance] = useState(false)
+  const [role, setRole] = useState('')
   const dispatch = useDispatch()
   const testId = name => `attendee-editor-${name}`
 
   useEffect(() => {
     setName(attendee.name)
     setAttendance(attendee.attendance)
+    setRole(attendee.role)
   }, [attendee])
 
   const firstTimerIcon =
@@ -71,8 +73,11 @@ export const AttendeeEditor = ({attendee}) => {
       <FormLabel component='label'>Role</FormLabel>
       <RadioGroup
         row aria-label='role' name='role'
-        value={attendee.role}
-        onChange={() => {}}
+        value={role}
+        onChange={e => {
+          setRole(e.target.value)
+          dispatch(toggleRole(attendee.id))
+        }}
       >
         <FormControlLabel
           label='Student'

@@ -5,12 +5,14 @@ import {
   selectCoaches,
   selectReadyForPairing,
   addAttendee,
+  updateAttendeeName,
   toggleAttendance,
+  toggleRole,
   toggleLanguage,
   readyForPairing,
   reviewAttendeesAgain,
   parseAttendeeList,
-  goToPairingStep, updateAttendeeName
+  goToPairingStep
 } from './attendeesSlice'
 import {addPeopleForPairings} from '../pairings/pairingsSlice'
 import pairingCsvParser from './csv/pairingCsvParser'
@@ -93,6 +95,21 @@ describe('The Attendees Slice', () => {
       const coach = {id: 1, attendance: true, role: 'Coach'}
       const nextState = attendeesReducer({...initialState, list: [coach]}, action)
       expect(selectCoaches({attendees: nextState})[0]).toMatchObject({attendance: false})
+    })
+  })
+
+  describe('Toggle the role of an attendee', () => {
+    const action = toggleRole(1)
+
+    it('changes the role from student to coach', () => {
+      const student = {id: 1, role: 'Student'}
+      const nextState = attendeesReducer({...initialState, list: [student]}, action)
+      expect(selectCoaches({attendees: nextState})[0]).toMatchObject({id: 1, role: 'Coach'})
+    })
+    it('changes the role from coach to student', () => {
+      const coach = {id: 1, role: 'Coach'}
+      const nextState = attendeesReducer({...initialState, list: [coach]}, action)
+      expect(selectStudents({attendees: nextState})[0]).toMatchObject({id: 1, role: 'Student'})
     })
   })
 

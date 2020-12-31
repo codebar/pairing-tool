@@ -38,13 +38,10 @@ describe('The Attendee Editor', () => {
 
     const editor = render(attendee)
 
-    expect(editor.attendanceSwitch()).toBeChecked()
-    expect(editor.studentRadioButton()).toBeChecked()
     expect(editor.notesTextarea().value).toBe(attendee.notes)
     expect(editor.tutorialInput().value).toBe(attendee.tutorial)
     expect(editor.languageButton('JS')).toHaveClass('Active')
 
-    expect(editor.coachRadioButton()).not.toBeChecked()
     expect(editor.skillsTextarea().value).toBe('')
     expect(editor.languageButton('HTML')).toHaveClass('Inactive')
   })
@@ -58,29 +55,28 @@ describe('The Attendee Editor', () => {
 
     const editor = render(attendee)
 
-    expect(editor.attendanceSwitch()).not.toBeChecked()
-    expect(editor.coachRadioButton()).toBeChecked()
     expect(editor.notesTextarea().value).toBe(attendee.notes)
     expect(editor.skillsTextarea().value).toBe(attendee.skills)
     expect(editor.languageButton('Java')).toHaveClass('Active')
 
-    expect(editor.studentRadioButton()).not.toBeChecked()
     expect(editor.tutorialInput().value).toBe('')
     expect(editor.languageButton('JS')).toHaveClass('Inactive')
   })
 
   describe('The name input', () => {
     const attendee = {...student, name: 'Anakin Skywalker'}
-
     it('renders with the name of the attendee', () => {
       const {nameInput} = render(attendee)
+
       expect(nameInput().value).toBe('Anakin Skywalker')
     })
     it('updates the name of the attendee', () => {
       const {nameInput, store} = render(attendee)
+
       userEvent.clear(nameInput())
       userEvent.type(nameInput(), 'Darth Vader')
       userEvent.tab()
+
       expect(nameInput().value).toBe('Darth Vader')
       expect(selectAttendeeById(attendee.id)(store.getState()).name).toBe('Darth Vader')
     })
@@ -89,10 +85,12 @@ describe('The Attendee Editor', () => {
   describe('The first timer icon', () => {
     it('renders when the attendee is a first timer', () => {
       const {firstTimerIcon} = render({...student, 'new': true})
+
       expect(firstTimerIcon()).toBeInTheDocument()
     })
     it('does not render when the attendee is not a first timer', () => {
       const {firstTimerIcon} = render({...student, 'new': false})
+
       expect(firstTimerIcon()).not.toBeInTheDocument()
     })
   })
@@ -100,19 +98,57 @@ describe('The Attendee Editor', () => {
   describe('The attendance switch', () => {
     it('renders with the attendee attendance when its off', () => {
       const {attendanceSwitch} = render({ ...student, attendance: false })
+
       expect(attendanceSwitch()).not.toBeChecked()
     })
     it('renders with the attendance when its on', () => {
       const {attendanceSwitch} = render({ ...student, attendance: true })
+
       expect(attendanceSwitch()).toBeChecked()
     })
     it('toggles the attendance', () => {
       const attendee = { ...student, attendance: false }
       const {attendanceSwitch, store} = render(attendee)
+
       userEvent.click(attendanceSwitch())
+
       expect(attendanceSwitch()).toBeChecked()
       expect(selectAttendeeById(attendee.id)(store.getState()).attendance).toBeTruthy()
     })
   })
 
+  describe('The role radio buttons', () => {
+    const expectStudentIsChecked = (studentRadioButton, coachRadioButton) => {
+      expect(studentRadioButton()).toBeChecked()
+      expect(coachRadioButton()).not.toBeChecked()
+    }
+    const expectCoachIsChecked = (studentRadioButton, coachRadioButton) => {
+      expect(studentRadioButton()).not.toBeChecked()
+      expect(coachRadioButton()).toBeChecked()
+    }
+
+    it('renders with student selected for students', () => {
+      const {studentRadioButton, coachRadioButton} = render(student)
+
+      expectStudentIsChecked(studentRadioButton, coachRadioButton)
+    })
+    it('renders with coach selected for coaches', () => {
+      const {studentRadioButton, coachRadioButton} = render(coach)
+
+      expectCoachIsChecked(studentRadioButton, coachRadioButton)
+    })
+    it('toggles the attendee role', () => {
+      const {studentRadioButton, coachRadioButton,store} = render(student)
+
+      userEvent.click(coachRadioButton())
+
+      expectCoachIsChecked(studentRadioButton, coachRadioButton)
+      expect(selectAttendeeById(student.id)(store.getState()).role).toBe('Coach')
+
+      userEvent.click(studentRadioButton())
+
+      expectStudentIsChecked(studentRadioButton, coachRadioButton)
+      expect(selectAttendeeById(student.id)(store.getState()).role).toBe('Student')
+    })
+  })
 })
