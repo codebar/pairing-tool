@@ -2,6 +2,8 @@ import {renderComponent, testStore} from '../../../../../test/testUtils'
 import {coach, stateAfterParsingCsv, student} from '../../../../../test/fixtures/attendees'
 import {overrideToggle} from '../../../../../config/togglesSlice'
 import {AttendeeEditor} from './AttendeeEditor'
+import userEvent from '@testing-library/user-event'
+import {selectAttendeeById} from '../../attendeesSlice'
 
 describe('The Attendee Editor', () => {
 
@@ -36,7 +38,6 @@ describe('The Attendee Editor', () => {
 
     const editor = render(attendee)
 
-    expect(editor.nameInput().value).toBe(attendee.name)
     expect(editor.attendanceSwitch()).toBeChecked()
     expect(editor.studentRadioButton()).toBeChecked()
     expect(editor.notesTextarea().value).toBe(attendee.notes)
@@ -48,7 +49,6 @@ describe('The Attendee Editor', () => {
     expect(editor.skillsTextarea().value).toBe('')
     expect(editor.languageButton('HTML')).toHaveClass('Inactive')
   })
-
   it('renders a coach with its existing information', () => {
     const attendee = {
       ...coach,
@@ -60,7 +60,6 @@ describe('The Attendee Editor', () => {
     const editor = render(attendee)
 
     expect(editor.firstTimerIcon()).toBeInTheDocument()
-    expect(editor.nameInput().value).toBe(attendee.name)
     expect(editor.attendanceSwitch()).not.toBeChecked()
     expect(editor.coachRadioButton()).toBeChecked()
     expect(editor.notesTextarea().value).toBe(attendee.notes)
@@ -70,6 +69,35 @@ describe('The Attendee Editor', () => {
     expect(editor.studentRadioButton()).not.toBeChecked()
     expect(editor.tutorialInput().value).toBe('')
     expect(editor.languageButton('JS')).toHaveClass('Inactive')
+  })
+
+  describe('The name input', () => {
+    const attendee = {
+      ...student,
+      name: 'Anakin Skywalker'
+    }
+    it('renders with the name of the attendee', () => {
+      const {nameInput} = render(attendee)
+      expect(nameInput().value).toBe('Anakin Skywalker')
+    })
+    it('updates the name of the attendee', () => {
+      const {nameInput, store} = render(attendee)
+      userEvent.clear(nameInput())
+      userEvent.type(nameInput(), 'Darth Vader')
+      userEvent.tab()
+      expect(nameInput().value).toBe('Darth Vader')
+      expect(selectAttendeeById(attendee.id)(store.getState()).name).toBe('Darth Vader')
+    })
+  })
+
+  describe('The first timer icon', () => {
+    it('renders when the attendee is a first timer', () => {})
+    it('does not render when the attendee is not a first timer', () => {})
+  })
+
+  describe('The attendance switch', () => {
+    it('renders with the attendee attendance', () => {})
+    it('toggles the attendance', () => {})
   })
 
 })

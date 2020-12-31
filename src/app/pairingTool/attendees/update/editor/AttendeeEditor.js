@@ -1,5 +1,5 @@
-import React from 'react'
-import {useSelector} from 'react-redux'
+import React, {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import {selectLanguages} from '../../../../configuration/configurationSlice'
 import {
   Button,
@@ -13,11 +13,18 @@ import {
 } from '@material-ui/core'
 import firstTimer from '../firstTimer.jpg'
 import './AttendeeEditor.scss'
+import {updateAttendeeName} from '../../attendeesSlice'
 
 
 export const AttendeeEditor = ({attendee}) => {
   const languages = useSelector(selectLanguages)
+  const [name, setName] = useState('')
+  const dispatch = useDispatch()
   const testId = name => `attendee-editor-${name}`
+
+  useEffect(() => {
+    setName(attendee.name)
+  }, [attendee])
 
   const firstTimerIcon =
     <>
@@ -34,8 +41,9 @@ export const AttendeeEditor = ({attendee}) => {
     <TextField
       data-test-id={testId('name')}
       label='Name'
-      value={attendee.name}
-      onChange={() => {}}
+      value={name}
+      onChange={e => setName(e.target.value)}
+      onBlur={() => dispatch(updateAttendeeName({id: attendee.id, name}))}
     />
 
   const attendanceSwitch =

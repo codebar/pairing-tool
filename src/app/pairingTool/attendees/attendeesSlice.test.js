@@ -10,7 +10,7 @@ import {
   readyForPairing,
   reviewAttendeesAgain,
   parseAttendeeList,
-  goToPairingStep
+  goToPairingStep, updateAttendeeName
 } from './attendeesSlice'
 import {addPeopleForPairings} from '../pairings/pairingsSlice'
 import pairingCsvParser from './csv/pairingCsvParser'
@@ -68,6 +68,16 @@ describe('The Attendees Slice', () => {
       const thirdState = attendeesReducer(secondState, addCoachAction)
       const fourthState = attendeesReducer(thirdState, addCoachAction)
       expect(selectCoaches({attendees: fourthState}).length).toBe(1)
+    })
+  })
+
+  describe('Updating the name of an attendee', () => {
+    const action = updateAttendeeName({id: 1, name: 'New name'})
+
+    it('overrides the attendee name with the new one', () => {
+      const student = {id: 1, name: 'Old name', role: 'Student'}
+      const nextState = attendeesReducer({...initialState, list: [student]}, action)
+      expect(selectStudents({attendees: nextState})[0].name).toBe('New name')
     })
   })
 
