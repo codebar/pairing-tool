@@ -1,24 +1,59 @@
 import React from 'react'
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormLabel from '@material-ui/core/FormLabel'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import TextField from '@material-ui/core/TextField'
+import {useSelector} from 'react-redux'
+import {selectLanguages} from '../../../../configuration/configurationSlice'
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+  Switch
+} from '@material-ui/core'
+import firstTimer from '../firstTimer.jpg'
 import './AttendeeEditor.scss'
 
 
 export const AttendeeEditor = ({attendee}) => {
+  const languages = useSelector(selectLanguages)
+  const testId = name => `attendee-editor-${name}`
 
-  const attendeeNameInput =
+  const firstTimerIcon =
+    <>
+      {attendee.new &&
+      <img
+        data-test-id={testId('new')}
+        className='FirstTimerIcon'
+        src={firstTimer}
+        alt='First Timer'
+      />}
+    </>
+
+  const nameInput =
     <TextField
-      data-test-id='attendee-edit-name-input'
+      data-test-id={testId('name')}
       label='Name'
       value={attendee.name}
       onChange={() => {}}
     />
 
-  const attendeeRoleRadioButtons =
+  const attendanceSwitch =
+    <FormControlLabel
+      label='Attendance'
+      labelPlacement='start'
+      control={
+        <Switch
+          data-test-id={testId('attendance')}
+          name='attendance'
+          color='primary'
+          checked={attendee.attendance}
+          onChange={() => {}}
+        />
+      }
+    />
+
+  const roleRadioButtons =
     <FormControl component='fieldset'>
       <FormLabel component='label'>Role</FormLabel>
       <RadioGroup
@@ -29,53 +64,72 @@ export const AttendeeEditor = ({attendee}) => {
         <FormControlLabel
           label='Student'
           value='Student'
-          control={<Radio data-test-id={'attendee-edit-role-student'}/>}
+          control={<Radio data-test-id={testId('role-student')}/>}
         />
         <FormControlLabel
           label='Coach'
           value='Coach'
-          control={<Radio data-test-id={'attendee-edit-role-coach'}/>}
+          control={<Radio data-test-id={testId('role-coach')}/>}
         />
       </RadioGroup>
     </FormControl>
 
-  const attendeeNotesInput =
+  const notesTextarea =
     <TextField
-      data-test-id='attendee-edit-notes-input'
+      data-test-id={testId('notes')}
       label='Notes'
+      multiline
+      rowsMax={2}
       value={attendee.notes}
       onChange={() => {}}
     />
 
-  const skillsInput =
+  const skillsTextarea =
     <TextField
-      data-test-id='attendee-edit-skills-input'
+      data-test-id={testId('skills')}
       label='Skills'
       multiline
       rowsMax={2}
-      value={attendee.skills}
+      value={attendee.role === 'Coach' ? attendee.skills : ''}
       onChange={() => {}}
-      disabled={attendee.role === 'Student'}
+      InputProps={{readOnly: true}}
     />
 
   const tutorialInput =
     <TextField
-      data-test-id='attendee-edit-tutorial-input'
+      data-test-id={testId('tutorial')}
       label='Tutorial'
-      multiline
-      rowsMax={2}
-      value={attendee.tutorial}
+      value={attendee.role === 'Student' ? attendee.tutorial : ''}
       onChange={() => {}}
-      disabled={attendee.role === 'Coach'}
+      InputProps={{readOnly: true}}
     />
 
+  const languageButtons =
+    <div className='LanguageButtons'>
+      {languages.map(language =>
+        <Button
+          data-test-id={testId(`language-${language}`)}
+          key={language}
+          className={`${language}Button ${attendee.languages.includes(language) ? 'Active' : 'Inactive'}`}
+          variant='contained'
+          color='primary'
+          onClick={() => {}}
+        >
+          {language}
+        </Button>
+      )}
+    </div>
+
   return (
-    <div className='AttendeeEditor' data-test-id='attendee-edit-form'>
-      {attendeeNameInput}
-      {attendeeRoleRadioButtons}
-      {attendeeNotesInput}
-      {skillsInput}
+    <div className='AttendeeEditor' data-test-id='attendee-editor'>
+      {firstTimerIcon}
+      {nameInput}
+      {attendanceSwitch}
+      {roleRadioButtons}
+      {notesTextarea}
+      {skillsTextarea}
       {tutorialInput}
+      {languageButtons}
     </div>
   )
 }

@@ -18,7 +18,7 @@ describe('The Update Attendees Step', () => {
       addNewAttendeeButton: () => renderResult.getByTestId('add-new-attendee-button'),
       attendeesList: () => renderResult.getByTestId('attendees-list'),
       attendeeDisplayNames: () => renderResult.getAllByTestId('attendee-display-name'),
-      attendeeEditForm: () => renderResult.getByTestId('attendee-edit-form'),
+      attendeeEditForm: () => renderResult.getByTestId('attendee-editor'),
     }
   }
 

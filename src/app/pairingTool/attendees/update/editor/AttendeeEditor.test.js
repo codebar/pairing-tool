@@ -5,61 +5,70 @@ import {AttendeeEditor} from './AttendeeEditor'
 
 describe('The Attendee Editor', () => {
 
-
   const render = attendee => {
     const store = testStore(stateAfterParsingCsv)
     store.dispatch(overrideToggle({toggle: 'updateAttendeesNewScreen', value: 'true'}))
     const renderResult = renderComponent(<AttendeeEditor attendee={attendee} />, store)
-    const htmlInputFrom = container => container.getElementsByTagName('input')[0]
-    const htmlTextareaFrom = container => container.getElementsByTagName('textarea')[0]
+    const extractHtmlTagFrom = tag => container => container.getElementsByTagName(tag)[0]
+    const testId = name => `attendee-editor-${name}`
     return {
       ...renderResult,
       store,
-      nameInput: () => htmlInputFrom(renderResult.getByTestId('attendee-edit-name-input')),
-      studentRadioInput: () => htmlInputFrom(renderResult.getByTestId('attendee-edit-role-student')),
-      coachRadioInput: () => htmlInputFrom(renderResult.getByTestId('attendee-edit-role-coach')),
-      notesInput: () => htmlInputFrom(renderResult.getByTestId('attendee-edit-notes-input')),
-      skillsInput: () => htmlTextareaFrom(renderResult.getByTestId('attendee-edit-skills-input')),
-      tutorialInput: () => htmlTextareaFrom(renderResult.getByTestId('attendee-edit-tutorial-input')),
+      firstTimerIcon: () => renderResult.getByTestId(testId('new')),
+      nameInput: () => extractHtmlTagFrom('input')(renderResult.getByTestId(testId('name'))),
+      attendanceSwitch: () => extractHtmlTagFrom('input')(renderResult.getByTestId(testId('attendance'))),
+      studentRadioButton: () => extractHtmlTagFrom('input')(renderResult.getByTestId(testId('role-student'))),
+      coachRadioButton: () => extractHtmlTagFrom('input')(renderResult.getByTestId(testId('role-coach'))),
+      notesTextarea: () => extractHtmlTagFrom('textarea')(renderResult.getByTestId(testId('notes'))),
+      skillsTextarea: () => extractHtmlTagFrom('textarea')(renderResult.getByTestId(testId('skills'))),
+      tutorialInput: () => extractHtmlTagFrom('input')(renderResult.getByTestId(testId('tutorial'))),
+      languageButton: language => renderResult.getByTestId(testId(`language-${language}`))
     }
   }
 
   it('renders a student with its existing information', () => {
-    const {
-      nameInput,
-      studentRadioInput,
-      coachRadioInput,
-      notesInput,
-      skillsInput,
-      tutorialInput
-    } = render(student)
+    const attendee = {
+      ...student,
+      'new': false,
+      attendance: true,
+      languages: ['JS']
+    }
 
-    expect(nameInput().value).toBe(student.name)
-    expect(studentRadioInput()).toBeChecked()
-    expect(notesInput().value).toBe(student.notes)
-    expect(tutorialInput().value).toBe(student.tutorial)
+    const editor = render(attendee)
 
-    expect(coachRadioInput()).not.toBeChecked()
-    expect(skillsInput()).toBeDisabled()
+    expect(editor.nameInput().value).toBe(attendee.name)
+    expect(editor.attendanceSwitch()).toBeChecked()
+    expect(editor.studentRadioButton()).toBeChecked()
+    expect(editor.notesTextarea().value).toBe(attendee.notes)
+    expect(editor.tutorialInput().value).toBe(attendee.tutorial)
+    expect(editor.languageButton('JS')).toHaveClass('Active')
+
+    expect(editor.coachRadioButton()).not.toBeChecked()
+    expect(editor.skillsTextarea().value).toBe('')
+    expect(editor.languageButton('HTML')).toHaveClass('Inactive')
   })
 
   it('renders a coach with its existing information', () => {
-    const {
-      nameInput,
-      studentRadioInput,
-      coachRadioInput,
-      notesInput,
-      skillsInput,
-      tutorialInput
-    } = render(coach)
+    const attendee = {
+      ...coach,
+      'new': true,
+      attendance: false,
+      languages: ['Java']
+    }
 
-    expect(nameInput().value).toBe(coach.name)
-    expect(coachRadioInput()).toBeChecked()
-    expect(notesInput().value).toBe(coach.notes)
-    expect(skillsInput().value).toBe(coach.skills)
+    const editor = render(attendee)
 
-    expect(studentRadioInput()).not.toBeChecked()
-    expect(tutorialInput()).toBeDisabled()
+    expect(editor.firstTimerIcon()).toBeInTheDocument()
+    expect(editor.nameInput().value).toBe(attendee.name)
+    expect(editor.attendanceSwitch()).not.toBeChecked()
+    expect(editor.coachRadioButton()).toBeChecked()
+    expect(editor.notesTextarea().value).toBe(attendee.notes)
+    expect(editor.skillsTextarea().value).toBe(attendee.skills)
+    expect(editor.languageButton('Java')).toHaveClass('Active')
+
+    expect(editor.studentRadioButton()).not.toBeChecked()
+    expect(editor.tutorialInput().value).toBe('')
+    expect(editor.languageButton('JS')).toHaveClass('Inactive')
   })
 
 })
