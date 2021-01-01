@@ -12,7 +12,6 @@ export const AttendeeCompactCard = ({data, type}) => {
   return (
     <Card className='AttendeeCompactCard'>
       <CardContent className='CardContent'>
-        <DraggableName attendee={data} type={type}/>
         <section>
           {languages.map(language =>
             <Button
@@ -24,6 +23,7 @@ export const AttendeeCompactCard = ({data, type}) => {
             </Button>
           )}
         </section>
+        <DraggableName attendee={data} type={type}/>
       </CardContent>
     </Card>
   )

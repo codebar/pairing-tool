@@ -1,14 +1,36 @@
 .AvailableStudent {
-  border: 1px solid pink;
   cursor: move;
+  margin: 10px;
+  .Button {
+    background-color: whitesmoke;
+    &:hover{
+      background-color: whitesmoke;
+    }
+  }
   &.Dragging {
-    background-color: lightpink;
+    .Button {
+      background-color: lightpink;
+      &:hover{
+        background-color: lightpink;
+      }
+    }
   }
 }
 .AvailableCoach {
-  border: 1px solid orange;
   cursor: move;
+  margin: 10px;
+  .Button {
+    background-color: whitesmoke;
+    &:hover{
+      background-color: whitesmoke;
+    }
+  }
   &.Dragging {
-    background-color: lightsalmon;
+    .Button {
+      background-color: lightsalmon;
+      &:hover{
+        background-color: lightsalmon;
+      }
+    }
   }
 }

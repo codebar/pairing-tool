@@ -1,5 +1,7 @@
 import React from 'react'
 import {useDrag} from 'react-dnd'
+import OpenWithIcon from '@material-ui/icons/OpenWith'
+import Button from '@material-ui/core/Button'
 import './DraggableName.scss'
 
 export const DraggableName = ({attendee, type}) => {
@@ -10,8 +12,8 @@ export const DraggableName = ({attendee, type}) => {
     })
   })
   return (
-    <div ref={drag} className={`Available${type}${isDragging && ' Dragging'}`}>
-      <span>{attendee.name}</span>
+    <div ref={drag} className={`Available${type}${isDragging === true ? ' Dragging' : ''}`}>
+      <Button className='Button' variant='contained' color='default' endIcon={<OpenWithIcon/>}>{attendee.name}</Button>
     </div>
   )
 }

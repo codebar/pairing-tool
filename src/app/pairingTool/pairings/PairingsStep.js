@@ -58,19 +58,11 @@ export const PairingsStep = () => {
             {groups.map(group =>
               <div className='PairingGroup'>
                 <StudentDropzone groupId={group.id}>
-                  {group.students.map(student =>
-                    <div className='AttendeeName'>
-                      <DraggableName attendee={student} type={DraggableType.STUDENT}/>
-                    </div>
-                  )}
+                  {group.students.map(student => <DraggableName attendee={student} type={DraggableType.STUDENT}/>)}
                   {group.students.length === 0 && <span className='EmptyDropzone'>Drag a student here</span>}
                 </StudentDropzone>
                 <CoachDropzone groupId={group.id}>
-                  {group.coaches.map(coach =>
-                    <div className='AttendeeName'>
-                      <DraggableName attendee={coach} type={DraggableType.COACH}/>
-                    </div>
-                  )}
+                  {group.coaches.map(coach => <DraggableName attendee={coach} type={DraggableType.COACH}/>)}
                   {group.coaches.length === 0 && <span className='EmptyDropzone'>Drag a coach here</span>}
                 </CoachDropzone>
                 <div className='PairingGroupLanguages'>
