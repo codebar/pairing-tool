@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 export const initialState = {
-  updateAttendeesNewScreen: false
+  updateAttendeesNewScreen: true
 }
 
 const togglesSlice = createSlice({
