@@ -3,8 +3,12 @@ import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 import {useDispatch, useSelector} from 'react-redux'
 import {DraggableType} from '../../../config/dnd'
-import {reviewAttendeesAgain} from '../attendees/attendeesSlice'
-import {selectAvailableCoaches, selectAvailableStudents, selectPairingGroups} from './pairingsSlice'
+import {
+  goToReviewAttendeesStep,
+  selectAvailableCoaches,
+  selectAvailableStudents,
+  selectPairingGroups
+} from './pairingsSlice'
 import {AttendeeCompactCard} from './dragAndDrop/AttendeeCompactCard'
 import {DraggableName} from './dragAndDrop/DraggableName'
 import {StudentDropzone} from './dragAndDrop/StudentDropzone'
@@ -29,7 +33,7 @@ export const PairingsStep = () => {
             variant='contained'
             color='primary'
             startIcon={<SkipPreviousIcon/>}
-            onClick={() => dispatch(reviewAttendeesAgain())}
+            onClick={() => dispatch(goToReviewAttendeesStep())}
           >
             Review attendance and skills
           </Button>

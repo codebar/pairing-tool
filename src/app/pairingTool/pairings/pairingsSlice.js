@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {selectLanguages} from '../../configuration/configurationSlice'
+import {reviewAttendeesAgain} from '../attendees/attendeesSlice'
 
 export const initialState = {
   students: [],
@@ -10,6 +11,10 @@ const pairingsSlice = createSlice({
   name: 'pairings',
   initialState,
   reducers: {
+    resetPairings: state => {
+      state.students = []
+      state.coaches = []
+    },
     addPeopleForPairings: (state, {payload}) => {
       const existingIds = []
         .concat(state.students.map(x => x.id))
@@ -36,7 +41,8 @@ export const pairingsReducer = pairingsSlice.reducer
 export const {
   addPeopleForPairings,
   moveCoachToGroup,
-  moveStudentToGroup
+  moveStudentToGroup,
+  resetPairings
 } = pairingsSlice.actions
 
 export const selectAvailableStudents = state => state.pairings.students.filter(student => student.group === 0)
@@ -121,3 +127,8 @@ const organizePairingGroups = (collection, key) => collection[key]
   }, [])
 
 const dropIndex = (array, index) => [...array.slice(0, index), ...array.slice(index + 1)]
+
+export const goToReviewAttendeesStep = () => dispatch => {
+  dispatch(resetPairings())
+  dispatch(reviewAttendeesAgain())
+}
