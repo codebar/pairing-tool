@@ -1,6 +1,6 @@
 import React from 'react'
 import {Icon} from '@material-ui/core'
-import newbie from '../newbie.png'
+import newbie from './newbie.png'
 import './AttendeeMiniCard.scss'
 
 export const AttendeeMiniCard = ({attendee, selected, onClick}) => {
