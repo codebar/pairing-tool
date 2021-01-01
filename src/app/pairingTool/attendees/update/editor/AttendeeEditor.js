@@ -14,7 +14,6 @@ import {
   Button,
   FormControl,
   FormControlLabel,
-  FormLabel,
   Radio,
   RadioGroup,
   TextField,
@@ -40,14 +39,23 @@ export const AttendeeEditor = ({attendee}) => {
     setAttendance(attendee.attendance)
     setRole(attendee.role)
     setNotes(attendee.notes)
-    if (attendee.skills !== undefined) setSkills(attendee.skills)
-    if (attendee.tutorial !== undefined) setTutorial(attendee.tutorial)
+    setSkills(attendee.skills !== undefined ? attendee.skills : '')
+    setTutorial(attendee.tutorial !== undefined ? attendee.tutorial : '')
     setLanguages(attendee.languages)
-  }, [attendee])
+  }, [
+    attendee.name,
+    attendee.attendance,
+    attendee.role,
+    attendee.notes,
+    attendee.skills,
+    attendee.tutorial,
+    attendee.languages
+  ])
 
   const nameInput =
     <TextField
       data-test-id={testId('name')}
+      className='NameInput'
       label='Name'
       value={name}
       onChange={e => setName(e.target.value)}
@@ -57,7 +65,7 @@ export const AttendeeEditor = ({attendee}) => {
   const attendanceSwitch =
     <FormControlLabel
       label='Attendance'
-      labelPlacement='start'
+      labelPlacement='top'
       control={
         <Switch
           data-test-id={testId('attendance')}
@@ -74,9 +82,9 @@ export const AttendeeEditor = ({attendee}) => {
 
   const roleRadioButtons =
     <FormControl component='fieldset'>
-      <FormLabel component='label'>Role</FormLabel>
       <RadioGroup
-        row aria-label='role' name='role'
+        aria-label='role'
+        name='role'
         value={role}
         onChange={e => {
           setRole(e.target.value)
@@ -100,6 +108,7 @@ export const AttendeeEditor = ({attendee}) => {
     <TextField
       data-test-id={testId('notes')}
       label='Notes'
+      fullWidth
       multiline
       rowsMax={2}
       value={notes}
@@ -111,6 +120,7 @@ export const AttendeeEditor = ({attendee}) => {
     <TextField
       data-test-id={testId('skills')}
       label='Skills'
+      fullWidth
       multiline
       rowsMax={2}
       value={skills}
@@ -122,6 +132,7 @@ export const AttendeeEditor = ({attendee}) => {
     <TextField
       data-test-id={testId('tutorial')}
       label='Tutorial'
+      fullWidth
       value={tutorial}
       onChange={e => setTutorial(e.target.value)}
       onBlur={() => dispatch(updateAttendeeTutorial({id: attendee.id, tutorial}))}
@@ -158,13 +169,28 @@ export const AttendeeEditor = ({attendee}) => {
 
   return (
     <div className='AttendeeEditor' data-test-id='attendee-editor'>
-      {nameInput}
-      {attendanceSwitch}
-      {roleRadioButtons}
-      {notesTextarea}
-      {skillsTextarea}
-      {tutorialInput}
-      {languageButtons}
+      <div className='Row'>
+        {nameInput}
+        {attendanceSwitch}
+        {roleRadioButtons}
+      </div>
+      <div className='Row'>
+        {notesTextarea}
+      </div>
+      <div className='Row'>
+        {skillsTextarea}
+      </div>
+      <div className='Row'>
+        {tutorialInput}
+      </div>
+      <div className='Row'>
+        {languageButtons}
+      </div>
+      <div className='ComingSoon'>
+        <p><em>Here we can add more configuration options in the future</em></p>
+        <p><em>Useful when we want to persist this information and/or auto-calculate pairs</em></p>
+      </div>
+
     </div>
   )
 }
