@@ -4,13 +4,7 @@ import newbie from './newbie.png'
 import './AttendeeMiniCard.scss'
 
 export const AttendeeMiniCard = ({attendee, selected, onClick}) => {
-  const subclass = selected
-    ? 'SelectedToEdit'
-    : (attendee.attendance
-      ? 'IsAttending'
-      : 'IsNotAttending'
-    )
-
+  const subclass = `${selected === true ? 'SelectedToEdit' : ''} ${attendee.attendance ? 'IsAttending' : 'IsNotAttending'}`
   const icon = attendee.role === 'Student'
     ? 'fas fa-book-reader'
     : 'fas fa-graduation-cap'

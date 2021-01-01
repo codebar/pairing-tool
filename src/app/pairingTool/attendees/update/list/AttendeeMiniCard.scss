@@ -1,15 +1,19 @@
 .AttendeeDisplayName {
   text-align: left;
   padding: 10px 15px;
-  border-radius: 10px;
-  border: 1px solid #333333;
+  margin-bottom: 3px;
+  border: 1px solid #8d8d8d;
   cursor: default;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
 
-  &:hover {background-color: #97ced2 !important;}
-  &.SelectedToEdit {background-color: #4e96d0;}
+  @mixin highlight($color) {
+    border-color: $color;
+    box-shadow: 0 0 10px 4px $color;
+  }
+  &:hover { @include highlight(#97ced2) }
+  &.SelectedToEdit { @include highlight(#4e96d0) }
   &.IsAttending {background-color: #8ab67c;}
   &.IsNotAttending {background-color: #c2c3c9;}
 
