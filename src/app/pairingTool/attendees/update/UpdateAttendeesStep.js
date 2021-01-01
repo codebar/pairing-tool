@@ -4,9 +4,9 @@ import {addAttendee, goToPairingStep, selectAttendees, selectCoaches, selectStud
 import {featureEnabled} from '../../../../config/togglesSlice'
 import {AttendeeCard} from './AttendeeCard'
 import {AttendeeEditor} from './editor/AttendeeEditor'
-import {Button, Icon, IconButton, TextField} from '@material-ui/core'
+import {AttendeeMiniCard} from './list/AttendeeMiniCard'
+import {Button, IconButton, TextField} from '@material-ui/core'
 import {PersonAdd as PersonAddIcon, SkipNext as SkipNextIcon} from '@material-ui/icons'
-import newbie from './newbie.png'
 import './UpdateAttendeesStep.scss'
 
 export const UpdateAttendeesStep = () => {
@@ -69,31 +69,6 @@ const NewScreen = () => {
         </div>
         {selectedAttendee !== undefined && <AttendeeEditor attendee={selectedAttendee}/>}
       </div>
-    </div>
-  )
-}
-
-const AttendeeMiniCard = ({attendee, selected, onClick}) => {
-  const subclass = selected
-    ? 'SelectedToEdit'
-    : (attendee.attendance
-      ? 'IsAttending'
-      : 'IsNotAttending'
-    )
-
-  const icon = attendee.role === 'Student'
-    ? 'fas fa-book-reader'
-    : 'fas fa-graduation-cap'
-
-  return (
-    <div
-      data-test-id='attendee-display-name'
-      className={`AttendeeDisplayName ${subclass}`}
-      onClick={onClick}
-    >
-      <img className={`FirstTimerIcon ${attendee.new === false ? 'Hidden' : ''}`} src={newbie} alt='First Timer'/>
-      <Icon className={`RoleIcon ${icon}`} />
-      <span className='AttendeeNameLabel'>{attendee.name}</span>
     </div>
   )
 }
