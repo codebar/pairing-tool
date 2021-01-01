@@ -57,18 +57,6 @@ describe('The Attendee Editor', () => {
     })
   })
 
-  describe('The first timer icon', () => {
-    it('renders when the attendee is a first timer', () => {
-      const {firstTimerIcon} = render({...student, 'new': true})
-      expect(firstTimerIcon).toBeInTheDocument()
-    })
-
-    it('does not render when the attendee is not a first timer', () => {
-      const {firstTimerIcon} = render({...student, 'new': false})
-      expect(firstTimerIcon).not.toBeInTheDocument()
-    })
-  })
-
   describe('The attendance switch', () => {
     it('renders with the attendee attendance when its off', () => {
       const {attendanceSwitch} = render({ ...student, attendance: false })

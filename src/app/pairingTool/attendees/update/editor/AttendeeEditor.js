@@ -2,6 +2,15 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {selectLanguages} from '../../../../configuration/configurationSlice'
 import {
+  toggleAttendance,
+  toggleLanguage,
+  toggleRole,
+  updateAttendeeName,
+  updateAttendeeNotes,
+  updateAttendeeSkills,
+  updateAttendeeTutorial
+} from '../../attendeesSlice'
+import {
   Button,
   FormControl,
   FormControlLabel,
@@ -11,17 +20,7 @@ import {
   TextField,
   Switch
 } from '@material-ui/core'
-import firstTimer from '../firstTimer.jpg'
 import './AttendeeEditor.scss'
-import {
-  toggleAttendance,
-  toggleLanguage,
-  toggleRole,
-  updateAttendeeName,
-  updateAttendeeNotes,
-  updateAttendeeSkills,
-  updateAttendeeTutorial
-} from '../../attendeesSlice'
 
 
 export const AttendeeEditor = ({attendee}) => {
@@ -45,17 +44,6 @@ export const AttendeeEditor = ({attendee}) => {
     if (attendee.tutorial !== undefined) setTutorial(attendee.tutorial)
     setLanguages(attendee.languages)
   }, [attendee])
-
-  const firstTimerIcon =
-    <>
-      {attendee.new &&
-      <img
-        data-test-id={testId('new')}
-        className='FirstTimerIcon'
-        src={firstTimer}
-        alt='First Timer'
-      />}
-    </>
 
   const nameInput =
     <TextField
@@ -170,7 +158,6 @@ export const AttendeeEditor = ({attendee}) => {
 
   return (
     <div className='AttendeeEditor' data-test-id='attendee-editor'>
-      {firstTimerIcon}
       {nameInput}
       {attendanceSwitch}
       {roleRadioButtons}
