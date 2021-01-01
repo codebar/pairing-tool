@@ -26,13 +26,31 @@
       border-radius: 10px;
       border: 1px solid #333333;
       cursor: default;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
 
-      &:hover {
-        background-color: #9fc5c9;
+      &:hover {background-color: #97ced2 !important;}
+      &.SelectedToEdit {background-color: #4e96d0;}
+      &.IsAttending {background-color: #8ab67c;}
+      &.IsNotAttending {background-color: #c2c3c9;}
+
+      .AttendeeNameLabel {
+        line-height: 24px;
+        padding-right: 15px;
       }
-
-      &.SelectedToEdit {
-        background-color: #4e96d0;
+      .RoleIcon {
+        width: 30px;
+        height: 24px;
+        padding-right: 15px;
+      }
+      .FirstTimerIcon {
+        width: 24px;
+        height: 24px;
+        padding-right: 15px;
+      }
+      .Hidden {
+        opacity: 0;
       }
     }
 

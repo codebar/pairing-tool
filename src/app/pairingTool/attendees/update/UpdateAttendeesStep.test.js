@@ -1,9 +1,9 @@
-import {renderComponent, testStore} from '../../../../test/testUtils'
 import {screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import {renderComponent, testStore} from '../../../../test/testUtils'
 import {stateAfterParsingCsv} from '../../../../test/fixtures/attendees'
 import {overrideToggle} from '../../../../config/togglesSlice'
-import {selectAttendees} from '../attendeesSlice'
+import {addAttendee} from '../attendeesSlice'
 import {UpdateAttendeesStep} from './UpdateAttendeesStep'
 
 describe('The Update Attendees Step', () => {
@@ -11,42 +11,53 @@ describe('The Update Attendees Step', () => {
   const render = (toggle = {toggle: 'updateAttendeesNewScreen', value: 'false'}) => {
     const store = testStore(stateAfterParsingCsv)
     store.dispatch(overrideToggle(toggle))
+    store.dispatch = jest.fn()
     const renderResult = renderComponent(<UpdateAttendeesStep/>, store)
+    const testId = name => `update-attendees-step-${name}`
     return {
       ...renderResult,
       store,
-      addNewAttendeeButton: () => renderResult.getByTestId('add-new-attendee-button'),
-      attendeesList: () => renderResult.getByTestId('attendees-list'),
-      attendeeDisplayNames: () => renderResult.getAllByTestId('attendee-display-name'),
-      attendeeEditForm: () => renderResult.getByTestId('attendee-editor'),
+      newAttendeeButton: () => renderResult.queryByTestId(testId('new-attendee')),
+      attendeesList: () => renderResult.queryByTestId(testId('list')),
+      goToPairingsButton: () => renderResult.queryByTestId(testId('pairing')),
+      attendeeEditor: () => renderResult.queryByTestId('attendee-editor')
     }
   }
 
-  describe('with new update attendees screen', () => {
+  describe('With new update attendees screen', () => {
     const withNewScreenEnabled = {toggle: 'updateAttendeesNewScreen', value: 'true'}
 
-    it('renders initial elements and controls', () => {
-      const {addNewAttendeeButton, attendeesList} = render(withNewScreenEnabled)
+    it('Adds a new attendee', () => {
+      const {newAttendeeButton, store} = render(withNewScreenEnabled)
 
-      expect(addNewAttendeeButton()).toBeInTheDocument()
-      expect(attendeesList()).toBeInTheDocument()
+      userEvent.click(newAttendeeButton())
+      const newAttendee = {name: '', role: 'Student', languages: [], attendance: true}
+      expect(store.dispatch).toHaveBeenCalledWith(addAttendee(newAttendee))
     })
-    it('can add a new attendee', () => {
-      const {addNewAttendeeButton, attendeeDisplayNames, store} = render(withNewScreenEnabled)
-      const numberOfAttendees = selectAttendees(store.getState()).length
-      expect(attendeeDisplayNames().length).toBe(numberOfAttendees)
 
-      userEvent.click(addNewAttendeeButton())
-
-      expect(attendeeDisplayNames().length).toBe(numberOfAttendees + 1)
-    })
-    it('can select an attendee for modification', () => {
-      const {attendeeEditForm} = render(withNewScreenEnabled)
+    it('Select attendees for modification', () => {
+      const {attendeeEditor} = render(withNewScreenEnabled)
 
       userEvent.click(screen.getByText('Chewbacca'))
+      expect(attendeeEditor()).toBeInTheDocument()
+      expect(attendeeEditor().innerHTML).toContain('Chewbacca')
 
-      expect(attendeeEditForm()).toBeInTheDocument()
-      expect(attendeeEditForm().innerHTML).toContain('Chewbacca')
+      const yodaCard = screen.getByText('Yoda')
+      userEvent.click(yodaCard)
+      expect(attendeeEditor().innerHTML).toContain('Yoda')
+
+      userEvent.click(yodaCard)
+      expect(attendeeEditor()).not.toBeInTheDocument()
+    })
+
+    it('Navigates to the pairings step', () => {
+      const { goToPairingsButton, store } = render(withNewScreenEnabled)
+
+      userEvent.click(goToPairingsButton())
+      expect(store.dispatch).toHaveBeenCalled()
+      // thunk actions are a bit more cheeky and hard to test :(
+      // waiting to see if the fixes in the pairing screens will remove the need of a thunk in the first place
     })
   })
+
 })
