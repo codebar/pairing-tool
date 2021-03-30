@@ -1,11 +1,20 @@
 
 version: 2.1
 
+orbs:
+  cypress: cypress-io/cypress@1.27.0
+
 workflows:
   version: 2
   pipeline:
     jobs:
       - run_tests:
+          filters:
+            branches:
+              only: main
+      - cypress/run:
+          yarn: true
+          executor: cypress/base-14
           filters:
             branches:
               only: main
@@ -15,6 +24,7 @@ workflows:
               only: main
           requires:
             - run_tests
+            - cypress/run
 
 jobs:
   run_tests:

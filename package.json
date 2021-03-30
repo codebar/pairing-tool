@@ -5,6 +5,7 @@
   "homepage": "http://saljuama.github.io/codebar-pairing-tool",
   "scripts": {
     "test": "react-scripts test",
+    "test:e2e": "cypress run",
     "clean": "eslint \"src/**/*.js\" --fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
