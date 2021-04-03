@@ -3,6 +3,7 @@
 /build
 
 cypress/videos/
+cypress/screenshots/
 
 .eslintcache
 

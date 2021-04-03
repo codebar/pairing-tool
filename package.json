@@ -9,7 +9,7 @@
     "clean": "eslint \"src/**/*.js\" --fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "serve": "yarn build && serve -s build",
+    "serve": "yarn build && serve -s build -n",
     "predeploy": "yarn build",
     "deploy": "gh-pages -b gh-pages -e ./docs -d build"
   },

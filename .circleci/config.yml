@@ -20,6 +20,7 @@ workflows:
             - install
       - cypress/run:
           yarn: true
+          cache-key: v1-dependencies-{{ checksum "package.json" }}
           executor: cypress/base-14
           start: yarn serve
           wait-on: 'http://localhost:5000'
