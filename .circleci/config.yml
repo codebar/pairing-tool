@@ -8,18 +8,26 @@ workflows:
   version: 2
   pipeline:
     jobs:
+      - install:
+          filters:
+            branches:
+              only: main
       - run_tests:
           filters:
             branches:
               only: main
+          requires:
+            - install
       - cypress/run:
           yarn: true
           executor: cypress/base-14
-          start: yarn start
-          wait-on: 'http://localhost:3000'
+          start: yarn serve
+          wait-on: 'http://localhost:5000'
           filters:
             branches:
               only: main
+          requires:
+            - install
       - publish_github_page:
           filters:
             branches:
@@ -29,7 +37,7 @@ workflows:
             - cypress/run
 
 jobs:
-  run_tests:
+  install:
     working_directory: ~/saljuama.github.io
     docker:
       - image: circleci/node:14.15.1
@@ -44,6 +52,17 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+  run_tests:
+    working_directory: ~/saljuama.github.io
+    docker:
+      - image: circleci/node:14.15.1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run: yarn test
 
   publish_github_page:
