@@ -15,6 +15,8 @@ workflows:
       - cypress/run:
           yarn: true
           executor: cypress/base-14
+          start: yarn start
+          wait-on: 'http://localhost:3000'
           filters:
             branches:
               only: main
