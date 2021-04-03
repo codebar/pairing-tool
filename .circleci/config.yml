@@ -12,18 +12,12 @@ workflows:
           filters:
             branches:
               only: main
-      - cypress/install:
-          filters:
-            branches:
-              only: main
       - cypress/run:
           yarn: true
           executor: cypress/base-14
           filters:
             branches:
               only: main
-          requires:
-            - cypress/install
       - publish_github_page:
           filters:
             branches:
