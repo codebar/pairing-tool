@@ -34,7 +34,7 @@ const rejectStyle = {
   backgroundColor: '#ffe4e7'
 }
 
-export const CsvFileDropzone = () => {
+export const CsvFileDropDropzone = () => {
   const dispatch = useDispatch()
   const onDrop = useCallback(
     acceptedFiles => acceptedFiles.forEach(file => dispatch(parseAttendeeList(file))),

@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 export const initialState = {
-  updateAttendeesNewScreen: true
+  csvFileDropzoneWithDnd: false
 }
 
 const togglesSlice = createSlice({
