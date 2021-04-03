@@ -1,12 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit'
-
-export const initialState = {
-  csvFileDropzoneWithDnd: false
-}
+import {featureToggles} from './featureToggles'
 
 const togglesSlice = createSlice({
   name: 'toggles',
-  initialState,
+  initialState: featureToggles,
   reducers: {
     overrideToggle: (state, action) => {
       if (action.payload.toggle in state)
