@@ -20,6 +20,7 @@ workflows:
             - install
       - cypress/run:
           yarn: true
+          install-command: 'echo "Using install from cache"'
           cache-key: v1-dependencies-{{ checksum "package.json" }}
           executor: cypress/base-14
           start: yarn serve
@@ -48,10 +49,11 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: yarn install
+      - run: yarn install && yarn build
       - save_cache:
           paths:
             - node_modules
+            - build
           key: v1-dependencies-{{ checksum "package.json" }}
 
   run_tests:
