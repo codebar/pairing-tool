@@ -8,30 +8,18 @@ workflows:
   version: 2
   pipeline:
     jobs:
-      - cypress/install:
-          executor: cypress/base-14
-          cache-key: v1-dependencies-{{ checksum "package.json" }}
-          yarn: true
-          filters:
-            branches:
-              only: main
       - run_tests:
           filters:
             branches:
               only: main
-          requires:
-            - cypress/install
       - cypress/run:
           executor: cypress/base-14
-          cache-key: v1-dependencies-{{ checksum "package.json" }}
           yarn: true
           start: yarn start
           wait-on: 'http://localhost:3000'
           filters:
             branches:
               only: main
-          requires:
-            - cypress/install
       - publish_github_page:
           filters:
             branches:
@@ -51,6 +39,11 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn test
   publish_github_page:
     working_directory: ~/saljuama.github.io
