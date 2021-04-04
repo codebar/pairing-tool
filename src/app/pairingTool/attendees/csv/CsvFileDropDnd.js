@@ -21,10 +21,15 @@ export const CsvFileDropDnd = () => {
         ref={inputFile}
         onChange={parseCsv}
         style={{display: 'none'}}
-        accept={'.csv'}
+        accept={'*.csv'}
         data-test='csv-upload-button'
       />
-      <Button variant='contained' color='primary' component='span' onClick={() => inputFile.current.click()}>
+      <Button
+        variant='contained'
+        color='primary'
+        onClick={() => inputFile.current.click()}
+        className='UploadCsvButton'
+      >
           Upload CSV
       </Button>
     </>

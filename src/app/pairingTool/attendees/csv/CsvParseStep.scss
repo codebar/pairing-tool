@@ -13,8 +13,17 @@
   img {
     width: 798px;
     height: 160px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     border: 1px solid grey;
     border-radius: 10px;
+  }
+
+  .UploadCsvButton {
+    width: 300px;
+    margin: 50px auto;
+
+    span {
+      margin: 0;
+    }
   }
 }
