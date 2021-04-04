@@ -53,11 +53,15 @@ export const CsvFileDropDropzone = () => {
   )
 
   return (
-    <div {...getRootProps({style})}>
-      <input {...getInputProps()} />
-      <span>Drag and Drop the CSV here</span>
-      <span>or</span>
-      <span>Click here to select the file</span>
-    </div>
+    <>
+      <span>And process the CSV file here</span>
+      <div {...getRootProps({style})}>
+        <input {...getInputProps()} />
+        <span>Drag and Drop the CSV here</span>
+        <span>or</span>
+        <span>Click here to select the file</span>
+      </div>
+    </>
+
   )
 }

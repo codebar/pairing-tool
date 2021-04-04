@@ -4,8 +4,8 @@ import {featureEnabled} from '../../../../config/togglesSlice'
 import {CsvFileDropDropzone} from './CsvFileDropDropzone'
 import {CsvFileDropDnd} from './CsvFileDropDnd'
 
-export const CsvFileDrop = () => {
-  const useNewCsvDropZone = useSelector(featureEnabled('csvFileDropzoneWithDnd'))
+export const UploadWorkshopCsv = () => {
+  const useNewCsvDropZone = useSelector(featureEnabled('csvUploadNewButton'))
 
   return (useNewCsvDropZone
     ? <CsvFileDropDnd/>
