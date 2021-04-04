@@ -1,4 +1,4 @@
 export const featureToggles = {
   updateAttendeesNewScreen: true,
-  csvUploadNewButton: false
+  csvUploadNewButton: true
 }
