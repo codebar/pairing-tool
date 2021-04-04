@@ -12,7 +12,6 @@ workflows:
           executor: cypress/base-14
           cache-key: v1-dependencies-{{ checksum "package.json" }}
           yarn: true
-          build: yarn build
           filters:
             branches:
               only: main
@@ -26,6 +25,7 @@ workflows:
           executor: cypress/base-14
           cache-key: v1-dependencies-{{ checksum "package.json" }}
           yarn: true
+          build: yarn build
           start: yarn serve
           wait-on: 'http://localhost:5000'
           filters:
