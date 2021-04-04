@@ -1,3 +1,4 @@
 export const featureToggles = {
-  csvFileDropzoneWithDnd: false
+  updateAttendeesNewScreen: true,
+  csvUploadNewButton: false
 }
