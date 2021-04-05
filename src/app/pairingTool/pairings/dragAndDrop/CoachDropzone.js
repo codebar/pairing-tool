@@ -7,11 +7,11 @@ import './CoachDrozone.scss'
 
 export const CoachDropzone = ({groupId, children}) => {
   const dispatch = useDispatch()
-  const [{isOver}, drop] = useDrop({
+  const [{isOver}, drop] = useDrop(() => ({
     accept: DraggableType.COACH,
     drop: item => dispatch(moveCoachToGroup({coachId: item.id, groupId})),
-    collect: monitor => ({isOver: !!monitor.isOver()}),
-  })
+    collect: monitor => ({isOver: !!monitor.isOver()})
+  }))
   return (
     <div ref={drop} className={`CoachDropzone ${isOver && 'IsOver'}`}>
       {children}
