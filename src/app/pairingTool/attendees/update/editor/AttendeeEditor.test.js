@@ -1,7 +1,6 @@
 import userEvent from '@testing-library/user-event'
 import {renderComponent, testStore} from '../../../../../test/testUtils'
 import {coach, stateAfterParsingCsv, student} from '../../../../../test/fixtures/attendees'
-import {overrideToggle} from '../../../../../config/togglesSlice'
 import {
   toggleAttendance,
   toggleLanguage,
@@ -17,7 +16,6 @@ describe('The Attendee Editor', () => {
 
   const render = attendee => {
     const store = testStore(stateAfterParsingCsv)
-    store.dispatch(overrideToggle({toggle: 'updateAttendeesNewScreen', value: 'true'}))
     store.dispatch = jest.fn()
     const renderResult = renderComponent(<AttendeeEditor attendee={attendee} />, store)
     const extractHtmlTagFrom = tag => container => container.getElementsByTagName(tag)[0]
