@@ -27,6 +27,7 @@
     "react-redux": "^7.2.2"
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^1.6.0",
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
