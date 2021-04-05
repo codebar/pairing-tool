@@ -8,7 +8,7 @@ describe('The Workshop Attendees component', () => {
     const {getByText} = renderComponent(<PairingTool/>)
 
     expect(getByText(/Pairing Tool/i)).toBeInTheDocument()
-    expect(getByText(/Drag and Drop/i)).toBeInTheDocument()
+    expect(getByText(/Upload CSV/i)).toBeInTheDocument()
   })
 
 })
