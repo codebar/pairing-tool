@@ -2,8 +2,9 @@ import React, {useRef} from 'react'
 import {useDispatch} from 'react-redux'
 import {parseAttendeeList} from '../attendeesSlice'
 import {Button} from '@material-ui/core'
+import './UploadCsvButton.scss'
 
-export const CsvFileDropDnd = () => {
+export const UploadCsvButton = () => {
   const dispatch = useDispatch()
   const inputFile = useRef(null)
 
