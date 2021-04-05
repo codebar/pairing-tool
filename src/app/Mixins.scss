@@ -9,6 +9,27 @@
   }
 }
 
+@mixin Draggable($color) {
+  cursor: move;
+  margin: 10px;
+
+  &.Dragging {
+    .Button {
+      background-color: $color;
+      &:hover{
+        background-color: $color;
+      }
+    }
+  }
+
+  .Button {
+    background-color: whitesmoke;
+    &:hover{
+      background-color: whitesmoke;
+    }
+  }
+}
+
 @mixin LanguageButton($color) {
   &.Inactive {
     color: $color;

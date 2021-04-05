@@ -1,16 +1,16 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 import {selectLanguages} from '../../../configuration/configurationSlice'
-import {DraggableName} from './DraggableName'
+import {AttendeeDraggableName} from './AttendeeDraggableName'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import './AttendeeCompactCard.scss'
+import './AttendeeCard.scss'
 
-export const AttendeeCompactCard = ({data, type}) => {
+export const AttendeeCard = ({data, type}) => {
   const languages = useSelector(selectLanguages)
   return (
-    <Card className='AttendeeCompactCard'>
+    <Card className='AttendeeCard'>
       <CardContent className='CardContent'>
         <section>
           {languages.map(language =>
@@ -23,7 +23,7 @@ export const AttendeeCompactCard = ({data, type}) => {
             </Button>
           )}
         </section>
-        <DraggableName attendee={data} type={type}/>
+        <AttendeeDraggableName attendee={data} type={type}/>
       </CardContent>
     </Card>
   )

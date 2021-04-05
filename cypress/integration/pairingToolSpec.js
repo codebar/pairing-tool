@@ -16,8 +16,8 @@ describe('The Pairing Tool', () => {
 
     cy.contains('Step 3: Start organising the pairs by dragging the names of the participants to groups')
 
-    cy.get('.AvailableStudent').contains('Ragnar').drag('.StudentDropzone')
-    cy.get('.AvailableCoach').contains('Lagertha').drag('.CoachDropzone')
+    cy.get('.DraggableStudent').contains('Ragnar').drag('.StudentDropzone')
+    cy.get('.DraggableCoach').contains('Lagertha').drag('.CoachDropzone')
 
     cy.contains('JS')
   })

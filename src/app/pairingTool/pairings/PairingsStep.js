@@ -9,8 +9,8 @@ import {
   selectAvailableStudents,
   selectPairingGroups
 } from './pairingsSlice'
-import {AttendeeCompactCard} from './dragAndDrop/AttendeeCompactCard'
-import {DraggableName} from './dragAndDrop/DraggableName'
+import {AttendeeCard} from './dragAndDrop/AttendeeCard'
+import {AttendeeDraggableName} from './dragAndDrop/AttendeeDraggableName'
 import {StudentDropzone} from './dragAndDrop/StudentDropzone'
 import {CoachDropzone} from './dragAndDrop/CoachDropzone'
 import Button from '@material-ui/core/Button'
@@ -43,12 +43,12 @@ export const PairingsStep = () => {
           <div className='Attendees'>
             <h4>Students</h4>
             <StudentDropzone groupId={0}>
-              {availableStudents.map(student => <AttendeeCompactCard data={student} type={DraggableType.STUDENT}/>)}
+              {availableStudents.map(student => <AttendeeCard data={student} type={DraggableType.STUDENT}/>)}
               {availableStudents.length === 0 && <span className='EmptyDropzone'>Drag a student here</span>}
             </StudentDropzone>
             <h4>Coaches</h4>
             <CoachDropzone groupId={0}>
-              {availableCoaches.map(coach => <AttendeeCompactCard data={coach} type={DraggableType.COACH}/>)}
+              {availableCoaches.map(coach => <AttendeeCard data={coach} type={DraggableType.COACH}/>)}
               {availableCoaches.length === 0 && <span className='EmptyDropzone'>Drag a coach here</span>}
             </CoachDropzone>
           </div>
@@ -58,11 +58,11 @@ export const PairingsStep = () => {
             {groups.map(group =>
               <div className='PairingGroup'>
                 <StudentDropzone groupId={group.id}>
-                  {group.students.map(student => <DraggableName attendee={student} type={DraggableType.STUDENT}/>)}
+                  {group.students.map(student => <AttendeeDraggableName attendee={student} type={DraggableType.STUDENT}/>)}
                   {group.students.length === 0 && <span className='EmptyDropzone'>Drag a student here</span>}
                 </StudentDropzone>
                 <CoachDropzone groupId={group.id}>
-                  {group.coaches.map(coach => <DraggableName attendee={coach} type={DraggableType.COACH}/>)}
+                  {group.coaches.map(coach => <AttendeeDraggableName attendee={coach} type={DraggableType.COACH}/>)}
                   {group.coaches.length === 0 && <span className='EmptyDropzone'>Drag a coach here</span>}
                 </CoachDropzone>
                 <div className='PairingGroupLanguages'>
