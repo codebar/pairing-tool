@@ -11,7 +11,7 @@ export const StudentDropzone = ({groupId, children}) => {
     accept: DraggableType.STUDENT,
     drop: item => dispatch(moveStudentToGroup({studentId: item.id, groupId})),
     collect: monitor => ({isOver: !!monitor.isOver()}),
-  }))
+  }), [groupId])
   return (
     <div ref={drop} className={`StudentDropzone ${isOver === true ? 'IsOver' : ''}`}>
       {children}
