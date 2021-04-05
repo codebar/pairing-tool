@@ -1,20 +1,13 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {addAttendee, goToPairingStep, selectAttendees, selectCoaches, selectStudents} from '../attendeesSlice'
-import {featureEnabled} from '../../../../config/togglesSlice'
-import {AttendeeCard} from './AttendeeCard'
+import {addAttendee, goToPairingStep, selectAttendees} from '../attendeesSlice'
 import {AttendeeEditor} from './editor/AttendeeEditor'
 import {AttendeeMiniCard} from './list/AttendeeMiniCard'
-import {Button, IconButton, TextField} from '@material-ui/core'
+import {Button, IconButton} from '@material-ui/core'
 import {PersonAdd as PersonAddIcon, SkipNext as SkipNextIcon} from '@material-ui/icons'
 import './UpdateAttendeesStep.scss'
 
 export const UpdateAttendeesStep = () => {
-  const newScreenEnabled = useSelector(featureEnabled('updateAttendeesNewScreen'))
-  return newScreenEnabled ?  <NewScreen/> : <CurrentScreen />
-}
-
-const NewScreen = () => {
   const [selectedAttendee, setSelectedAttendee] = useState(undefined)
   const attendees = useSelector(selectAttendees)
   const dispatch = useDispatch()
@@ -68,57 +61,6 @@ const NewScreen = () => {
           {attendeesCards}
         </div>
         {selectedAttendee !== undefined && <AttendeeEditor attendee={selectedAttendee}/>}
-      </div>
-    </div>
-  )
-}
-
-const CurrentScreen = () => {
-  const [newStudent, setNewStudent] = useState('')
-  const [newCoach, setNewCoach] = useState('')
-  const students = useSelector(selectStudents)
-  const coaches = useSelector(selectCoaches)
-  const dispatch = useDispatch()
-
-  const createNewCoach = () => {
-    if (newCoach !== '') {
-      dispatch(addAttendee({name: newCoach, role: 'Coach', languages: [], attendance: true}))
-      setNewCoach('')
-    }
-  }
-
-  const createNewStudent = () => {
-    if (newStudent !== '') {
-      dispatch(addAttendee({name: newStudent, role: 'Student', languages: [], attendance: true}))
-      setNewStudent('')
-    }
-  }
-
-  return (
-    <div className='UpdateAttendeesStep'>
-      <div className='UpdateAttendeesStepHeader'>
-        <span>Step 2: Update attendance, skills and add new students or coaches</span>
-        <Button className='UpdateAttendeesStepDone' variant='contained' color='primary' endIcon={<SkipNextIcon/>} onClick={() => dispatch(goToPairingStep())}>
-          Continue to pairings
-        </Button>
-      </div>
-      <div className='UpdateAttendeesStepContent'>
-        <div className='Students'>
-          <h3>Students</h3>
-          <div className='AddNew'>
-            <TextField className='AddNewName' label='Name' value={newStudent} onChange={e => setNewStudent(e.target.value)} fullWidth/>
-            <Button variant='outlined' color='primary' onClick={createNewStudent}>New Student</Button>
-          </div>
-          {students.slice().reverse().map(attendee => <AttendeeCard key={attendee.id} data={attendee}/>)}
-        </div>
-        <div className='Coaches'>
-          <h3>Coaches</h3>
-          <div className='AddNew'>
-            <TextField className='AddNewName' label='Name' value={newCoach} onChange={e => setNewCoach(e.target.value)} fullWidth/>
-            <Button variant='outlined' color='primary' onClick={createNewCoach}>New Coach</Button>
-          </div>
-          {coaches.slice().reverse().map(attendee => <AttendeeCard key={attendee.id} data={attendee}/>)}
-        </div>
       </div>
     </div>
   )
