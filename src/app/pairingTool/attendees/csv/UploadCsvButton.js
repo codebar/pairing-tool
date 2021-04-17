@@ -23,7 +23,7 @@ export const UploadCsvButton = () => {
         onChange={parseCsv}
         style={{display: 'none'}}
         accept={'*.csv'}
-        data-test='csv-upload-button'
+        data-test-id='csv-upload-button'
       />
       <Button
         variant='contained'
