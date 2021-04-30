@@ -2,7 +2,7 @@
   "name": "pairing-tool",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://saljuama.github.io/codebar-pairing-tool",
+  "homepage": "http://codebar.github.io/pairing-tool",
   "scripts": {
     "test": "react-scripts test",
     "test:e2e": "cypress run",
