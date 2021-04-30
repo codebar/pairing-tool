@@ -1,4 +1,0 @@
-@import "../../../Mixins";
-
-.DraggableStudent { @include Draggable(lightpink); }
-.DraggableCoach { @include Draggable(lightsalmon); }
