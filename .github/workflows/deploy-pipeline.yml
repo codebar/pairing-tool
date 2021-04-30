@@ -61,8 +61,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install dependencies
+      - name: Install dependencies 📦
         run: yarn install
 
-      - name: Deploy
-        run: yarn deploy
+      - name: Build 🔧
+        run: yarn build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build # The folder the action should deploy.
