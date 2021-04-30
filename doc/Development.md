@@ -51,7 +51,7 @@ const AnyComponent = () => {
 #### Overriding a toggle value
 With the querystring parameters:
 * Local: after `yarn start` we can visit `http://localhost:3000?myToggle=true`
-* In GH pages: visit `https://saljuama.github.io/codebar-pairing-tool?myToggle=true`
+* In GH pages: visit `https://codebar.github.io/pairing-tool/?myToggle=true`
 
 #### Releasing and cleaning up
 To release a feature, or a change, hidden under a feature toggle, just go to the `src/config/featureToggles.js` file and

@@ -1,6 +1,6 @@
 # User Manual
 
-This is a [first prototype of the pairing tool](https://saljuama.github.io/codebar-pairing-tool/) and is meant to help doing the pairing during the workshops.
+This is a [first prototype of the pairing tool](https://codebar.github.io/pairing-tool) and is meant to help with the pairing during the workshops.
 
 
 ## Limitations
@@ -25,7 +25,7 @@ And upload the CSV file, when clicking the button select the file in your file s
 
 ### 2. Update attendance and skills for each participant
 
-Recommended to do this during the round of presentations at the beginning of the workshop. For each participant:
+Recommendation: Do this during the round of presentations at the beginning of the workshop. For each participant:
 
 * Check the attendance
 * Update the skills if there is any that is not correct or missing
@@ -47,7 +47,7 @@ Start dragging and dropping students and coaches into the respective destination
 
 When you drag and drop a person, in the pair box will be displayed the skills that everyone in that pair have in common.
 
-Also a new pair box will appear to form more pairs.
+Also, a new box for a new pair will appear to form more pairs.
 
 It is possible to drag more than 1 student/coach in a pair, so it is possible to have triples and give 2 students to a coach or pair 2 coaches with 1 student.
 
