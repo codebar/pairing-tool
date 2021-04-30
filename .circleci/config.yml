@@ -1,0 +1,69 @@
+
+version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@1.27.0
+
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+      - run_tests:
+          filters:
+            branches:
+              only: main
+      - cypress/run:
+          executor: cypress/base-14
+          yarn: true
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+          filters:
+            branches:
+              only: main
+      - publish_github_page:
+          filters:
+            branches:
+              only: main
+          requires:
+            - run_tests
+            - cypress/run
+
+jobs:
+  run_tests:
+    working_directory: ~/saljuama.github.io
+    docker:
+      - image: circleci/node:14.15.1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v2-dependencies-{{ checksum "package.json" }}
+      - run: yarn test
+  publish_github_page:
+    working_directory: ~/saljuama.github.io
+    docker:
+      - image: circleci/node:14.15.1
+    steps:
+      - setup_github_write_access
+      - checkout
+      - restore_cache:
+          keys:
+            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-
+      - run: yarn deploy
+
+commands:
+  setup_github_write_access:
+    description: "Setup Github write access"
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "08:05:c7:18:e2:e6:83:8e:f6:26:37:b9:3b:f3:e4:8b"
+      - run: git config --global user.email "circleci@saljuama.dev"
+      - run: git config --global user.name "saljuama (Circle CI)"

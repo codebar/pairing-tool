@@ -1,0 +1,13 @@
+@import '../../../configuration/Languages';
+
+.AttendeeCard {
+  margin-bottom: 5px;
+
+  .CardContent {
+    padding: 5px 10px 5px 16px !important;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

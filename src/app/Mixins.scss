@@ -1,0 +1,48 @@
+@mixin Dropzone {
+  background-color: #e0e0e0;
+  border: 5px dashed #c8c8c8;
+  border-radius: 10px;
+  padding: 10px;
+
+  &.IsOver {
+    background-color: aquamarine;
+  }
+}
+
+@mixin Draggable($color) {
+  cursor: move;
+  margin: 10px;
+
+  &.Dragging {
+    .Button {
+      background-color: $color;
+      &:hover{
+        background-color: $color;
+      }
+    }
+  }
+
+  .Button {
+    background-color: whitesmoke;
+    &:hover{
+      background-color: whitesmoke;
+    }
+  }
+}
+
+@mixin LanguageButton($color) {
+  &.Inactive {
+    color: $color;
+    background-color: transparent;
+    &:hover{
+      background-color: transparent;
+    }
+  }
+  &.Active {
+    color: white;
+    background-color: $color;
+    &:hover{
+      background-color: $color;
+    }
+  }
+}

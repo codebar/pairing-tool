@@ -1,0 +1,5 @@
+@import "../../../Mixins.scss";
+
+.CoachDropzone {
+  @include Dropzone;
+}
