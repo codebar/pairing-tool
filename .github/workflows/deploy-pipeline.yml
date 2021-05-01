@@ -10,16 +10,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 💻
-        uses: ./.github/actions/checkout
-      - name: Run Unit Tests 🧪
+        uses: actions/checkout@v2
+      - name: Restore cache 💨
+        uses: ./.github/actions/dependencies-and-cache
+      - name: Dependencies 📦
+        run: yarn install
+      - name: Run Tests 🧪
         run: yarn test
 
   functional-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 💻
-        uses: ./.github/actions/checkout
-      - name: Cypress Run 🧪
+        uses: actions/checkout@v2
+      - name: Restore cache 💨
+        uses: ./.github/actions/dependencies-and-cache
+      - name: Run Tests 🧪
         uses: cypress-io/github-action@v2
         with:
           build: yarn build
@@ -30,7 +36,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 💻
-        uses: ./.github/actions/checkout
+        uses: actions/checkout@v2
+      - name: Restore cache 💨
+        uses: ./.github/actions/dependencies-and-cache
+      - name: Dependencies 📦
+        run: yarn install
       - name: Build 🔧
         run: yarn build
       - name: Deploy 🚀

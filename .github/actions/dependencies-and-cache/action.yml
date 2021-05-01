@@ -1,11 +1,8 @@
-name: Checkout 👋
+name: Setup ⚙️ + Dependencies 📦
 description: Get the code from the repo and install dependencies
 runs:
   using: composite
   steps:
-    - name: Getting the code 💻
-      uses: actions/checkout@v2
-
     - name: Setup NodeJS 🏃‍
       uses: actions/setup-node@v2
       with:
@@ -22,6 +19,3 @@ runs:
         key: ${{ runner.os }}-dependencies-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-dependencies-
-
-    - name: Install dependencies 📦
-      run: yarn install
