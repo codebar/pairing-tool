@@ -11,20 +11,28 @@ jobs:
     steps:
       - name: Checkout 💻
         uses: ./.github/actions/checkout
-
       - name: Run Unit Tests 🧪
         run: yarn test
 
-  deploy-page:
-    needs: unit-tests
+  functional-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 💻
         uses: ./.github/actions/checkout
+      - name: Cypress Run 🧪
+        uses: cypress-io/github-action@v2
+        with:
+          build: yarn build
+          start: yarn start
 
+  deploy-page:
+    needs: [unit-tests, functional-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 💻
+        uses: ./.github/actions/checkout
       - name: Build 🔧
         run: yarn build
-
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
