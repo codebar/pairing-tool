@@ -59,6 +59,10 @@ jobs:
     steps:
       - name: Checkout 💻
         uses: actions/checkout@v2
+      - name: Setup NodeJS 🏃‍
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
       - name: Restore cache 💨
         uses: actions/cache@v2
         id: yarn-build-cache
@@ -75,6 +79,7 @@ jobs:
         with:
           build: yarn build
           start: yarn start
+          wait-on: http://localhost:3000
 
   deploy-page:
     needs: [unit-tests, functional-tests]
