@@ -1,5 +1,5 @@
-name: Setup ⚙️ + Dependencies 📦
-description: Get the code from the repo and install dependencies
+name: Restore Cache 💨
+description: Add NodeJS 14.x and restore node modules and cypress binary
 runs:
   using: composite
   steps:
