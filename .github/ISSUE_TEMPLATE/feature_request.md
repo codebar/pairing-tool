@@ -1,22 +1,25 @@
 ---
-name: Feature request
-about: Suggest an new idea for this project
+name: New Feature
+about: Suggest new ideas and/or functionalities
 title: ''
-labels: feature request
+labels: enhancement
 assignees: saljuama
 
 ---
 
+> INSTRUCTIONS:
+> * Fill the sections in the template (they start with `##`)
+> * Delete the lines that start with `>` before submitting the issue
+
 ## Description 
+> Add here a description of the new functionality 
+> you would like to see built in the application
 
-> Give a clear and concise description of what is the feature or what is the change that you'd like to see
-
-## Context 
-
-> Describe why are you requesting this: 
->   Ex. I always have to manually do [...]
->.  Ex. I'm always frustrated when [...]
+## Additional Context 
+> If applicable, describe: 
+> * why are you requesting this? 
+> * what problem are you trying to solve? 
+> * any other relevant information 
 
 ## Alternatives considered
-
-> Include here possible solutions, you might have thought of, if any
+> If you have thought of other solutions, describe them briefly here
