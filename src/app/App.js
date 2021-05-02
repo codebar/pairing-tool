@@ -25,8 +25,12 @@ const PrototypeNotice = ({onClose}) =>
   <div className='PrototypeNotice'>
     <Alert severity='info' color='warning' onClose={onClose}>
       <AlertTitle>The Pairing Tool is currently a prototype</AlertTitle>
-      Your feedback at this stage is <strong>highly appreciated!</strong>!
+      There is a list of known limitations available in the&nbsp;
+      <a href='https://github.com/codebar/pairing-tool/blob/main/doc/UserManual.md' target='_blank' rel='noreferrer'>
+        user manual
+      </a>
       <br/>
+      Your feedback at this stage is <strong>highly appreciated!</strong>!&nbsp;
       <FeedbackLink>Contact the maintainers</FeedbackLink>
     </Alert>
   </div>
