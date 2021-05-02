@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {selectLanguages} from '../../configuration/configurationSlice'
+import {selectLanguageNames} from '../../configuration/configurationSlice'
 import {reviewAttendeesAgain} from '../attendees/attendeesSlice'
 
 export const initialState = {
@@ -51,7 +51,7 @@ export const selectPairingGroups = state =>
   sortByIdAscending(
     calculateCommonLanguages(
       state.pairings,
-      selectLanguages(state),
+      selectLanguageNames(state),
       addEmptyGroup(
         mergePairingGroups(
           organizePairingGroups(state.pairings, 'students'),

@@ -1,6 +1,6 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
-import {selectLanguages} from '../../../configuration/configurationSlice'
+import {selectLanguageNames} from '../../../configuration/configurationSlice'
 import {AttendeeDraggableName} from './AttendeeDraggableName'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent'
 import './AttendeeCard.scss'
 
 export const AttendeeCard = ({data, type}) => {
-  const languages = useSelector(selectLanguages)
+  const languages = useSelector(selectLanguageNames)
   return (
     <Card className='AttendeeCard'>
       <CardContent className='CardContent'>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {selectLanguages} from '../../../../configuration/configurationSlice'
+import {selectLanguageNames} from '../../../../configuration/configurationSlice'
 import {
   toggleAttendance,
   toggleLanguage,
@@ -23,7 +23,7 @@ import './AttendeeEditor.scss'
 
 
 export const AttendeeEditor = ({attendee}) => {
-  const globalLanguages = useSelector(selectLanguages)
+  const globalLanguages = useSelector(selectLanguageNames)
   const [name, setName] = useState('')
   const [attendance, setAttendance] = useState(false)
   const [role, setRole] = useState('')

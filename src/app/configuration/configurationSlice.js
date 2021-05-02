@@ -14,4 +14,4 @@ const configurationSlice = createSlice({
 })
 export const configurationReducer = configurationSlice.reducer
 
-export const selectLanguages = state => state.configuration.languages
+export const selectLanguageNames = state => state.configuration.languages
