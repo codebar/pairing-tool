@@ -1,3 +1,6 @@
+import { initialState as configuration } from '../../app/configuration/configurationSlice'
+import { featureToggles as toggles } from '../../config/featureToggles'
+
 export const student = {
   id: 1,
   attendance: false,
@@ -21,8 +24,8 @@ export const coach = {
 }
 
 export const stateAfterParsingCsv = {
-  toggles: {updateAttendeesNewScreen: false},
-  configuration: {languages: ['HTML', 'CSS', 'JS', 'Python', 'Ruby', 'SQL', 'Java', 'Other']},
+  toggles,
+  configuration,
   attendees: {
     list: [
       {

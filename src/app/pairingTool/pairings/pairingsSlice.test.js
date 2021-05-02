@@ -8,6 +8,7 @@ import {
   selectAvailableStudents,
   selectPairingGroups
 } from './pairingsSlice'
+import { initialState as configuration } from '../../configuration/configurationSlice'
 
 describe('The Pairings Slice', () => {
 
@@ -103,7 +104,7 @@ describe('The Pairings Slice', () => {
   })
 
   describe('Selecting pairing groups', () => {
-    const rootState = pairings => ({pairings, configuration: {languages: ['HTML', 'CSS', 'JS', 'Python', 'Ruby', 'SQL', 'Java', 'Other']}})
+    const rootState = pairings => ({pairings, configuration})
 
     it('excludes entries from group 0', () => {
       const state = {
