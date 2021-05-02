@@ -1,6 +1,6 @@
 ---
 name: Question
-about: Ask anything you want to know
+about: Ask anything you want to know - Use this if none of the categories apply to your request
 title: ''
 labels: question
 assignees: saljuama
