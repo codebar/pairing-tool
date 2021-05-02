@@ -8,8 +8,11 @@ assignees: saljuama
 ---
 
 > INSTRUCTIONS:
+> * Add a title summarizing the change
 > * Fill the sections in the template (they start with `##`)
-> * Delete the lines that start with `>` before submitting the issue
+> * Delete the lines that start with `>`
+> * In the projects section (right column), add the `Pairing Tool` project
+> * Click on the `Submit new issue` button!
 
 ## Description
 > Add a short description as concise as possible: 
