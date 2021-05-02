@@ -1,16 +1,32 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {Alert, AlertTitle} from '@material-ui/lab'
+import {FeedbackLink} from './navigation/FeedbackLink'
+import {NavigationBar} from './navigation/NavigationBar'
 import {PairingTool} from './pairingTool/PairingTool'
-import smallLogo from './logo200.png'
 import './App.scss'
 
-export const App = () => (
-  <div className='App'>
-    <div className='AppHeader'>
-      <img alt='Codebar' src={smallLogo} />
-      <span>Pairing Tool</span>
+export const App = () => {
+  const [displayPrototypeNotice, togglePrototypeNotice] = useState(true)
+
+  return (
+    <div className='App'>
+      <div className='AppHeader'>
+        <NavigationBar/>
+      </div>
+      <div className='AppContent'>
+        {displayPrototypeNotice && <PrototypeNotice onClose={() => togglePrototypeNotice(!displayPrototypeNotice)}/>}
+        <PairingTool/>
+      </div>
     </div>
-    <div className='AppContent'>
-      <PairingTool/>
-    </div>
+  )
+}
+
+const PrototypeNotice = ({onClose}) =>
+  <div className='PrototypeNotice'>
+    <Alert severity='info' color='warning' onClose={onClose}>
+      <AlertTitle>The Pairing Tool is currently a prototype</AlertTitle>
+      Your feedback at this stage is <strong>highly appreciated!</strong>!
+      <br/>
+      <FeedbackLink>Contact the maintainers</FeedbackLink>
+    </Alert>
   </div>
-)
