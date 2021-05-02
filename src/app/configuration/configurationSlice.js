@@ -1,7 +1,17 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 export const initialState = {
-  languages: ['HTML', 'CSS', 'JS', 'Python', 'Ruby', 'SQL', 'Java', 'PHP', 'Other']
+  languages: [
+    { name: 'HTML' },
+    { name: 'CSS' },
+    { name: 'JS' },
+    { name: 'Python' },
+    { name: 'Ruby' },
+    { name: 'SQL' },
+    { name: 'Java' },
+    { name: 'PHP' },
+    { name: 'Other' }
+  ]
 }
 
 const configurationSlice = createSlice({
@@ -14,4 +24,4 @@ const configurationSlice = createSlice({
 })
 export const configurationReducer = configurationSlice.reducer
 
-export const selectLanguageNames = state => state.configuration.languages
+export const selectLanguageNames = state => state.configuration.languages.map(language => language.name)
