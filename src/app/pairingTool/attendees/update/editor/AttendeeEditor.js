@@ -187,8 +187,7 @@ export const AttendeeEditor = ({attendee}) => {
         {languageButtons}
       </div>
       <div className='ComingSoon'>
-        <p><em>Here we can add more configuration options in the future</em></p>
-        <p><em>Useful when we want to persist this information and/or auto-calculate pairs</em></p>
+        <p><em>~~ More elements coming soon! ~~</em></p>
       </div>
 
     </div>
