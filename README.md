@@ -1,13 +1,19 @@
-# Codebar: Pairing Tool
+# Pairing Tool
 
 ![Build](https://github.com/codebar/pairing-tool/actions/workflows/pipeline.yml/badge.svg)
+:sparkles::computer: [Try it](https://codebar.github.io/pairing-tool) :computer::sparkles:
+
+## Support 
+If you have any issue, feedback, question, suggestion or request, contact the maintainers [here](https://github.com/codebar/pairing-tool/issues/new/choose).
 
 ## Useful Links
-
-* [Application](https://codebar.github.io/pairing-tool)
 * [User manual](doc/UserManual.md)
 * [Developer guide](doc/Development.md)
 
-## Support
+## Change Log
 
-If you have any feedback, question, suggestion or request, contact the maintainers [here](https://github.com/codebar/pairing-tool/issues/new/choose). 
+#### May 9th 2021
+ * Improved the language detection for Javascript and Java
+
+#### May 2nd 2021
+ * Prototype release
