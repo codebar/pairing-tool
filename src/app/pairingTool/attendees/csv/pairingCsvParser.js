@@ -4,7 +4,7 @@ const parseLanguagesFrom = (information,languageDetectionRules) => {
   return languageDetectionRules.reduce(
     (matchedLanguages, languageRules) => {
       const language = languageRules.name
-      const includes = [...languageRules.alias.map(x => x.toLowerCase()), language.toLowerCase()]
+      const includes = [language.toLowerCase(), ...languageRules.alias.map(x => x.toLowerCase())]
       const excludes = languageRules.exclusions.map(x => x.toLowerCase())
       const wordsForDetection = information.toLowerCase().split(' ')
 

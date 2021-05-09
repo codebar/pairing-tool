@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 import deepEqual from 'deep-equal'
 import pairingCsvParser from './csv/pairingCsvParser'
-import {selectLanguageNames} from '../../configuration/configurationSlice'
+import {selectLanguageDetectionRules} from '../../configuration/configurationSlice'
 import {addPeopleForPairings} from '../pairings/pairingsSlice'
 
 export const initialState = {
@@ -101,7 +101,7 @@ export const selectReadyForPairing = state => state.attendees.readyForPairing
 export const parseAttendeeList = file => async (dispatch, getState) => {
   try {
     const csv = await file.text()
-    const languages = selectLanguageNames(getState())
+    const languages = selectLanguageDetectionRules(getState())
     pairingCsvParser.parse(csv, languages).forEach(attendee => dispatch(addAttendee(attendee)))
   } catch (e) {
     console.error(e)
