@@ -3,6 +3,7 @@ import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 import {useDispatch, useSelector} from 'react-redux'
 import {DraggableType} from '../../../config/dnd'
+import {featureEnabled} from '../../../config/togglesSlice'
 import {
   goToReviewAttendeesStep,
   selectAvailableCoaches,
@@ -14,10 +15,12 @@ import {AttendeeDraggableName} from './dragAndDrop/AttendeeDraggableName'
 import {StudentDropzone} from './dragAndDrop/StudentDropzone'
 import {CoachDropzone} from './dragAndDrop/CoachDropzone'
 import Button from '@material-ui/core/Button'
+import GroupAddIcon from '@material-ui/icons/GroupAdd'
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
 import './PairingsStep.scss'
 
 export const PairingsStep = () => {
+  const autoAssignButton = useSelector(featureEnabled('autoPairingsButton'))
   const availableStudents = useSelector(selectAvailableStudents)
   const availableCoaches = useSelector(selectAvailableCoaches)
   const groups = useSelector(selectPairingGroups)
@@ -37,6 +40,18 @@ export const PairingsStep = () => {
           >
             Review attendance and skills
           </Button>
+          {
+            autoAssignButton &&
+            <Button
+              className='PairingsStepAutoAssign'
+              variant='contained'
+              color='secondary'
+              endIcon={<GroupAddIcon/>}
+              onClick={() => {}}
+            >
+              Auto-Assign Pairs
+            </Button>
+          }
         </div>
         <div className='PairingsStepContent'>
 
