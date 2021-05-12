@@ -47,6 +47,12 @@ export const {
 
 export const selectAvailableStudents = state => state.pairings.students.filter(student => student.group === 0)
 export const selectAvailableCoaches = state => state.pairings.coaches.filter(coach => coach.group === 0)
+export const selectNextGroupId = state => {
+  return Math.max(
+    ...state.pairings.students.map(student => student.group),
+    ...state.pairings.coaches.map(coach => coach.group)
+  ) + 1
+}
 export const selectPairingGroups = state =>
   sortByIdAscending(
     calculateCommonLanguages(

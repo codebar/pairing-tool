@@ -5,7 +5,7 @@ import {
   moveStudentToGroup,
   pairingsReducer,
   selectAvailableCoaches,
-  selectAvailableStudents,
+  selectAvailableStudents, selectNextGroupId,
   selectPairingGroups
 } from './pairingsSlice'
 import { initialState as configuration } from '../../configuration/configurationSlice'
@@ -100,6 +100,37 @@ describe('The Pairings Slice', () => {
       const rootState = {pairings: state}
       expect(selectAvailableStudents(rootState)).toContainEqual({id: 1, name: 'A', languages: [], group: 0})
       expect(selectAvailableStudents(rootState)).not.toContainEqual({id: 2, name: 'B', languages: [], group: 1})
+    })
+  })
+
+  describe('Selecting next group id', () => {
+    it('returns 1 if there are no groups made yet', () => {
+      const state = {
+        students: [
+          {id: 1, name: 'A', languages: [], group: 0},
+          {id: 2, name: 'B', languages: [], group: 0}
+        ],
+        coaches: [
+          {id: 3, name: 'X', languages: [], group: 0},
+          {id: 4, name: 'Y', languages: [], group: 0}
+        ]
+      }
+      const rootState = {pairings: state}
+      expect(selectNextGroupId(rootState)).toEqual(1)
+    })
+    it('returns one more than the maximum group among students and coaches', () => {
+      const state = {
+        students: [
+          {id: 1, name: 'A', languages: [], group: 1},
+          {id: 2, name: 'B', languages: [], group: 2}
+        ],
+        coaches: [
+          {id: 3, name: 'X', languages: [], group: 1},
+          {id: 4, name: 'Y', languages: [], group: 3}
+        ]
+      }
+      const rootState = {pairings: state}
+      expect(selectNextGroupId(rootState)).toEqual(4)
     })
   })
 
