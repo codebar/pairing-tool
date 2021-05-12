@@ -8,7 +8,6 @@ describe('Auto assign pairs thunk', () => {
     const dispatch = jest.fn()
     const getState = () => ({
       ...storeInitialState,
-      configuration: {languages: [{name: 'JS'}, {name: 'Python'}]},
       pairings: {
         students: [{id: 1, name: 'A', languages: ['JS'], group: 0}],
         coaches: [{id: 2, name: 'B', languages: ['JS'], group: 0}]
