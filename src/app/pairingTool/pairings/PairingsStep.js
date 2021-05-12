@@ -4,6 +4,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend'
 import {useDispatch, useSelector} from 'react-redux'
 import {DraggableType} from '../../../config/dnd'
 import {featureEnabled} from '../../../config/togglesSlice'
+import {autoAssignPairs} from './autoPairing/autoAssignPairs'
 import {
   goToReviewAttendeesStep,
   selectAvailableCoaches,
@@ -47,7 +48,7 @@ export const PairingsStep = () => {
               variant='contained'
               color='secondary'
               endIcon={<GroupAddIcon/>}
-              onClick={() => {}}
+              onClick={() => dispatch(autoAssignPairs())}
             >
               Auto-Assign Pairs
             </Button>
