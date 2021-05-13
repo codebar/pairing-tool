@@ -53,4 +53,19 @@ describe('Auto assign pairs', () => {
     expect(groupExists(pairingGroups, 11, 21)).toBeTruthy()
   })
 
+  it('assigns single matches after pairing other single matches', async ()=> {
+    const pairingGroups = await runAutoPairingsFor({
+      students: [
+        {id: 1, name: 'A', languages: ['JS'], group: 0},
+        {id: 2, name: 'B', languages: ['Ruby'], group: 0},
+      ],
+      coaches: [
+        {id: 3, name: 'X', languages: ['JS', 'Ruby'], group: 0},
+        {id: 4, name: 'Y', languages: ['JS'], group: 0}
+      ]
+    })
+    expect(groupExists(pairingGroups, 2, 3)).toBeTruthy()
+    expect(groupExists(pairingGroups, 1, 4)).toBeTruthy()
+  })
+
 })
