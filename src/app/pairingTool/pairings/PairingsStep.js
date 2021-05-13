@@ -18,6 +18,7 @@ import {CoachDropzone} from './dragAndDrop/CoachDropzone'
 import Button from '@material-ui/core/Button'
 import GroupAddIcon from '@material-ui/icons/GroupAdd'
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
+import Tooltip from '@material-ui/core/Tooltip'
 import './PairingsStep.scss'
 
 export const PairingsStep = () => {
@@ -32,26 +33,36 @@ export const PairingsStep = () => {
       <div className='PairingsStep'>
         <div className='PairingsStepHeader'>
           <span>Step 3: Start organising the pairs by dragging the names of the participants to groups</span>
-          <Button
-            className='PairingsStepBack'
-            variant='contained'
-            color='primary'
-            startIcon={<SkipPreviousIcon/>}
-            onClick={() => dispatch(goToReviewAttendeesStep())}
+          <Tooltip
+            title='CAREFUL! THIS RESET THE PAIRS :('
+            placement='right'
           >
+            <Button
+              className='PairingsStepBack'
+              variant='contained'
+              color='primary'
+              startIcon={<SkipPreviousIcon/>}
+              onClick={() => dispatch(goToReviewAttendeesStep())}
+            >
             Review attendance and skills
-          </Button>
+            </Button>
+          </Tooltip>
           {
             autoAssignButton &&
-            <Button
-              className='PairingsStepAutoAssign'
-              variant='contained'
-              color='secondary'
-              endIcon={<GroupAddIcon/>}
-              onClick={() => dispatch(autoAssignPairs())}
+            <Tooltip
+              title='WORK IN PROGRESS, ONLY MATCHES SINGLE PAIRS FOR NOW'
+              placement='right'
             >
-              Auto-Assign Pairs
-            </Button>
+              <Button
+                className='PairingsStepAutoAssign'
+                variant='contained'
+                color='secondary'
+                endIcon={<GroupAddIcon/>}
+                onClick={() => dispatch(autoAssignPairs())}
+              >
+          Auto-Assign Pairs
+              </Button>
+            </Tooltip>
           }
         </div>
         <div className='PairingsStepContent'>
