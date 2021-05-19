@@ -1,4 +1,3 @@
-import {selectLanguageNames} from '../../../configuration/configurationSlice'
 import {
   moveCoachToGroup,
   moveStudentToGroup,
@@ -6,20 +5,38 @@ import {
   selectAvailableStudents,
   selectNextGroupId
 } from '../pairingsSlice'
+import {hopcroftKarp} from 'hopcroft-karp'
 
 export const autoAssignPairs = () => (dispatch, getState) => {
-  let createdPair = false
-  do {
-    createdPair = false
-    selectLanguageNames(getState()).forEach(language => {
-      const nextGroupId = selectNextGroupId(getState())
-      const matchingStudents = selectAvailableStudents(getState()).filter(student => student.languages.includes(language))
-      const matchingCoaches = selectAvailableCoaches(getState()).filter(coach => coach.languages.includes(language))
-      if (matchingCoaches.length === 1 && matchingStudents.length === 1) {
-        dispatch(moveStudentToGroup({studentId: matchingStudents[0].id, groupId: nextGroupId}))
-        dispatch(moveCoachToGroup({coachId: matchingCoaches[0].id, groupId: nextGroupId}))
-        createdPair = true
-      }
-    })
-  } while(createdPair)
+  const graph = buildBipartiteGraph(
+    selectAvailableStudents(getState()),
+    selectAvailableCoaches(getState())
+  )
+  const solvedPairs = hopcroftKarp(graph)
+  Object.entries(solvedPairs)
+    .filter(([student, coach]) => coach !== null)
+    .forEach(([student, coach]) => createPair(
+      dispatch,
+      parseInt(student),
+      parseInt(coach),
+      selectNextGroupId(getState())
+    ))
+}
+
+const createPair = (dispatch, studentId, coachId, groupId) => {
+  dispatch(moveStudentToGroup({studentId, groupId}))
+  dispatch(moveCoachToGroup({coachId, groupId}))
+}
+
+const buildBipartiteGraph = (students, coaches) => {
+  const graph = {}
+  students.forEach(student => graph[student.id] = eligibleCoachesForStudent(student, coaches))
+  return graph
+}
+
+const eligibleCoachesForStudent = (student, coaches) => {
+  const studentLanguages = new Set(student.languages)
+  return coaches
+    .filter(coach => [...new Set(coach.languages)].filter( x => studentLanguages.has(x)).length > 0 )
+    .map(coach => coach.id)
 }

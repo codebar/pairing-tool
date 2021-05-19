@@ -21,51 +21,47 @@ describe('Auto assign pairs', () => {
     )
   }
 
-  it('does assign a pair if there is a match in language', async () => {
-    const pairingGroups = await runAutoPairingsFor({
-      students: [{id: 1, name: 'A', languages: ['JS'], group: 0}],
-      coaches: [{id: 2, name: 'B', languages: ['JS'], group: 0}]
-    })
-    expect(groupExists(pairingGroups, 1, 2)).toBeTruthy()
-  })
+  describe('Single matches', () => {
 
-  it('does not assign a pair if there are no matches in languages', async () => {
-    const pairingGroups = await runAutoPairingsFor({
-      students: [{id: 1, name: 'A', languages: ['Python'], group: 0}],
-      coaches: [{id: 2, name: 'B', languages: ['JS'], group: 0}]
-    })
-    expect(groupExists(pairingGroups, 1, 2)).toBeFalsy()
-  })
-
-  it('does assign different pairs for different matches', async () => {
-    const pairingGroups = await runAutoPairingsFor({
-      students: [
-        {id: 10, name: 'A', languages: ['JS'], group: 0},
-        {id: 11, name: 'B', languages: ['Python'], group: 0},
-      ],
-      coaches: [
-        {id: 20, name: 'X', languages: ['JS'], group: 0},
-        {id: 21, name: 'Y', languages: ['Python'], group: 0}
-      ]
+    it('does not assign a pair if there are no matches in languages', async () => {
+      const pairingGroups = await runAutoPairingsFor({
+        students: [{id: 1, name: 'A', languages: ['Python'], group: 0}],
+        coaches: [{id: 2, name: 'B', languages: ['JS'], group: 0}]
+      })
+      expect(groupExists(pairingGroups, 1, 2)).toBeFalsy()
     })
 
-    expect(groupExists(pairingGroups, 10, 20)).toBeTruthy()
-    expect(groupExists(pairingGroups, 11, 21)).toBeTruthy()
+    it('does assign different pairs for different matches', async () => {
+      const pairingGroups = await runAutoPairingsFor({
+        students: [
+          {id: 10, name: 'A', languages: ['JS'], group: 0},
+          {id: 11, name: 'B', languages: ['Python'], group: 0},
+        ],
+        coaches: [
+          {id: 20, name: 'X', languages: ['JS'], group: 0},
+          {id: 21, name: 'Y', languages: ['Python'], group: 0}
+        ]
+      })
+
+      expect(groupExists(pairingGroups, 10, 20)).toBeTruthy()
+      expect(groupExists(pairingGroups, 11, 21)).toBeTruthy()
+    })
+
+    it('assigns single matches after pairing other single matches', async ()=> {
+      const pairingGroups = await runAutoPairingsFor({
+        students: [
+          {id: 1, name: 'A', languages: ['JS'], group: 0},
+          {id: 2, name: 'B', languages: ['Ruby'], group: 0},
+        ],
+        coaches: [
+          {id: 3, name: 'X', languages: ['JS', 'Ruby'], group: 0},
+          {id: 4, name: 'Y', languages: ['JS'], group: 0}
+        ]
+      })
+      expect(groupExists(pairingGroups, 2, 3)).toBeTruthy()
+      expect(groupExists(pairingGroups, 1, 4)).toBeTruthy()
+    })
   })
 
-  it('assigns single matches after pairing other single matches', async ()=> {
-    const pairingGroups = await runAutoPairingsFor({
-      students: [
-        {id: 1, name: 'A', languages: ['JS'], group: 0},
-        {id: 2, name: 'B', languages: ['Ruby'], group: 0},
-      ],
-      coaches: [
-        {id: 3, name: 'X', languages: ['JS', 'Ruby'], group: 0},
-        {id: 4, name: 'Y', languages: ['JS'], group: 0}
-      ]
-    })
-    expect(groupExists(pairingGroups, 2, 3)).toBeTruthy()
-    expect(groupExists(pairingGroups, 1, 4)).toBeTruthy()
-  })
 
 })
