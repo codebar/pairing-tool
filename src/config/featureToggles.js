@@ -1,3 +1,3 @@
 export const featureToggles = {
-  autoPairingsButton: false
+  autoPairingsButton: true
 }

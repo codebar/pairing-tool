@@ -41,16 +41,43 @@ Once all the attendees are reviewed and updated, click on the `Continue to Pairi
 
 ### 3. Sort the pairings
 
-Start dragging and dropping students and coaches into the respective destination boxes.
+To sort the pairs, there are 2 available features: 
+
+* You can drag and drop students and coaches to specific pair slots
+* You can click the "Auto-Assign Pairs" buttons
 
 ![Drag and drop students and coaches](images/drag-and-drop-pairs.png)
 
-When you drag and drop a person, in the pair box will be displayed the skills that everyone in that pair have in common.
+#### Drag and Drop participants
 
-Also, a new box for a new pair will appear to form more pairs.
+You can drag and drop participants by their name: 
+* From the list of available participants to a pair group
+* From a pair group to another pair group
+* From a pair group back to the list of available participants
 
-It is possible to drag more than 1 student/coach in a pair, so it is possible to have triples and give 2 students to a coach or pair 2 coaches with 1 student.
+When you drag and drop a person to a pair group: 
+* The list of all languages in common to everyone in the group will be displayed, and refreshed whenever the group changes.
+* A new box for a new pair will appear if you used the only empty group.
+
+It is possible to drag more than 1 student/coach in a group, in case you want to build a bigger group.
 
 ![Pairings in progress](images/pairings-in-progress.png)
+
+#### Auto-Assign Pairs
+
+> :warning: NOTE: Finding Pairs auto-magically is a complex problem, and we are all human, there are some aspects that
+are hard to take into account for different algorithms, or it would be so expensive to do so.
+
+When clicking this button, the pairing tool will try to:
+* Find the maximum amount of pairs possible
+* Only find 1:1 pairs, it will not assign 2 students to 1 coach
+* It might not find a pair for everyone.
+* It will NOT modify existing pairs, so you can pre-pair people before using the button
+* It will NOT try to fill half-pairs (where only a student, or a coach is placed in a pair group)
+
+Also, you will still be able to move people around and change the generated pairs after clicking the button.
+
+Or even, if you do undo some pairs by dragging the people back to the list of available students and/or, and then click again, it will try to find pairs again.
+
 
 ### 4. Well done, now announce the pairs!!!
