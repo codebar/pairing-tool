@@ -49,20 +49,15 @@ export const PairingsStep = () => {
           </Tooltip>
           {
             autoAssignButton &&
-            <Tooltip
-              title='WORK IN PROGRESS, ONLY MATCHES SINGLE PAIRS FOR NOW'
-              placement='right'
+            <Button
+              className='PairingsStepAutoAssign'
+              variant='contained'
+              color='secondary'
+              endIcon={<GroupAddIcon/>}
+              onClick={() => dispatch(autoAssignPairs())}
             >
-              <Button
-                className='PairingsStepAutoAssign'
-                variant='contained'
-                color='secondary'
-                endIcon={<GroupAddIcon/>}
-                onClick={() => dispatch(autoAssignPairs())}
-              >
-          Auto-Assign Pairs
-              </Button>
-            </Tooltip>
+              Auto-Assign Pairs
+            </Button>
           }
         </div>
         <div className='PairingsStepContent'>
