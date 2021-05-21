@@ -8,8 +8,8 @@ This is a [first prototype of the pairing tool](https://codebar.github.io/pairin
 > :warning: REMEMBER: This is still a prototype, and some features are limited or have oversimplified implementations, when using it, keep in mind:
 
 * It does not store any state, refreshing the browser will reset everything
-* The autodetect skills/languages feature, works based on parsing the notes/tutorial/skills that participants added in their profiles at [codebar.io](codebar.io), but the detection is not 100% accurate. Specially between Java and Javascript, and also Other technologies.
-* In the pairings screen, skills are not editable, this is to avoid accidental changes since this screen works using drag and drop
+* The autodetect skills/languages feature, works based on parsing the notes/tutorial/skills that participants added in their profiles at [codebar.io](codebar.io), but the detection might not 100% accurate, and not everyone fills these fields in their profiles, you'll need to double check.
+* In the pairings screen, skills are not editable, this is intended, to avoid accidental changes since this screen works using drag and drop
 * Going back from the pairings to the attendees list, will reset all the existing pairings.
 
 ## How to use it
