@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
+import {css} from '@emotion/react'
 import React, {useState} from 'react'
 import {Alert, AlertTitle} from '@mui/lab'
 import {FeedbackLink} from './navigation/FeedbackLink'
 import {NavigationBar} from './navigation/NavigationBar'
 import {PairingTool} from './pairingTool/PairingTool'
-import {css} from '@emotion/react'
 
 const appStyle = css`
   height: 100vh;
