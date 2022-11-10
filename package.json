@@ -8,7 +8,7 @@
     "test:e2e": "cypress run",
     "clean": "eslint \"src/**/*.js\" --fix",
     "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build",
+    "build": "react-scripts --openssl-legacy-provider build",
     "serve": "serve -s build -n",
     "predeploy": "yarn build",
     "deploy": "gh-pages -b gh-pages -e ./docs -d build"
