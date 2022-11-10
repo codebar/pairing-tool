@@ -1,8 +1,17 @@
+/** @jsxImportSource @emotion/react */
 import React, {useRef} from 'react'
 import {useDispatch} from 'react-redux'
 import {parseAttendeeList} from '../attendeesSlice'
-import {Button} from '@material-ui/core'
-import './UploadCsvButton.scss'
+import {Button} from '@mui/material'
+import {css} from '@emotion/react'
+
+const style=css`
+  width: 300px;
+  margin: 0 auto !important;
+  span {
+    margin: 0 !important;
+  }
+`
 
 export const UploadCsvButton = () => {
   const dispatch = useDispatch()
@@ -18,20 +27,20 @@ export const UploadCsvButton = () => {
   return (
     <>
       <input
+        hidden
         type='file'
+        accept={'*.csv'}
         ref={inputFile}
         onChange={parseCsv}
-        style={{display: 'none'}}
-        accept={'*.csv'}
         data-test-id='csv-upload-button'
       />
       <Button
+        css={style}
         variant='contained'
         color='primary'
         onClick={() => inputFile.current.click()}
-        className='UploadCsvButton'
       >
-          Upload CSV
+        Upload CSV
       </Button>
     </>
   )
