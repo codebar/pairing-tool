@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 💻
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup NodeJS 🏃‍
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 18
       - name: Restore cache 💨
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: yarn-build-cache
         with:
           path: |
@@ -34,13 +34,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 💻
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup NodeJS 🏃‍
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 18
       - name: Restore cache 💨
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: yarn-build-cache
         with:
           path: |
@@ -58,13 +58,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 💻
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup NodeJS 🏃‍
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 18
       - name: Restore cache 💨
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: yarn-build-cache
         with:
           path: |
@@ -75,7 +75,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-dependencies-
       - name: Run Tests 🧪
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           build: yarn build
           start: yarn start
@@ -86,13 +86,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 💻
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup NodeJS 🏃‍
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 18
       - name: Restore cache 💨
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: yarn-build-cache
         with:
           path: |
