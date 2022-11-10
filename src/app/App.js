@@ -1,19 +1,46 @@
+/** @jsxImportSource @emotion/react */
 import React, {useState} from 'react'
-import {Alert, AlertTitle} from '@material-ui/lab'
+import {Alert, AlertTitle} from '@mui/lab'
 import {FeedbackLink} from './navigation/FeedbackLink'
 import {NavigationBar} from './navigation/NavigationBar'
 import {PairingTool} from './pairingTool/PairingTool'
-import './App.scss'
+import {css} from '@emotion/react'
+
+const appStyle = css`
+  height: 100vh;
+  text-align: center;
+  background-color: #fdfaf6;
+  display: grid;
+  grid-template:
+          'header' 60px
+          'content' 1fr
+          / 1fr;
+`
+
+const headerStyle = css`
+  grid-area: header;
+`
+
+const contentStyle = css`
+  grid-area: content;
+  overflow: auto;
+`
+
+const noticeStyle = css`
+  .MuiAlert-message { margin: 0 auto; }
+  .MuiAlert-action { margin-left: 0 }
+  margin: 20px auto;
+`
 
 export const App = () => {
   const [displayPrototypeNotice, togglePrototypeNotice] = useState(true)
 
   return (
-    <div className='App'>
-      <div className='AppHeader'>
+    <div css={appStyle}>
+      <div css={headerStyle}>
         <NavigationBar/>
       </div>
-      <div className='AppContent'>
+      <div css={contentStyle}>
         {displayPrototypeNotice && <PrototypeNotice onClose={() => togglePrototypeNotice(!displayPrototypeNotice)}/>}
         <PairingTool/>
       </div>
@@ -22,7 +49,7 @@ export const App = () => {
 }
 
 const PrototypeNotice = ({onClose}) =>
-  <div className='PrototypeNotice'>
+  <div css={noticeStyle}>
     <Alert severity='info' color='warning' onClose={onClose}>
       <AlertTitle>The Pairing Tool is currently a prototype</AlertTitle>
       There is a list of known limitations available in the&nbsp;
