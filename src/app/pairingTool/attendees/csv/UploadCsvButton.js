@@ -32,7 +32,6 @@ export const UploadCsvButton = () => {
         accept={'*.csv'}
         ref={inputFile}
         onChange={parseCsv}
-        data-test-id='csv-upload-button'
       />
       <Button
         css={style}

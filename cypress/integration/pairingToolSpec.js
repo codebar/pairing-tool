@@ -4,7 +4,7 @@ describe('The Pairing Tool', () => {
     cy.visit('/')
 
     cy.contains('Pairing Tool')
-    cy.findByTestId('csv-upload-button').attachFile('workshop-csv-file.csv')
+    cy.get('input[type=file]').attachFile('workshop-csv-file.csv')
 
     cy.contains('Step 2')
     cy.findByText(/Ragnar/).click()
