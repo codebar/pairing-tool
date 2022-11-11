@@ -109,7 +109,6 @@ export const AttendeeEditor = ({attendee}) => {
       labelPlacement='top'
       control={
         <Switch
-          data-test-id={testId('attendance')}
           name='attendance'
           color='primary'
           checked={attendance}

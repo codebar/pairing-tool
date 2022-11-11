@@ -1,18 +1,24 @@
 describe('The Pairing Tool', () => {
 
-  it('Happy Path', () => {
+  it('Open the main page', () => {
     cy.visit('/')
+  })
 
+  it('Upload a workshop CSV file', () => {
     cy.contains('Pairing Tool')
     cy.get('input[type=file]').attachFile('workshop-csv-file.csv')
+  })
 
+  it('Select attendees for the workshop', () => {
     cy.contains('Step 2')
     cy.findByText(/Ragnar/).click()
-    cy.findByTestId('attendee-editor-attendance').click()
+    cy.findByRole('checkbox', {name: /attendance/i}).click()
     cy.findByText(/Lagertha/).click()
-    cy.findByTestId('attendee-editor-attendance').click()
-    cy.findByTestId('update-attendees-step-pairing').click()
+    cy.findByRole('checkbox', {name: /attendance/i}).click()
+    cy.findByRole('button', {name: /continue to pairings/i}).click()
+  })
 
+  it('Drag and drop coaches and students to match them together', () => {
     cy.contains('Step 3')
     cy.findByText(/Ragnar/).drag('.StudentDropzone')
     cy.findByText(/Lagertha/).drag('.CoachDropzone')

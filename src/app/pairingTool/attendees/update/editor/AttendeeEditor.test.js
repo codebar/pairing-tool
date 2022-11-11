@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event'
+import {screen} from '@testing-library/react'
 import {renderComponent, testStore} from '../../../../../test/testUtils'
 import {coach, stateAfterParsingCsv, student} from '../../../../../test/fixtures/attendees'
 import {
@@ -25,7 +26,6 @@ describe('The Attendee Editor', () => {
       store,
       firstTimerIcon: renderResult.queryByTestId(testId('new')),
       nameInput: extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('name'))),
-      attendanceSwitch: extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('attendance'))),
       studentRadioButton: extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('role-student'))),
       coachRadioButton: extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('role-coach'))),
       notesTextarea: extractHtmlTagFrom('textarea')(renderResult.queryByTestId(testId('notes'))),
@@ -57,20 +57,24 @@ describe('The Attendee Editor', () => {
 
   describe('The attendance switch', () => {
     it('renders with the attendee attendance when its off', () => {
-      const {attendanceSwitch} = render({ ...student, attendance: false })
+      render({ ...student, attendance: false })
+      const attendanceSwitch = screen.queryByRole('checkbox', {name: /attendance/i})
       expect(attendanceSwitch).not.toBeChecked()
     })
 
     it('renders with the attendance when its on', () => {
-      const {attendanceSwitch} = render({ ...student, attendance: true })
+      render({ ...student, attendance: true })
+      const attendanceSwitch = screen.queryByRole('checkbox', {name: /attendance/i})
       expect(attendanceSwitch).toBeChecked()
     })
 
     it('toggles the attendance', () => {
       const attendee = { ...student, attendance: false }
-      const {attendanceSwitch, store} = render(attendee)
+      const {store} = render(attendee)
 
+      const attendanceSwitch = screen.queryByRole('checkbox', {name: /attendance/i})
       userEvent.click(attendanceSwitch)
+
       expect(attendanceSwitch).toBeChecked()
       expect(store.dispatch).toHaveBeenCalledWith(toggleAttendance(attendee.id))
     })
