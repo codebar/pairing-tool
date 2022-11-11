@@ -7,7 +7,47 @@ import {AttendeeEditor} from './editor/AttendeeEditor'
 import {AttendeeMiniCard} from './list/AttendeeMiniCard'
 import {Button, IconButton} from '@mui/material'
 import {PersonAdd as PersonAddIcon, SkipNext as SkipNextIcon} from '@mui/icons-material'
-import './UpdateAttendeesStep.scss'
+
+const style = css`
+  display: flex;
+  flex-direction: column;`
+
+const headerStyle = css`
+  display: flex;
+  flex-direction: column;
+  &>span {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 36px;
+  }
+  .UpdateAttendeesStepDone {
+    width: 300px;
+    margin: 0 auto;
+  }`
+
+const contentStyle = css`
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 1%;
+
+  .Students,
+  .Coaches {
+    width: 50%;
+
+    .AddNew {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      width: 90%;
+      margin: 0 auto;
+      .AddNewName {
+        margin: 0 30px;
+      }
+    }
+  }`
+
+
+
 
 export const UpdateAttendeesStep = () => {
   const [selectedAttendee, setSelectedAttendee] = useState(undefined)
@@ -43,8 +83,8 @@ export const UpdateAttendeesStep = () => {
     </>
 
   return (
-    <div className='UpdateAttendeesStep'>
-      <div className='UpdateAttendeesStepHeader'>
+    <div css={style}>
+      <div css={headerStyle}>
         <span>Step 2: Update attendance, skills and add new students or coaches</span>
         <Button
           data-test-id={testId('pairing')}
@@ -57,7 +97,7 @@ export const UpdateAttendeesStep = () => {
           Continue to pairings
         </Button>
       </div>
-      <div className='UpdateAttendeesStepContent'>
+      <div css={contentStyle}>
         <div className='Attendees' data-test-id={testId('list')}>
           {addNewAttendeeButton}
           {attendeesCards}
