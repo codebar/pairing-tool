@@ -7,7 +7,7 @@ import newbie from './newbie.png'
 
 const cardStyle = (selected, attendance) => {
   const baseStyle = {
-    testAlign: 'left',
+    textAlign: 'left',
     padding: '10px 15px',
     marginBottom: '3px',
     border: '1px solid #8d8d8d',
@@ -53,13 +53,12 @@ const nameLabel = css`
 
 export const AttendeeMiniCard = ({attendee, selected, onClick}) => (
   <div
-    data-test-id='attendee-display-name'
     style={cardStyle(selected, attendee.attendance)}
     onClick={onClick}
   >
     <img style={firstTimerIcon(attendee.new)} src={newbie} alt='First Timer'/>
-    {attendee.role === 'Student' && <MenuBookIcon css={roleIcon}/>}
-    {attendee.role === 'Coach' && <SchoolIcon css={roleIcon}/>}
+    {attendee.role === 'Student' && <MenuBookIcon css={roleIcon} alt='Student'/>}
+    {attendee.role === 'Coach' && <SchoolIcon css={roleIcon} alt='Coach' />}
     <span css={nameLabel}>{attendee.name}</span>
   </div>
 )
