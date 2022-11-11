@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import {css} from '@emotion/react'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {selectLanguageNames} from '../../../../configuration/configurationSlice'
@@ -18,9 +20,48 @@ import {
   RadioGroup,
   TextField,
   Switch
-} from '@material-ui/core'
-import './AttendeeEditor.scss'
+} from '@mui/material'
 
+const editorStyle = css`
+  margin: 48px 20px 20px 20px;
+  padding: 20px;
+  border: 1px solid #8d8d8d;
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: left;
+`
+
+const rowStyle = css`
+  margin-bottom: 20px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const colorCombinations = {
+  HTML:'#DC4B26',
+  CSS:'#026DB3',
+  JS:'#E8A22A',
+  Python:'#F8D248',
+  Ruby:'#A21401',
+  SQL:'#30638B',
+  Java:'#E52B29',
+  PHP:'#7300E2',
+  Other:'#111111'
+}
+
+const buttonStyle = (color, active) => active
+  ? {
+    color: 'white',
+    backgroundColor: color,
+    '&:hover' : { backgroundColor: color }
+  }
+  : {
+    color,
+    backgroundColor: 'transparent',
+    '&:hover' : { backgroundColor: 'transparent' }
+  }
 
 export const AttendeeEditor = ({attendee}) => {
   const globalLanguages = useSelector(selectLanguageNames)
@@ -55,7 +96,7 @@ export const AttendeeEditor = ({attendee}) => {
   const nameInput =
     <TextField
       data-test-id={testId('name')}
-      className='NameInput'
+      css={css`flex-grow: 2;`}
       label='Name'
       value={name}
       onChange={e => setName(e.target.value)}
@@ -139,14 +180,16 @@ export const AttendeeEditor = ({attendee}) => {
     />
 
   const languageButtons =
-    <div className='LanguageButtons'>
+    <div css={css`padding: 20px 0; text-align: left;`}>
       {globalLanguages.map(language =>
         <Button
           data-test-id={testId(`language-${language}`)}
           key={language}
-          className={`${language}Button ${languages.includes(language) ? 'Active' : 'Inactive'}`}
+          style={buttonStyle(
+            colorCombinations[language],
+            languages.includes(language)
+          )}
           variant='contained'
-          color='primary'
           onClick={() => {
             if (!languages.includes(language))
               setLanguages([...languages, language])
@@ -157,8 +200,6 @@ export const AttendeeEditor = ({attendee}) => {
                 ...languages.slice(index + 1)
               ])
             }
-
-
             dispatch(toggleLanguage({id: attendee.id, language}))
           }}
         >
@@ -168,28 +209,24 @@ export const AttendeeEditor = ({attendee}) => {
     </div>
 
   return (
-    <div className='AttendeeEditor' data-test-id='attendee-editor'>
-      <div className='Row'>
+    <div css={editorStyle} data-test-id='attendee-editor'>
+      <div css={rowStyle}>
         {nameInput}
         {attendanceSwitch}
         {roleRadioButtons}
       </div>
-      <div className='Row'>
+      <div css={rowStyle}>
         {notesTextarea}
       </div>
-      <div className='Row'>
+      <div css={rowStyle}>
         {skillsTextarea}
       </div>
-      <div className='Row'>
+      <div css={rowStyle}>
         {tutorialInput}
       </div>
-      <div className='Row'>
+      <div css={rowStyle}>
         {languageButtons}
       </div>
-      <div className='ComingSoon'>
-        <p><em>~~ More elements coming soon! ~~</em></p>
-      </div>
-
     </div>
   )
 }

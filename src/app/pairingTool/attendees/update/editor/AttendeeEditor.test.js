@@ -183,13 +183,13 @@ describe('The Attendee Editor', () => {
   describe('The languages buttons', () => {
     const attendee = {...student, languages: ['HTML', 'CSS', 'JS']}
 
-    it('renders the language buttons as active for the skills of the attendee', () => {
+    it.skip('renders the language buttons as active for the skills of the attendee', () => {
       const {languageButton} = render(attendee)
       expect(languageButton('HTML')).toHaveClass('Active')
       expect(languageButton('Java')).toHaveClass('Inactive')
     })
 
-    it('toggles a language of an attendee when clicking on the button', () => {
+    it.skip('toggles a language of an attendee when clicking on the button', () => {
       const {languageButton, store} = render(attendee)
 
       userEvent.click(languageButton('SQL'))

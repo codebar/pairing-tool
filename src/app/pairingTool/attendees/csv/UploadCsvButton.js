@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import {css} from '@emotion/react'
 import React, {useRef} from 'react'
 import {useDispatch} from 'react-redux'
 import {parseAttendeeList} from '../attendeesSlice'
 import {Button} from '@mui/material'
-import {css} from '@emotion/react'
 
-const style=css`
+const style = css`
   width: 300px;
   margin: 0 auto !important;
   span {

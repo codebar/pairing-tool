@@ -15,7 +15,6 @@ const style = css`
   color: white;
   border-bottom: 1px solid grey;
   box-shadow: 2px 2px 2px 2px lightgrey;
-
   img {
     width: 50px;
     height: 50px;
