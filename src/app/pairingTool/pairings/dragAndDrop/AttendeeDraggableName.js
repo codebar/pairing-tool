@@ -4,7 +4,8 @@ import OpenWithIcon from '@mui/icons-material/OpenWith'
 import Button from '@mui/material/Button'
 
 export const AttendeeDraggableName = ({attendee, type}) => {
-  const [collected, drag] = useDrag(() => ({
+  // eslint-disable-next-line no-unused-vars
+  const [_, drag] = useDrag(() => ({
     type,
     item: { id: attendee.id }
   }), [attendee, type])
