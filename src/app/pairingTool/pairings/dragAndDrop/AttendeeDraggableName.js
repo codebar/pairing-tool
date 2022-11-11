@@ -1,7 +1,9 @@
+/** @jsxImportSource @emotion/react */
+import {css} from '@emotion/react'
 import React from 'react'
 import {useDrag} from 'react-dnd'
-import OpenWithIcon from '@material-ui/icons/OpenWith'
-import Button from '@material-ui/core/Button'
+import OpenWithIcon from '@mui/icons-material/OpenWith'
+import Button from '@mui/material/Button'
 import './AttendeeDraggableName.scss'
 
 export const AttendeeDraggableName = ({attendee, type}) => {

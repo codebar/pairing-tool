@@ -1,5 +1,7 @@
+/** @jsxImportSource @emotion/react */
+import {css} from '@emotion/react'
 import React from 'react'
-import {Icon} from '@material-ui/core'
+import Icon from '@mui/material/Icon'
 import newbie from './newbie.png'
 import './AttendeeMiniCard.scss'
 

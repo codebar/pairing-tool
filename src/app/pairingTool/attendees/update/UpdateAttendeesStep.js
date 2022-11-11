@@ -1,10 +1,12 @@
+/** @jsxImportSource @emotion/react */
+import {css} from '@emotion/react'
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {addAttendee, goToPairingStep, selectAttendees} from '../attendeesSlice'
 import {AttendeeEditor} from './editor/AttendeeEditor'
 import {AttendeeMiniCard} from './list/AttendeeMiniCard'
-import {Button, IconButton} from '@material-ui/core'
-import {PersonAdd as PersonAddIcon, SkipNext as SkipNextIcon} from '@material-ui/icons'
+import {Button, IconButton} from '@mui/material'
+import {PersonAdd as PersonAddIcon, SkipNext as SkipNextIcon} from '@mui/icons-material'
 import './UpdateAttendeesStep.scss'
 
 export const UpdateAttendeesStep = () => {
