@@ -1,23 +1,20 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
 import React from 'react'
 import {useDrag} from 'react-dnd'
 import OpenWithIcon from '@mui/icons-material/OpenWith'
 import Button from '@mui/material/Button'
 
-const buttonWrapperStyle = css`
-  cursor: move;
-  margin: 10px;`
-
-const draggableButtonStyle = (color, dragging) => dragging
-  ? {
+const draggableButton = (color) => ({
+  cursor: 'move',
+  margin: '10px',
+  '& button': {
+    backgroundColor: 'whitesmoke',
+    '&:hover' : {backgroundColor: 'whitesmoke'}
+  },
+  '& button.IsDragging': {
     backgroundColor: color,
     '&:hover' : {backgroundColor: color}
   }
-  : {
-    backgroundColor: 'whitesmoke',
-    '&:hover' : {backgroundColor: 'whitesmoke'}
-  }
+})
 
 export const AttendeeDraggableName = ({attendee, type}) => {
   const [{isDragging}, drag] = useDrag(() => ({
@@ -28,8 +25,16 @@ export const AttendeeDraggableName = ({attendee, type}) => {
     })
   }), [attendee, type])
   return (
-    <div ref={drag} css={buttonWrapperStyle}>
-      <Button style={draggableButtonStyle(type === 'Student' ? 'lightpink' : 'lightsalmon', isDragging)} variant='contained' color='default' endIcon={<OpenWithIcon/>}>{attendee.name}</Button>
+    <div ref={drag} style={draggableButton(type === 'Student' ? 'lightpink' : 'lightsalmon')}>
+      {/*<Button*/}
+      {/*  className={isDragging ? 'IsDragging': ''}*/}
+      {/*  variant='contained'*/}
+      {/*  color='default'*/}
+      {/*  endIcon={<OpenWithIcon/>}*/}
+      {/*>*/}
+      {/*  {attendee.name}*/}
+      {/*</Button>*/}
+      {attendee.name} <OpenWithIcon/>
     </div>
   )
 }

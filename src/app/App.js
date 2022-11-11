@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
 import React, {useState} from 'react'
-import {Alert, AlertTitle} from '@mui/lab'
+import {Alert, AlertTitle} from '@mui/material'
 import {FeedbackLink} from './navigation/FeedbackLink'
 import {NavigationBar} from './navigation/NavigationBar'
 import {PairingTool} from './pairingTool/PairingTool'

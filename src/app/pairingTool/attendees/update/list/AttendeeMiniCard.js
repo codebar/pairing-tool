@@ -36,15 +36,15 @@ const roleIcon = css`
   padding-right: 15px;
 `
 
-const firstTimerIcon = (isNew) => isNew
-  ? {
+const firstTimerIcon = (isNew) => {
+  const baseStyle = {
     width: '24px',
     height: '24px',
     paddingRight: '15px'
   }
-  : {
-    opacity: 0
-  }
+  if (!isNew) baseStyle.opacity = 0
+  return baseStyle
+}
 
 const nameLabel = css`
   line-height: 24px;
