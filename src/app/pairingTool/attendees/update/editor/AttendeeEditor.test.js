@@ -19,27 +19,29 @@ describe('The Attendee Editor', () => {
     const store = testStore(stateAfterParsingCsv)
     store.dispatch = jest.fn()
     const renderResult = renderComponent(<AttendeeEditor attendee={attendee} />, store)
-    const testId = name => `attendee-editor-${name}`
     return {
       ...renderResult,
-      store,
-      firstTimerIcon: renderResult.queryByTestId(testId('new')),
-      languageButton: language => renderResult.queryByTestId(testId(`language-${language}`))
+      store
     }
   }
+  const textField = label => screen.getByRole('textbox', {name: label})
+  const radioButton = (pattern) => screen.getByRole('radio', {name: pattern})
+  const button = (label) => screen.getByRole('button', {name: label})
+
 
   describe('The name input', () => {
     const attendee = {...student, name: 'Anakin Skywalker'}
 
     it('renders with the name of the attendee', () => {
       render(attendee)
-      const nameInput = screen.getByRole('textbox', {name: /name/i})
+      const nameInput = textField(/name/i)
+
       expect(nameInput.value).toBe('Anakin Skywalker')
     })
 
     it('updates the name of the attendee', () => {
       const {store} = render(attendee)
-      const nameInput = screen.getByRole('textbox', {name: /name/i})
+      const nameInput = textField(/name/i)
 
       userEvent.clear(nameInput)
       userEvent.type(nameInput, 'Darth Vader')
@@ -84,7 +86,6 @@ describe('The Attendee Editor', () => {
       expect(studentRadioButton).not.toBeChecked()
       expect(coachRadioButton).toBeChecked()
     }
-    const radioButton = (pattern) => screen.getByRole('radio', {name: pattern})
 
     it('renders with student selected for students', () => {
       render(student)
@@ -122,13 +123,13 @@ describe('The Attendee Editor', () => {
 
     it('renders with the notes of the attendee', () => {
       render(attendee)
-      const notesTextarea = screen.getByRole('textbox', {name: /notes/i})
+      const notesTextarea = textField(/notes/i)
       expect(notesTextarea.value).toBe('I can teach many things')
     })
 
     it('updates the notes of the attendee', () => {
       const {store} = render(attendee)
-      const notesTextarea = screen.getByRole('textbox', {name: /notes/i})
+      const notesTextarea = textField(/notes/i)
 
       const newNotes = 'I will be able to teach this and that \n and that too'
 
@@ -144,14 +145,14 @@ describe('The Attendee Editor', () => {
   describe('The skills textarea', () => {
     it('renders with the skills of the attendee when they are set', () => {
       render({...coach, skills: 'clean code and testing'})
-      const skillsTextarea = screen.getByRole('textbox', {name: /skills/i})
+      const skillsTextarea = textField(/skills/i)
 
       expect(skillsTextarea.value).toBe('clean code and testing')
     })
 
     it('renders empty string when the skills of the attendee are not set', () => {
       render(student)
-      const skillsTextarea = screen.getByRole('textbox', {name: /skills/i})
+      const skillsTextarea = textField(/skills/i)
 
       expect(skillsTextarea.value).toBe('')
     })
@@ -159,7 +160,7 @@ describe('The Attendee Editor', () => {
     it('updates the skills of the attendee', () => {
       const attendee = {...coach, skills: 'clean code and testing'}
       const {store} = render(attendee)
-      const skillsTextarea = screen.getByRole('textbox', {name: /skills/i})
+      const skillsTextarea = textField(/skills/i)
 
       const newSkills = 'I can do refactors, test, and more'
       userEvent.clear(skillsTextarea)
@@ -174,14 +175,14 @@ describe('The Attendee Editor', () => {
   describe('The tutorial input', () => {
     it('renders with the tutorial of the attendee when it is set', () => {
       render({...student, tutorial: 'JS: Basics'})
-      const tutorialTextField = screen.getByRole('textbox', {name: /tutorial/i})
+      const tutorialTextField = textField(/tutorial/i)
 
       expect(tutorialTextField.value).toBe('JS: Basics')
     })
 
     it('renders empty string when the tutorial of the attendee is not set', () => {
       render(coach)
-      const tutorialTextField = screen.getByRole('textbox', {name: /tutorial/i})
+      const tutorialTextField = textField(/tutorial/i)
 
       expect(tutorialTextField.value).toBe('')
     })
@@ -189,7 +190,7 @@ describe('The Attendee Editor', () => {
     it('updates the tutorial of the attendee', () => {
       const attendee = {...student, tutorial: 'JS: Basics'}
       const {store} = render(attendee)
-      const tutorialTextField = screen.getByRole('textbox', {name: /tutorial/i})
+      const tutorialTextField = textField(/tutorial/i)
 
       const newTutorial = 'JS: Advanced'
       userEvent.clear(tutorialTextField)
@@ -205,20 +206,21 @@ describe('The Attendee Editor', () => {
     const attendee = {...student, languages: ['HTML', 'CSS', 'JS']}
 
     it.skip('renders the language buttons as active for the skills of the attendee', () => {
-      const {languageButton} = render(attendee)
-      expect(languageButton('HTML')).toHaveClass('Active')
-      expect(languageButton('Java')).toHaveClass('Inactive')
+      render(attendee)
+      expect(button('HTML')).toHaveClass('Active')
+      expect(button('Java')).toHaveClass('Inactive')
     })
 
     it.skip('toggles a language of an attendee when clicking on the button', () => {
-      const {languageButton, store} = render(attendee)
+      const {store} = render(attendee)
+      const sqlButton = button('SQL')
 
-      userEvent.click(languageButton('SQL'))
-      expect(languageButton('SQL')).toHaveClass('Active')
+      userEvent.click(sqlButton)
+      expect(sqlButton).toHaveClass('Active')
       expect(store.dispatch).toHaveBeenCalledWith(toggleLanguage({id: attendee.id, language: 'SQL'}))
 
-      userEvent.click(languageButton('SQL'))
-      expect(languageButton('SQL')).toHaveClass('Inactive')
+      userEvent.click(sqlButton)
+      expect(sqlButton).toHaveClass('Inactive')
       expect(store.dispatch).toHaveBeenCalledWith(toggleLanguage({id: attendee.id, language: 'SQL'}))
     })
   })

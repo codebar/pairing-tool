@@ -73,7 +73,6 @@ export const AttendeeEditor = ({attendee}) => {
   const [tutorial, setTutorial] = useState('')
   const [languages, setLanguages] = useState([])
   const dispatch = useDispatch()
-  const testId = name => `attendee-editor-${name}`
 
   useEffect(() => {
     setName(attendee.name)
@@ -170,7 +169,6 @@ export const AttendeeEditor = ({attendee}) => {
     <div css={css`padding: 20px 0; text-align: left;`}>
       {globalLanguages.map(language =>
         <Button
-          data-test-id={testId(`language-${language}`)}
           key={language}
           style={buttonStyle(
             colorCombinations[language],
@@ -196,7 +194,7 @@ export const AttendeeEditor = ({attendee}) => {
     </div>
 
   return (
-    <div css={editorStyle} data-test-id='attendee-editor'>
+    <div css={editorStyle}>
       <div css={rowStyle}>
         {nameInput}
         {attendanceSwitch}
