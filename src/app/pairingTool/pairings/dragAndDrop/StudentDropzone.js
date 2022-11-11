@@ -24,7 +24,7 @@ export const StudentDropzone = ({groupId, children}) => {
     collect: monitor => ({isOver: !!monitor.isOver()}),
   }), [groupId])
   return (
-    <div ref={drop} className={isOver === true ? 'IsOver' : ''} css={dropzone}>
+    <div ref={drop} className={`StudentDropzone ${isOver === true ? 'IsOver' : ''}`} css={dropzone}>
       {children}
     </div>
   )
