@@ -95,7 +95,6 @@ export const AttendeeEditor = ({attendee}) => {
 
   const nameInput =
     <TextField
-      data-test-id={testId('name')}
       css={css`flex-grow: 2;`}
       label='Name'
       value={name}

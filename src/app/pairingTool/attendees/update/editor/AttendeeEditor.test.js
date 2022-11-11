@@ -25,7 +25,6 @@ describe('The Attendee Editor', () => {
       ...renderResult,
       store,
       firstTimerIcon: renderResult.queryByTestId(testId('new')),
-      nameInput: extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('name'))),
       studentRadioButton: extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('role-student'))),
       coachRadioButton: extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('role-coach'))),
       notesTextarea: extractHtmlTagFrom('textarea')(renderResult.queryByTestId(testId('notes'))),
@@ -39,12 +38,14 @@ describe('The Attendee Editor', () => {
     const attendee = {...student, name: 'Anakin Skywalker'}
 
     it('renders with the name of the attendee', () => {
-      const {nameInput} = render(attendee)
+      render(attendee)
+      const nameInput = screen.getByRole('textbox', {name: /name/i})
       expect(nameInput.value).toBe('Anakin Skywalker')
     })
 
     it('updates the name of the attendee', () => {
-      const {nameInput, store} = render(attendee)
+      const {store} = render(attendee)
+      const nameInput = screen.getByRole('textbox', {name: /name/i})
 
       userEvent.clear(nameInput)
       userEvent.type(nameInput, 'Darth Vader')
