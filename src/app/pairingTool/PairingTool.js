@@ -4,7 +4,6 @@ import {selectReadyForAttendanceReview, selectReadyForPairing} from './attendees
 import {CsvParseStep} from './attendees/csv/CsvParseStep'
 import {UpdateAttendeesStep} from './attendees/update/UpdateAttendeesStep'
 import {PairingsStep} from './pairings/PairingsStep'
-import './PairingTool.scss'
 
 export const PairingTool = () => {
   const initialized = useSelector(selectReadyForAttendanceReview)

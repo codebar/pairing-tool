@@ -5,7 +5,7 @@ import {createStore} from './config/store'
 import {overrideToggle} from './config/togglesSlice'
 import * as serviceWorker from './serviceWorker'
 import {App} from './app/App'
-import './index.scss'
+import './index.css'
 
 const reduxStore = createStore()
 

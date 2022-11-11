@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
 import React from 'react'
-import Icon from '@mui/material/Icon'
 import MenuBookIcon from '@mui/icons-material/MenuBook'
 import SchoolIcon from '@mui/icons-material/School'
 import newbie from './newbie.png'
