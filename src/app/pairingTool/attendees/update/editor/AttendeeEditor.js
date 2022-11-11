@@ -130,22 +130,13 @@ export const AttendeeEditor = ({attendee}) => {
           dispatch(toggleRole(attendee.id))
         }}
       >
-        <FormControlLabel
-          label='Student'
-          value='Student'
-          control={<Radio data-test-id={testId('role-student')}/>}
-        />
-        <FormControlLabel
-          label='Coach'
-          value='Coach'
-          control={<Radio data-test-id={testId('role-coach')}/>}
-        />
+        <FormControlLabel label='Student' value='Student' control={<Radio />}/>
+        <FormControlLabel label='Coach' value='Coach' control={<Radio />}/>
       </RadioGroup>
     </FormControl>
 
   const notesTextarea =
     <TextField
-      data-test-id={testId('notes')}
       label='Notes'
       fullWidth
       multiline
@@ -157,7 +148,6 @@ export const AttendeeEditor = ({attendee}) => {
 
   const skillsTextarea =
     <TextField
-      data-test-id={testId('skills')}
       label='Skills'
       fullWidth
       multiline
@@ -169,7 +159,6 @@ export const AttendeeEditor = ({attendee}) => {
 
   const tutorialInput =
     <TextField
-      data-test-id={testId('tutorial')}
       label='Tutorial'
       fullWidth
       value={tutorial}

@@ -19,17 +19,11 @@ describe('The Attendee Editor', () => {
     const store = testStore(stateAfterParsingCsv)
     store.dispatch = jest.fn()
     const renderResult = renderComponent(<AttendeeEditor attendee={attendee} />, store)
-    const extractHtmlTagFrom = tag => container => container.getElementsByTagName(tag)[0]
     const testId = name => `attendee-editor-${name}`
     return {
       ...renderResult,
       store,
       firstTimerIcon: renderResult.queryByTestId(testId('new')),
-      studentRadioButton: extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('role-student'))),
-      coachRadioButton: extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('role-coach'))),
-      notesTextarea: extractHtmlTagFrom('textarea')(renderResult.queryByTestId(testId('notes'))),
-      skillsTextarea: extractHtmlTagFrom('textarea')(renderResult.queryByTestId(testId('skills'))),
-      tutorialInput: extractHtmlTagFrom('input')(renderResult.queryByTestId(testId('tutorial'))),
       languageButton: language => renderResult.queryByTestId(testId(`language-${language}`))
     }
   }
@@ -90,19 +84,28 @@ describe('The Attendee Editor', () => {
       expect(studentRadioButton).not.toBeChecked()
       expect(coachRadioButton).toBeChecked()
     }
+    const radioButton = (pattern) => screen.getByRole('radio', {name: pattern})
 
     it('renders with student selected for students', () => {
-      const {studentRadioButton, coachRadioButton} = render(student)
-      expectStudentIsChecked(studentRadioButton, coachRadioButton)
+      render(student)
+      expectStudentIsChecked(
+        radioButton(/student/i),
+        radioButton(/coach/i)
+      )
     })
 
     it('renders with coach selected for coaches', () => {
-      const {studentRadioButton, coachRadioButton} = render(coach)
-      expectCoachIsChecked(studentRadioButton, coachRadioButton)
+      render(coach)
+      expectCoachIsChecked(
+        radioButton(/student/i),
+        radioButton(/coach/i)
+      )
     })
 
     it('toggles the attendee role', () => {
-      const {studentRadioButton, coachRadioButton, store} = render(student)
+      const {store} = render(student)
+      const studentRadioButton = radioButton(/student/i)
+      const coachRadioButton = radioButton(/coach/i)
 
       userEvent.click(coachRadioButton)
       expectCoachIsChecked(studentRadioButton, coachRadioButton)
@@ -118,12 +121,15 @@ describe('The Attendee Editor', () => {
     const attendee = {...coach, notes: 'I can teach many things'}
 
     it('renders with the notes of the attendee', () => {
-      const {notesTextarea} = render(attendee)
+      render(attendee)
+      const notesTextarea = screen.getByRole('textbox', {name: /notes/i})
       expect(notesTextarea.value).toBe('I can teach many things')
     })
 
     it('updates the notes of the attendee', () => {
-      const {notesTextarea, store} = render(attendee)
+      const {store} = render(attendee)
+      const notesTextarea = screen.getByRole('textbox', {name: /notes/i})
+
       const newNotes = 'I will be able to teach this and that \n and that too'
 
       userEvent.clear(notesTextarea)
@@ -137,20 +143,25 @@ describe('The Attendee Editor', () => {
 
   describe('The skills textarea', () => {
     it('renders with the skills of the attendee when they are set', () => {
-      const {skillsTextarea} = render({...coach, skills: 'clean code and testing'})
+      render({...coach, skills: 'clean code and testing'})
+      const skillsTextarea = screen.getByRole('textbox', {name: /skills/i})
+
       expect(skillsTextarea.value).toBe('clean code and testing')
     })
 
     it('renders empty string when the skills of the attendee are not set', () => {
-      const {skillsTextarea} = render(student)
+      render(student)
+      const skillsTextarea = screen.getByRole('textbox', {name: /skills/i})
+
       expect(skillsTextarea.value).toBe('')
     })
 
     it('updates the skills of the attendee', () => {
       const attendee = {...coach, skills: 'clean code and testing'}
-      const {skillsTextarea, store} = render(attendee)
-      const newSkills = 'I can do refactors, test, and more'
+      const {store} = render(attendee)
+      const skillsTextarea = screen.getByRole('textbox', {name: /skills/i})
 
+      const newSkills = 'I can do refactors, test, and more'
       userEvent.clear(skillsTextarea)
       userEvent.type(skillsTextarea, newSkills)
       expect(skillsTextarea.value).toBe(newSkills)
@@ -162,23 +173,28 @@ describe('The Attendee Editor', () => {
 
   describe('The tutorial input', () => {
     it('renders with the tutorial of the attendee when it is set', () => {
-      const {tutorialInput} = render({...student, tutorial: 'JS: Basics'})
-      expect(tutorialInput.value).toBe('JS: Basics')
+      render({...student, tutorial: 'JS: Basics'})
+      const tutorialTextField = screen.getByRole('textbox', {name: /tutorial/i})
+
+      expect(tutorialTextField.value).toBe('JS: Basics')
     })
 
     it('renders empty string when the tutorial of the attendee is not set', () => {
-      const {tutorialInput} = render(coach)
-      expect(tutorialInput.value).toBe('')
+      render(coach)
+      const tutorialTextField = screen.getByRole('textbox', {name: /tutorial/i})
+
+      expect(tutorialTextField.value).toBe('')
     })
 
     it('updates the tutorial of the attendee', () => {
       const attendee = {...student, tutorial: 'JS: Basics'}
-      const {tutorialInput, store} = render(attendee)
-      const newTutorial = 'JS: Advanced'
+      const {store} = render(attendee)
+      const tutorialTextField = screen.getByRole('textbox', {name: /tutorial/i})
 
-      userEvent.clear(tutorialInput)
-      userEvent.type(tutorialInput, newTutorial)
-      expect(tutorialInput.value).toBe(newTutorial)
+      const newTutorial = 'JS: Advanced'
+      userEvent.clear(tutorialTextField)
+      userEvent.type(tutorialTextField, newTutorial)
+      expect(tutorialTextField.value).toBe(newTutorial)
 
       userEvent.tab()
       expect(store.dispatch).toHaveBeenCalledWith(updateAttendeeTutorial({id: attendee.id, tutorial: newTutorial}))
