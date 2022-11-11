@@ -1,9 +1,10 @@
+/** @jsxImportSource @emotion/react */
+import {css} from '@emotion/react'
 import React from 'react'
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 import {useDispatch, useSelector} from 'react-redux'
 import {DraggableType} from '../../../config/dnd'
-import {featureEnabled} from '../../../config/togglesSlice'
 import {autoAssignPairs} from './autoPairing/autoAssignPairs'
 import {
   goToReviewAttendeesStep,
@@ -15,14 +16,39 @@ import {AttendeeCard} from './dragAndDrop/AttendeeCard'
 import {AttendeeDraggableName} from './dragAndDrop/AttendeeDraggableName'
 import {StudentDropzone} from './dragAndDrop/StudentDropzone'
 import {CoachDropzone} from './dragAndDrop/CoachDropzone'
-import Button from '@material-ui/core/Button'
-import GroupAddIcon from '@material-ui/icons/GroupAdd'
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
-import Tooltip from '@material-ui/core/Tooltip'
-import './PairingsStep.scss'
+import Button from '@mui/material/Button'
+import GroupAddIcon from '@mui/icons-material/GroupAdd'
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious'
+import Tooltip from '@mui/material/Tooltip'
+
+const headerStyle = css`
+  display: flex;
+  flex-direction: column;
+  &>span {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 36px;
+  }
+  &>button {
+    width: 300px;
+    margin: 15px auto;
+  }
+`
+const pairingGroupStyle = css`
+  padding: 10px;
+  border: 1px dashed #4e555b;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 10px;
+
+  & > * {
+    width: 45%;
+    overflow: hidden;
+  }
+`
 
 export const PairingsStep = () => {
-  const autoAssignButton = useSelector(featureEnabled('autoPairingsButton'))
   const availableStudents = useSelector(selectAvailableStudents)
   const availableCoaches = useSelector(selectAvailableCoaches)
   const groups = useSelector(selectPairingGroups)
@@ -30,15 +56,14 @@ export const PairingsStep = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className='PairingsStep'>
-        <div className='PairingsStepHeader'>
+      <div css={css`display: flex; flex-direction: column;`}>
+        <div css={headerStyle}>
           <span>Step 3: Start organising the pairs by dragging the names of the participants to groups</span>
           <Tooltip
             title='CAREFUL! THIS RESET THE PAIRS :('
             placement='right'
           >
             <Button
-              className='PairingsStepBack'
               variant='contained'
               color='primary'
               startIcon={<SkipPreviousIcon/>}
@@ -47,50 +72,44 @@ export const PairingsStep = () => {
             Review attendance and skills
             </Button>
           </Tooltip>
-          {
-            autoAssignButton &&
-            <Button
-              className='PairingsStepAutoAssign'
-              variant='contained'
-              color='secondary'
-              endIcon={<GroupAddIcon/>}
-              onClick={() => dispatch(autoAssignPairs())}
-            >
-              Auto-Assign Pairs
-            </Button>
-          }
+          <Button
+            variant='contained'
+            color='secondary'
+            endIcon={<GroupAddIcon/>}
+            onClick={() => dispatch(autoAssignPairs())}
+          >
+            Auto-Assign Pairs
+          </Button>
         </div>
-        <div className='PairingsStepContent'>
-
-          <div className='Attendees'>
+        <div css={css`display: flex;flex-flow: row nowrap;padding: 1%;`}>
+          <div css={css`display: flex;flex-direction: column;width: 60%;`}>
             <h4>Students</h4>
             <StudentDropzone groupId={0}>
               {availableStudents.map(student => <AttendeeCard data={student} type={DraggableType.STUDENT}/>)}
-              {availableStudents.length === 0 && <span className='EmptyDropzone'>Drag a student here</span>}
+              {availableStudents.length === 0 && <span css={css`padding:10px; color: #757575;`}>Drag a student here</span>}
             </StudentDropzone>
             <h4>Coaches</h4>
             <CoachDropzone groupId={0}>
               {availableCoaches.map(coach => <AttendeeCard data={coach} type={DraggableType.COACH}/>)}
-              {availableCoaches.length === 0 && <span className='EmptyDropzone'>Drag a coach here</span>}
+              {availableCoaches.length === 0 && <span css={css`padding:10px; color: #757575;`}>Drag a coach here</span>}
             </CoachDropzone>
           </div>
 
-          <div className='Pairs'>
+          <div css={css`display: flex; flex-direction: column; width: 40%; padding: 20px;`}>
             <h4>Pairs</h4>
             {groups.map(group =>
-              <div className='PairingGroup'>
+              <div css={pairingGroupStyle}>
                 <StudentDropzone groupId={group.id}>
                   {group.students.map(student => <AttendeeDraggableName attendee={student} type={DraggableType.STUDENT}/>)}
-                  {group.students.length === 0 && <span className='EmptyDropzone'>Drag a student here</span>}
+                  {group.students.length === 0 && <span css={css`padding:10px; color: #757575;`}>Drag a student here</span>}
                 </StudentDropzone>
                 <CoachDropzone groupId={group.id}>
                   {group.coaches.map(coach => <AttendeeDraggableName attendee={coach} type={DraggableType.COACH}/>)}
-                  {group.coaches.length === 0 && <span className='EmptyDropzone'>Drag a coach here</span>}
+                  {group.coaches.length === 0 && <span css={css`padding:10px; color: #757575;`}>Drag a coach here</span>}
                 </CoachDropzone>
-                <div className='PairingGroupLanguages'>
+                <div css={css`width: 100%; padding: 10px;`}>
                   {group.languages.map(language =>
                     <Button
-                      className={`${language}Button Active`}
                       variant='contained'
                       color='primary'
                     >
