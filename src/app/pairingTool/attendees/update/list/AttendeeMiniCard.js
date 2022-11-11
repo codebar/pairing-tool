@@ -2,6 +2,8 @@
 import {css} from '@emotion/react'
 import React from 'react'
 import Icon from '@mui/material/Icon'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
+import SchoolIcon from '@mui/icons-material/School'
 import newbie from './newbie.png'
 
 const cardStyle = (selected, attendance) => {
@@ -17,7 +19,7 @@ const cardStyle = (selected, attendance) => {
     '&:hover' : { borderColor: '#97ced2', boxShadow: '0 0 10px 4px #97ced2'},
   }
   if (selected) {
-    baseStyle.borderColor = '#4e96d0'
+    baseStyle.border = '1px solid #4e96d0'
     baseStyle.boxShadow = '0 0 10px 4px #4e96d0'
   }
   if (attendance) {
@@ -29,36 +31,36 @@ const cardStyle = (selected, attendance) => {
   return baseStyle
 }
 
-
 const roleIcon = css`
   width: 30px;
   height: 24px;
   padding-right: 15px;
 `
-const firstTimerIcon = css`
-  width: 24px;
-  height: 24px;
-  padding-right: 15px;
-`
+
+const firstTimerIcon = (isNew) => isNew
+  ? {
+    width: '24px',
+    height: '24px',
+    paddingRight: '15px'
+  }
+  : {
+    opacity: 0
+  }
+
 const nameLabel = css`
   line-height: 24px;
   padding-right: 15px;
 `
 
-export const AttendeeMiniCard = ({attendee, selected, onClick}) => {
-  const icon = attendee.role === 'Student'
-    ? 'fas fa-book-reader'
-    : 'fas fa-graduation-cap'
-
-  return (
-    <div
-      data-test-id='attendee-display-name'
-      style={cardStyle(selected, attendee.attendance)}
-      onClick={onClick}
-    >
-      <img hidden={attendee.new === false} css={firstTimerIcon} src={newbie} alt='First Timer'/>
-      <Icon className={icon} css={roleIcon} />
-      <span css={nameLabel}>{attendee.name}</span>
-    </div>
-  )
-}
+export const AttendeeMiniCard = ({attendee, selected, onClick}) => (
+  <div
+    data-test-id='attendee-display-name'
+    style={cardStyle(selected, attendee.attendance)}
+    onClick={onClick}
+  >
+    <img style={firstTimerIcon(attendee.new)} src={newbie} alt='First Timer'/>
+    {attendee.role === 'Student' && <MenuBookIcon css={roleIcon}/>}
+    {attendee.role === 'Coach' && <SchoolIcon css={roleIcon}/>}
+    <span css={nameLabel}>{attendee.name}</span>
+  </div>
+)

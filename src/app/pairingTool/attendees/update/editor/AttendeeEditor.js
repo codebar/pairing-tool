@@ -151,7 +151,7 @@ export const AttendeeEditor = ({attendee}) => {
       label='Notes'
       fullWidth
       multiline
-      rowsMax={2}
+      maxRows={2}
       value={notes}
       onChange={e => setNotes(e.target.value)}
       onBlur={() => dispatch(updateAttendeeNotes({id: attendee.id, notes}))}
@@ -163,7 +163,7 @@ export const AttendeeEditor = ({attendee}) => {
       label='Skills'
       fullWidth
       multiline
-      rowsMax={2}
+      maxRows={2}
       value={skills}
       onChange={e => setSkills(e.target.value)}
       onBlur={() => dispatch(updateAttendeeSkills({id: attendee.id, skills}))}
