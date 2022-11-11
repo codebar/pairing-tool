@@ -10,44 +10,40 @@ describe('The Update Attendees Step', () => {
   const render = () => {
     const store = testStore(stateAfterParsingCsv)
     store.dispatch = jest.fn()
-    const renderResult = renderComponent(<UpdateAttendeesStep/>, store)
-    const testId = name => `update-attendees-step-${name}`
-    return {
-      ...renderResult,
-      store,
-      newAttendeeButton: () => renderResult.queryByTestId(testId('new-attendee')),
-      goToPairingsButton: () => renderResult.queryByTestId(testId('pairing')),
-      attendeeEditor: () => renderResult.queryByTestId('attendee-editor')
-    }
+    renderComponent(<UpdateAttendeesStep/>, store)
+    return {store}
   }
+  const button = (label) => screen.getByRole('button', {name: label})
+  const textField = (label) => screen.queryByRole('textbox', {name : label})
 
   it('Adds a new attendee', () => {
-    const {newAttendeeButton, store} = render()
+    const {store} = render()
+    const newAttendeeButton = button('')
 
-    userEvent.click(newAttendeeButton())
+    userEvent.click(newAttendeeButton)
     const newAttendee = {name: '', role: 'Student', languages: [], attendance: true}
     expect(store.dispatch).toHaveBeenCalledWith(addAttendee(newAttendee))
   })
 
   it('Select attendees for modification', () => {
-    const {attendeeEditor} = render()
+    render()
 
-    userEvent.click(screen.getByText('Chewbacca'))
-    expect(attendeeEditor()).toBeInTheDocument()
-    expect(attendeeEditor().innerHTML).toContain('Chewbacca')
+    const chewbaccaCard = screen.getByText('Chewbacca')
+    userEvent.click(chewbaccaCard)
+    expect(textField(/name/i).value).toBe('Chewbacca')
 
     const yodaCard = screen.getByText('Yoda')
     userEvent.click(yodaCard)
-    expect(attendeeEditor().innerHTML).toContain('Yoda')
+    expect(textField(/name/i).value).toBe('Yoda')
 
     userEvent.click(yodaCard)
-    expect(attendeeEditor()).not.toBeInTheDocument()
+    expect(textField(/name/i)).not.toBeInTheDocument()
   })
 
   it('Navigates to the pairings step', () => {
-    const { goToPairingsButton, store } = render()
+    const { store } = render()
 
-    userEvent.click(goToPairingsButton())
+    userEvent.click(button(/continue to pairings/i))
     expect(store.dispatch).toHaveBeenCalled()
     // thunk actions are a bit more cheeky and hard to test :(
     // waiting to see if the fixes in the pairing screens will remove the need of a thunk in the first place

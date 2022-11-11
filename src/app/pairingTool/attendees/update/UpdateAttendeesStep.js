@@ -53,7 +53,6 @@ export const UpdateAttendeesStep = () => {
   const [selectedAttendee, setSelectedAttendee] = useState(undefined)
   const attendees = useSelector(selectAttendees)
   const dispatch = useDispatch()
-  const testId = name => `update-attendees-step-${name}`
 
   const selectAttendeeToEdit = attendee => {
     if (selectedAttendee === undefined || selectedAttendee.id !== attendee.id)
@@ -64,7 +63,7 @@ export const UpdateAttendeesStep = () => {
 
   const addNewAttendeeButton =
     <div
-      data-test-id={testId('new-attendee')}
+      aria-label='New Attendee'
       onClick={() => dispatch(addAttendee({name: '', role: 'Student', languages: [], attendance: true}))}
     >
       <IconButton><PersonAddIcon/></IconButton>
@@ -87,7 +86,6 @@ export const UpdateAttendeesStep = () => {
       <div css={headerStyle}>
         <span>Step 2: Update attendance, skills and add new students or coaches</span>
         <Button
-          data-test-id={testId('pairing')}
           className='UpdateAttendeesStepDone'
           variant='contained'
           color='primary'
@@ -98,7 +96,7 @@ export const UpdateAttendeesStep = () => {
         </Button>
       </div>
       <div css={contentStyle}>
-        <div className='Attendees' data-test-id={testId('list')}>
+        <div className='Attendees'>
           {addNewAttendeeButton}
           {attendeesCards}
         </div>
