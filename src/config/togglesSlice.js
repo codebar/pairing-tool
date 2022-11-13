@@ -16,7 +16,7 @@ const togglesSlice = createSlice({
 export const togglesReducer = togglesSlice.reducer
 export const {overrideToggle} = togglesSlice.actions
 
-const featureEnabled = featureName => state => state.toggles[featureName]
+export const featureEnabled = featureName => state => state.toggles[featureName]
 
 export const useFeatureToggle = (featureName) => {
   return useSelector(featureEnabled(featureName))

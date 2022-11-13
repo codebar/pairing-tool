@@ -1,43 +1,34 @@
 ## Development
 
-### Running the application locally
+### Useful commands for development
 
-```bash
-$ yarn start
-```
+* `yarn start` - Starts the application in local environment (http://localhost:3000)
+* `yarn test` - Runs the unit tests
+* `yarn test:e2e` - Runs the functional tests (it requires the app to be running)
 
-### Running the tests
 
-#### Unit tests
+### Maintaining the repo
 
-```bash
-$ yarn test
-```
+One of the practices followed while maintaining this repository is the use of **feature toggles**, and there are some 
+utilities in this project to make it easy to follow the practice: 
 
-#### Functional tests
+1. A central place to keep the values of the toggles
+2. Mechanism to read the value of the toggles by their name
+3. Mechanism to override the toggles values in the application if needed
 
-This requires that the application is running locally
+#### Example
 
-```bash
-$ yarn test:e2e
-```
+Adding a new toggle, `myToggle`, disabled by default, with a value of `false`, for this we would create a new property,
+in the `src/config/featureToggles.js` file: 
 
-### Working with Feature Toggles
-
-If we wanted to create a new toggle named `myToggle` with a default value of `false`, we would:
-
-#### Adding a new toggle
-Add the name, and the default value in the `src/config/featureToggles.js` file.
 ```javascript
 export const featureToggles = {
-  myToggle: false
+    myToggle: false
 }
 ```
 
-It is recommended to create new toggles with a default value of `false` so new features developed under them are not
-available to the users right away until the features are ready for it
+Then we can check its actual value in any React component, using a custom react hook that is available
 
-#### Accessing the value of a feature toggle
 ```javascript
 import {useFeatureToggle} from '..path-to-config-folder../config/togglesSlice' 
 
@@ -47,14 +38,15 @@ const AnyComponent = () => {
 }
 ```
 
-#### Overriding a toggle value
-With the querystring parameters:
-* Local: after `yarn start` we can visit `http://localhost:3000?myToggle=true`
-* In GH pages: visit `https://codebar.github.io/pairing-tool/?myToggle=true`
+We could override the value of the toggle in runtime with query string parameters in the URL, in different environments,
+as follows: 
+* In local environment: `http://localhost:3000?myToggle=true`
+* In production environment `https://codebar.github.io/pairing-tool/?myToggle=true`
 
-#### Releasing and cleaning up
-To release a feature, or a change, hidden under a feature toggle, just go to the `src/config/featureToggles.js` file and
-change the value to `true`.
+Valid values are `true` or `false`, any other value than these will be ignored and interpreted as `false`
 
-Once is verified that the feature is stable, and we will not need to turn the toggle off, we can start cleaning up the
-source code to remove the toggle usages and remove the toggle from the `src/config/featureToggles.js` file itself.
+Once the feature is complete, we can release it by swapping the value in `src/config/featureToggles.js` to `true`, 
+and after the deployment of this change the feature will be available for everyone. 
+
+Finally, after the release, once confirmed the feature is stable and there will be no need to turn the feature off, then 
+the toggle can be removed, by first deleting their usages in production code and tests, and lastly from the toggles file
