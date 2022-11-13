@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {featureToggles} from './featureToggles'
+import {useSelector} from 'react-redux'
 
 const togglesSlice = createSlice({
   name: 'toggles',
@@ -15,4 +16,8 @@ const togglesSlice = createSlice({
 export const togglesReducer = togglesSlice.reducer
 export const {overrideToggle} = togglesSlice.actions
 
-export const featureEnabled = featureName => state => state.toggles[featureName]
+const featureEnabled = featureName => state => state.toggles[featureName]
+
+export const useFeatureToggle = (featureName) => {
+  return useSelector(featureEnabled(featureName))
+}

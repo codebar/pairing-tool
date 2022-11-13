@@ -39,11 +39,10 @@ available to the users right away until the features are ready for it
 
 #### Accessing the value of a feature toggle
 ```javascript
-import {useSelector} from 'react-redux'
-import {featureEnabled} from '..path-to-config-folder../config/togglesSlice' 
+import {useFeatureToggle} from '..path-to-config-folder../config/togglesSlice' 
 
 const AnyComponent = () => {
-    const myToggleValue = useSelector(featureEnabled('myToggle')) // false
+    const myToggleValue = useFeatureToggle('myToggle') // false
     // rest of the component
 }
 ```
