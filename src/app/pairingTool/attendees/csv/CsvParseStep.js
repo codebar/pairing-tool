@@ -1,10 +1,9 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
 import React from 'react'
+import styled from '@emotion/styled'
 import {UploadCsvButton} from './UploadCsvButton'
 import pairingCsvImg from './pairingCsvImg.png'
 
-const style = css`
+const Container = styled.div`
   display:flex;
   flex-flow: column nowrap;
   margin: 0 auto;
@@ -27,11 +26,11 @@ const style = css`
 
 export const CsvParseStep = () => {
   return (
-    <div css={style}>
+    <Container>
       <span>Step 1: Download the pairing CSV from the workshop page</span>
       <img alt='Pairing CSV' src={pairingCsvImg} />
       <span>And click on this button to select and upload the CSV file</span>
       <UploadCsvButton/>
-    </div>
+    </Container>
   )
 }

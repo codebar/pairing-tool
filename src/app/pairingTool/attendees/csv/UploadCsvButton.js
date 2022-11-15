@@ -1,12 +1,11 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
 import React, {useRef} from 'react'
+import styled from '@emotion/styled'
 import {useDispatch} from 'react-redux'
 import {parseAttendeeList} from '../attendeesSlice'
 import {Button} from '@mui/material'
 
-const style = css`
-  width: 300px;
+const StyledButton = styled(Button)`
+  width: 200px;
   margin: 0 auto !important;
   span {
     margin: 0 !important;
@@ -33,14 +32,13 @@ export const UploadCsvButton = () => {
         ref={inputFile}
         onChange={parseCsv}
       />
-      <Button
-        css={style}
+      <StyledButton
         variant='contained'
         color='primary'
         onClick={() => inputFile.current.click()}
       >
         Upload CSV
-      </Button>
+      </StyledButton>
     </>
   )
 }
