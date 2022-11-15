@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/pairing-tool/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/pairing-tool/static/js/main.c8de3583.chunk.js",
-    "main.js.map": "/pairing-tool/static/js/main.c8de3583.chunk.js.map",
+    "main.js": "/pairing-tool/static/js/main.f2c16711.chunk.js",
+    "main.js.map": "/pairing-tool/static/js/main.f2c16711.chunk.js.map",
     "runtime-main.js": "/pairing-tool/static/js/runtime-main.16db65e0.js",
     "runtime-main.js.map": "/pairing-tool/static/js/runtime-main.16db65e0.js.map",
-    "static/js/2.8ed51c50.chunk.js": "/pairing-tool/static/js/2.8ed51c50.chunk.js",
-    "static/js/2.8ed51c50.chunk.js.map": "/pairing-tool/static/js/2.8ed51c50.chunk.js.map",
+    "static/js/2.01705681.chunk.js": "/pairing-tool/static/js/2.01705681.chunk.js",
+    "static/js/2.01705681.chunk.js.map": "/pairing-tool/static/js/2.01705681.chunk.js.map",
     "index.html": "/pairing-tool/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/pairing-tool/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.8ed51c50.chunk.js.LICENSE.txt": "/pairing-tool/static/js/2.8ed51c50.chunk.js.LICENSE.txt",
+    "static/js/2.01705681.chunk.js.LICENSE.txt": "/pairing-tool/static/js/2.01705681.chunk.js.LICENSE.txt",
     "static/media/newbie.e578ead4.png": "/pairing-tool/static/media/newbie.e578ead4.png",
     "static/media/pairingCsvImg.d0d3fc48.png": "/pairing-tool/static/media/pairingCsvImg.d0d3fc48.png"
   },
   "entrypoints": [
     "static/js/runtime-main.16db65e0.js",
-    "static/js/2.8ed51c50.chunk.js",
+    "static/js/2.01705681.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.c8de3583.chunk.js"
+    "static/js/main.f2c16711.chunk.js"
   ]
 }
