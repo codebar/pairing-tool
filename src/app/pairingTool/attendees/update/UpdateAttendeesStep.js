@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
 import React, {useState} from 'react'
+import styled from '@emotion/styled'
 import {useDispatch, useSelector} from 'react-redux'
 import {addAttendee, goToPairingStep, selectAttendees} from '../attendeesSlice'
 import {AttendeeEditor} from './editor/AttendeeEditor'
@@ -8,11 +7,11 @@ import {AttendeeMiniCard} from './list/AttendeeMiniCard'
 import {Button, IconButton} from '@mui/material'
 import {PersonAdd as PersonAddIcon, SkipNext as SkipNextIcon} from '@mui/icons-material'
 
-const style = css`
+const Container = styled.div`
   display: flex;
-  flex-direction: column;`
-
-const headerStyle = css`
+  flex-direction: column;
+`
+const Header = styled.div`
   display: flex;
   flex-direction: column;
   &>span {
@@ -20,12 +19,8 @@ const headerStyle = css`
     font-weight: bold;
     line-height: 36px;
   }
-  .UpdateAttendeesStepDone {
-    width: 300px;
-    margin: 0 auto;
-  }`
-
-const contentStyle = css`
+`
+const Content = styled.div`
   display: flex;
   flex-flow: row nowrap;
   padding: 1%;
@@ -44,10 +39,12 @@ const contentStyle = css`
         margin: 0 30px;
       }
     }
-  }`
-
-
-
+  }
+`
+const UpdateAttendeesDoneButton = styled(Button)`
+  width: 300px;
+  margin: 0 auto;
+`
 
 export const UpdateAttendeesStep = () => {
   const [selectedAttendee, setSelectedAttendee] = useState(undefined)
@@ -82,26 +79,25 @@ export const UpdateAttendeesStep = () => {
     </>
 
   return (
-    <div css={style}>
-      <div css={headerStyle}>
+    <Container>
+      <Header>
         <span>Step 2: Update attendance, skills and add new students or coaches</span>
-        <Button
-          className='UpdateAttendeesStepDone'
+        <UpdateAttendeesDoneButton
           variant='contained'
           color='primary'
           endIcon={<SkipNextIcon/>}
           onClick={() => dispatch(goToPairingStep())}
         >
           Continue to pairings
-        </Button>
-      </div>
-      <div css={contentStyle}>
+        </UpdateAttendeesDoneButton>
+      </Header>
+      <Content>
         <div className='Attendees'>
           {addNewAttendeeButton}
           {attendeesCards}
         </div>
         {selectedAttendee !== undefined && <AttendeeEditor attendee={selectedAttendee}/>}
-      </div>
-    </div>
+      </Content>
+    </Container>
   )
 }

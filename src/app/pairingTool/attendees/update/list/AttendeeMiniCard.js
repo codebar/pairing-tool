@@ -1,64 +1,55 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
 import React from 'react'
+import styled from '@emotion/styled'
 import MenuBookIcon from '@mui/icons-material/MenuBook'
 import SchoolIcon from '@mui/icons-material/School'
 import newbie from './newbie.png'
 
-const cardStyle = (selected, attendance) => {
-  const baseStyle = {
-    textAlign: 'left',
-    padding: '10px 15px',
-    marginBottom: '3px',
-    border: '1px solid #8d8d8d',
-    cursor: 'default',
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    alignItems: 'center',
-    '&:hover' : { borderColor: '#97ced2', boxShadow: '0 0 10px 4px #97ced2'},
+const CardContainer = styled.div`
+  text-align: left;
+  padding: 10px 15px;
+  margin-bottom: 3px;
+  border: ${props => props.isSelected ? '1px solid #8d8d8d' : '1px solid #4e96d0'};
+  background-color: ${props => props.isAttending ? '#8ab67c' : '#c2c3c9' };
+  box-shadow: ${props => props.isSelected ? '0 0 10px 4px #4e96d0' : '0 0 0 0 black'};
+  cursor: default;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  &:hover {
+    border-color: #97ced2;
+    box-shadow: 0 0 10px 4px #97ced2;
   }
-  if (selected) {
-    baseStyle.border = '1px solid #4e96d0'
-    baseStyle.boxShadow = '0 0 10px 4px #4e96d0'
-  }
-  if (attendance) {
-    baseStyle.backgroundColor = '#8ab67c'
-  }
-  else {
-    baseStyle.backgroundColor = '#c2c3c9'
-  }
-  return baseStyle
-}
-
-const roleIcon = css`
+`
+const FirstTimerIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  padding-right: 15px;
+  opacity: ${props => props.isNew ? 1 : 0};
+`
+const StudentIcon = styled(MenuBookIcon)`
   width: 30px;
   height: 24px;
   padding-right: 15px;
 `
-
-const firstTimerIcon = (isNew) => {
-  const baseStyle = {
-    width: '24px',
-    height: '24px',
-    paddingRight: '15px'
-  }
-  if (!isNew) baseStyle.opacity = 0
-  return baseStyle
-}
-
-const nameLabel = css`
+const CoachIcon = styled(SchoolIcon)`
+  width: 30px;
+  height: 24px;
+  padding-right: 15px;
+`
+const NameLabel = styled.span`
   line-height: 24px;
   padding-right: 15px;
 `
 
 export const AttendeeMiniCard = ({attendee, selected, onClick}) => (
-  <div
-    style={cardStyle(selected, attendee.attendance)}
+  <CardContainer
+    isSelected={selected}
+    isAttending={attendee.attendance}
     onClick={onClick}
   >
-    <img style={firstTimerIcon(attendee.new)} src={newbie} alt='First Timer'/>
-    {attendee.role === 'Student' && <MenuBookIcon css={roleIcon} alt='Student'/>}
-    {attendee.role === 'Coach' && <SchoolIcon css={roleIcon} alt='Coach' />}
-    <span css={nameLabel}>{attendee.name}</span>
-  </div>
+    <FirstTimerIcon isNew={attendee.new} src={newbie} alt='First Timer'/>
+    {attendee.role === 'Student' && <StudentIcon alt='Student'/>}
+    {attendee.role === 'Coach' && <CoachIcon alt='Coach' />}
+    <NameLabel>{attendee.name}</NameLabel>
+  </CardContainer>
 )

@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
 import React from 'react'
+import styled from '@emotion/styled'
 import {useSelector} from 'react-redux'
 import {selectLanguageNames} from '../../../configuration/configurationSlice'
 import {AttendeeDraggableName} from './AttendeeDraggableName'
@@ -8,14 +7,23 @@ import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 
-const style = css`
+const SpacedCard = styled(Card)`
+  margin-bottom: 5px;
+`
+const StyledCardContent = styled(CardContent)`
   padding: 5px 10px 5px 16px !important;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 `
-
+const LanguageButton = styled(Button)`
+  color: ${props => props.knownLanguage ? 'white' : props.languageColor};
+  background-color: ${props => props.knownLanguage ? props.languageColor : 'transparent'};
+  &:hover {
+    background-color: ${props => props.knownLanguage ? props.languageColor : 'transparent'};
+  }
+`
 const colorCombinations = {
   HTML:'#DC4B26',
   CSS:'#026DB3',
@@ -28,38 +36,25 @@ const colorCombinations = {
   Other:'#111111'
 }
 
-const buttonStyle = (color, active) => active
-  ? {
-    color: 'white',
-    backgroundColor: color,
-    '&:hover' : { backgroundColor: color }
-  }
-  : {
-    color,
-    backgroundColor: 'transparent',
-    '&:hover' : { backgroundColor: 'transparent' }
-  }
-
 export const AttendeeCard = ({data, type}) => {
   const languages = useSelector(selectLanguageNames)
   return (
-    <Card css={css`margin-bottom: 5px;`}>
-      <CardContent css={style}>
+    <SpacedCard>
+      <StyledCardContent>
         <section>
           {languages.map(language =>
-            <Button
-              style={buttonStyle(
-                colorCombinations[language],
-                data.languages.includes(language)
-              )}
+            <LanguageButton
+              key={language}
+              languageColor={colorCombinations[language]}
+              knownLanguage={data.languages.includes(language)}
               variant='contained'
             >
               {language}
-            </Button>
+            </LanguageButton>
           )}
         </section>
         <AttendeeDraggableName attendee={data} type={type}/>
-      </CardContent>
-    </Card>
+      </StyledCardContent>
+    </SpacedCard>
   )
 }

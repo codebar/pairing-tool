@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
 import React from 'react'
+import styled from '@emotion/styled'
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 import {useDispatch, useSelector} from 'react-redux'
@@ -21,7 +20,11 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious'
 import Tooltip from '@mui/material/Tooltip'
 
-const headerStyle = css`
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+const Header = styled.div`
   display: flex;
   flex-direction: column;
   &>span {
@@ -34,7 +37,27 @@ const headerStyle = css`
     margin: 15px auto;
   }
 `
-const pairingGroupStyle = css`
+const Content = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 1%;
+`
+const AvailableAttendeeGroups = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+`
+const PairedAttendeeGroups = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  padding: 20px;
+`
+const EmptyGroup = styled.span`
+  padding:10px;
+  color: #757575;
+`
+const PairedGroup = styled.div`
   padding: 10px;
   border: 1px dashed #4e555b;
   border-radius: 10px;
@@ -47,6 +70,10 @@ const pairingGroupStyle = css`
     overflow: hidden;
   }
 `
+const CommonLanguages = styled.div`
+  width: 100%;
+  padding: 10px;
+`
 
 export const PairingsStep = () => {
   const availableStudents = useSelector(selectAvailableStudents)
@@ -55,74 +82,62 @@ export const PairingsStep = () => {
   const dispatch = useDispatch()
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div css={css`display: flex; flex-direction: column;`}>
-        <div css={headerStyle}>
-          <span>Step 3: Start organising the pairs by dragging the names of the participants to groups</span>
-          <Tooltip
-            title='CAREFUL! THIS RESET THE PAIRS :('
-            placement='right'
-          >
-            <Button
-              variant='contained'
-              color='primary'
-              startIcon={<SkipPreviousIcon/>}
-              onClick={() => dispatch(goToReviewAttendeesStep())}
-            >
-            Review attendance and skills
-            </Button>
-          </Tooltip>
+    <Container>
+      <Header>
+        <span>Step 3: Start organising the pairs by dragging the names of the participants to groups</span>
+        <Tooltip title='CAREFUL! THIS RESET THE PAIRS :(' placement='right'>
           <Button
             variant='contained'
-            color='secondary'
-            endIcon={<GroupAddIcon/>}
-            onClick={() => dispatch(autoAssignPairs())}
+            color='primary'
+            startIcon={<SkipPreviousIcon/>}
+            onClick={() => dispatch(goToReviewAttendeesStep())}
           >
-            Auto-Assign Pairs
+            Review attendance and skills
           </Button>
-        </div>
-        <div css={css`display: flex;flex-flow: row nowrap;padding: 1%;`}>
-          <div css={css`display: flex;flex-direction: column;width: 60%;`}>
+        </Tooltip>
+        <Button
+          variant='contained'
+          color='secondary'
+          endIcon={<GroupAddIcon/>}
+          onClick={() => dispatch(autoAssignPairs())}
+        >
+            Auto-Assign Pairs
+        </Button>
+      </Header>
+      <Content>
+        <DndProvider backend={HTML5Backend}>
+          <AvailableAttendeeGroups>
             <h4>Students</h4>
             <StudentDropzone groupId={0}>
               {availableStudents.map(student => <AttendeeCard data={student} type={DraggableType.STUDENT}/>)}
-              {availableStudents.length === 0 && <span css={css`padding:10px; color: #757575;`}>Drag a student here</span>}
+              {availableStudents.length === 0 && <EmptyGroup>Drag a student here</EmptyGroup>}
             </StudentDropzone>
             <h4>Coaches</h4>
             <CoachDropzone groupId={0}>
               {availableCoaches.map(coach => <AttendeeCard data={coach} type={DraggableType.COACH}/>)}
-              {availableCoaches.length === 0 && <span css={css`padding:10px; color: #757575;`}>Drag a coach here</span>}
+              {availableCoaches.length === 0 && <EmptyGroup>Drag a coach here</EmptyGroup>}
             </CoachDropzone>
-          </div>
-
-          <div css={css`display: flex; flex-direction: column; width: 40%; padding: 20px;`}>
+          </AvailableAttendeeGroups>
+          <PairedAttendeeGroups>
             <h4>Pairs</h4>
             {groups.map(group =>
-              <div css={pairingGroupStyle}>
+              <PairedGroup>
                 <StudentDropzone groupId={group.id}>
                   {group.students.map(student => <AttendeeDraggableName attendee={student} type={DraggableType.STUDENT}/>)}
-                  {group.students.length === 0 && <span css={css`padding:10px; color: #757575;`}>Drag a student here</span>}
+                  {group.students.length === 0 && <EmptyGroup>Drag a student here</EmptyGroup>}
                 </StudentDropzone>
                 <CoachDropzone groupId={group.id}>
                   {group.coaches.map(coach => <AttendeeDraggableName attendee={coach} type={DraggableType.COACH}/>)}
-                  {group.coaches.length === 0 && <span css={css`padding:10px; color: #757575;`}>Drag a coach here</span>}
+                  {group.coaches.length === 0 && <EmptyGroup>Drag a coach here</EmptyGroup>}
                 </CoachDropzone>
-                <div css={css`width: 100%; padding: 10px;`}>
-                  {group.languages.map(language =>
-                    <Button
-                      variant='contained'
-                      color='primary'
-                    >
-                      {language}
-                    </Button>
-                  )}
-                </div>
-              </div>
+                <CommonLanguages>
+                  {group.languages.map(language => <Button variant='contained' color='primary'>{language}</Button>)}
+                </CommonLanguages>
+              </PairedGroup>
             )}
-          </div>
-
-        </div>
-      </div>
-    </DndProvider>
+          </PairedAttendeeGroups>
+        </DndProvider>
+      </Content>
+    </Container>
   )
 }

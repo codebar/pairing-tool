@@ -1,12 +1,11 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
 import React from 'react'
+import styled from '@emotion/styled'
 import {useDispatch} from 'react-redux'
 import {useDrop} from 'react-dnd'
 import {DraggableType} from '../../../../config/dnd'
 import {moveCoachToGroup} from '../pairingsSlice'
 
-const dropzone = css`
+const Dropzone = styled.div`
   background-color: #e0e0e0;
   border: 5px dashed #c8c8c8;
   border-radius: 10px;
@@ -24,8 +23,8 @@ export const CoachDropzone = ({groupId, children}) => {
     collect: monitor => ({isOver: !!monitor.isOver()})
   }), [groupId])
   return (
-    <div ref={drop} className={`CoachDropzone ${isOver === true ? 'IsOver' : ''}`} css={dropzone}>
+    <Dropzone ref={drop} className={`CoachDropzone ${isOver === true ? 'IsOver' : ''}`}>
       {children}
-    </div>
+    </Dropzone>
   )
 }

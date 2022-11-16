@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
 import React, {useEffect, useState} from 'react'
+import styled from '@emotion/styled'
 import {useDispatch, useSelector} from 'react-redux'
 import {selectLanguageNames} from '../../../../configuration/configurationSlice'
 import {
@@ -22,7 +21,7 @@ import {
   Switch
 } from '@mui/material'
 
-const editorStyle = css`
+const Container = styled.div`
   margin: 48px 20px 20px 20px;
   padding: 20px;
   border: 1px solid #8d8d8d;
@@ -30,15 +29,24 @@ const editorStyle = css`
   flex-flow: column nowrap;
   text-align: left;
 `
-
-const rowStyle = css`
+const Row = styled.div`
   margin-bottom: 20px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 `
-
+const LanguagesContainer = styled.div`
+  padding: 20px 0;
+  text-align: left;
+`
+const LanguageButton = styled(Button)`
+  color: ${props => props.knownLanguage ? 'white' : props.languageColor};
+  background-color: ${props => props.knownLanguage ? props.languageColor : 'transparent'};
+  &:hover {
+    background-color: ${props => props.knownLanguage ? props.languageColor : 'transparent'};
+  }
+`
 const colorCombinations = {
   HTML:'#DC4B26',
   CSS:'#026DB3',
@@ -50,18 +58,6 @@ const colorCombinations = {
   PHP:'#7300E2',
   Other:'#111111'
 }
-
-const buttonStyle = (color, active) => active
-  ? {
-    color: 'white',
-    backgroundColor: color,
-    '&:hover' : { backgroundColor: color }
-  }
-  : {
-    color,
-    backgroundColor: 'transparent',
-    '&:hover' : { backgroundColor: 'transparent' }
-  }
 
 export const AttendeeEditor = ({attendee}) => {
   const globalLanguages = useSelector(selectLanguageNames)
@@ -94,7 +90,7 @@ export const AttendeeEditor = ({attendee}) => {
 
   const nameInput =
     <TextField
-      css={css`flex-grow: 2;`}
+      style={{flexGrow: 2}}
       label='Name'
       value={name}
       onChange={e => setName(e.target.value)}
@@ -166,14 +162,12 @@ export const AttendeeEditor = ({attendee}) => {
     />
 
   const languageButtons =
-    <div css={css`padding: 20px 0; text-align: left;`}>
+    <LanguagesContainer>
       {globalLanguages.map(language =>
-        <Button
+        <LanguageButton
           key={language}
-          style={buttonStyle(
-            colorCombinations[language],
-            languages.includes(language)
-          )}
+          languageColor={colorCombinations[language]}
+          knownLanguage={languages.includes(language)}
           variant='contained'
           onClick={() => {
             if (!languages.includes(language))
@@ -189,29 +183,29 @@ export const AttendeeEditor = ({attendee}) => {
           }}
         >
           {language}
-        </Button>
+        </LanguageButton>
       )}
-    </div>
+    </LanguagesContainer>
 
   return (
-    <div css={editorStyle}>
-      <div css={rowStyle}>
+    <Container>
+      <Row>
         {nameInput}
         {attendanceSwitch}
         {roleRadioButtons}
-      </div>
-      <div css={rowStyle}>
+      </Row>
+      <Row>
         {notesTextarea}
-      </div>
-      <div css={rowStyle}>
+      </Row>
+      <Row>
         {skillsTextarea}
-      </div>
-      <div css={rowStyle}>
+      </Row>
+      <Row>
         {tutorialInput}
-      </div>
-      <div css={rowStyle}>
+      </Row>
+      <Row>
         {languageButtons}
-      </div>
-    </div>
+      </Row>
+    </Container>
   )
 }
