@@ -1,4 +1,5 @@
 import React from 'react'
+import {createRoot} from 'react-dom/client'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {createStore} from './config/store'
@@ -12,13 +13,14 @@ const reduxStore = createStore()
 new URLSearchParams(window.location.search)
   .forEach((value, key) => reduxStore.dispatch(overrideToggle({toggle: key, value})))
 
-ReactDOM.render(
+const appContainer = document.getElementById('root')
+const root = createRoot(appContainer)
+root.render(
   <React.StrictMode>
     <Provider store={reduxStore}>
       <App/>
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 )
 
 // If you want your app to work offline and load faster, you can change
