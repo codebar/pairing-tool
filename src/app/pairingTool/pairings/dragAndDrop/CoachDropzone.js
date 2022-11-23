@@ -23,7 +23,7 @@ export const CoachDropzone = ({groupId, children}) => {
     collect: monitor => ({isOver: !!monitor.isOver()})
   }), [groupId])
   return (
-    <Dropzone ref={drop} className={`CoachDropzone ${isOver === true ? 'IsOver' : ''}`}>
+    <Dropzone ref={drop} className={`${groupId === 0 ? 'UnassignedCoach' : 'CoachDropzone'} ${isOver === true ? 'IsOver' : ''}`}>
       {children}
     </Dropzone>
   )

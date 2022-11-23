@@ -18,12 +18,17 @@ describe('The Pairing Tool', () => {
     cy.findByRole('button', {name: /continue to pairings/i}).click()
   })
 
-  // skipped cause drag and drop isn't working properly, also maybe we need extra assertions to make the test fail
+  // skipped cause drag and drop isn't working properly in the test (it does in the app itself)
   it.skip('Drag and drop coaches and students to match them together', () => {
     cy.contains('Step 3')
+    cy.findAllByRole('button', {name: /JAVA/i}).should('exist')
+    cy.findAllByRole('button', {name: /JS/i}).should('exist')
+
     cy.findByText(/Ragnar/).drag('.StudentDropzone')
     cy.findByText(/Lagertha/).drag('.CoachDropzone')
-    cy.contains('JS')
+
+    cy.findAllByRole('button', {name: /JS/i}).should('exist')
+    cy.findAllByRole('button', {name: /JAVA/i}).should('not.exist')
   })
 
 })
