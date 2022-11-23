@@ -13,6 +13,3 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 import './commands'
-import { configure } from '@testing-library/cypress'
-
-configure({ testIdAttribute: 'data-test-id' })

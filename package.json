@@ -6,6 +6,7 @@
   "scripts": {
     "test": "react-scripts test",
     "test:e2e": "cypress run",
+    "cypress": "cypress open",
     "clean": "eslint \"src/**/*.js\" --fix",
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build"
@@ -32,7 +33,7 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^13.1.1",
-    "cypress": "^6.8.0",
+    "cypress": "^11.2.0",
     "cypress-file-upload": "^5.0.8",
     "react-scripts": "5.0.1"
   },
