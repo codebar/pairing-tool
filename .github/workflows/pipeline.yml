@@ -106,7 +106,7 @@ jobs:
       - name: Build 🔧
         run: yarn build
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: build # The folder the action should deploy from.
           branch: gh-pages # The branch the action should deploy to.
