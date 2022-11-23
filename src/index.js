@@ -1,6 +1,5 @@
 import React from 'react'
 import {createRoot} from 'react-dom/client'
-import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {createStore} from './config/store'
 import {overrideToggle} from './config/togglesSlice'
