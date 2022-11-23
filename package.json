@@ -1,8 +1,8 @@
 {
   "name": "pairing-tool",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
-  "homepage": "http://codebar.github.io/pairing-tool",
+  "homepage": "https://codebar.github.io/pairing-tool/",
   "scripts": {
     "test": "react-scripts test",
     "test:e2e": "cypress run",
