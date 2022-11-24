@@ -81,6 +81,7 @@ jobs:
         with:
           start: yarn start
           wait-on: http://localhost:3000
+          env: url=http://localhost:3000/pairing-tool/
 
   deploy-page:
     needs: [unit-tests, functional-tests]

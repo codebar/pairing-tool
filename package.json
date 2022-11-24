@@ -5,7 +5,8 @@
   "homepage": "https://codebar.github.io/pairing-tool/",
   "scripts": {
     "test": "react-scripts test",
-    "test:e2e": "cypress run",
+    "test:e2e": "cypress run --env url=http://localhost:3000/pairing-tool/",
+    "smoke": "cypress run --env url=https://codebar.github.io/pairing-tool/",
     "cypress": "cypress open",
     "clean": "eslint \"src/**/*.js\" --fix",
     "start": "react-scripts --openssl-legacy-provider start",

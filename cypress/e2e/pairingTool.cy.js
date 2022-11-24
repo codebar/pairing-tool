@@ -1,7 +1,7 @@
 describe('The Pairing Tool', () => {
 
   it('Open the main page', () => {
-    cy.visit('/')
+    cy.visit(Cypress.env('url'))
   })
 
   it('Upload a workshop CSV file', () => {
