@@ -2,7 +2,7 @@
   "name": "pairing-tool",
   "version": "0.1.1",
   "private": true,
-  "homepage": "https://codebar.github.io/pairing-tool/",
+  "homepage": "https://codebar.github.io/",
   "scripts": {
     "test": "react-scripts test",
     "test:e2e": "cypress run --env url=http://localhost:3000/pairing-tool/",
