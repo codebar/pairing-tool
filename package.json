@@ -9,8 +9,8 @@
     "smoke": "cypress run --env url=https://codebar.github.io/pairing-tool/",
     "cypress": "cypress open",
     "clean": "eslint \"src/**/*.js\" --fix",
-    "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts --openssl-legacy-provider build"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
