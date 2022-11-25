@@ -18,10 +18,10 @@ const StyledCardContent = styled(CardContent)`
   align-items: center;
 `
 const LanguageButton = styled(Button)`
-  color: ${props => props.knownLanguage ? 'white' : props.languageColor};
-  background-color: ${props => props.knownLanguage ? props.languageColor : 'transparent'};
+  color: ${props => props.knownlanguage ? 'white' : props.languagecolor};
+  background-color: ${props => props.knownlanguage ? props.languagecolor : 'transparent'};
   &:hover {
-    background-color: ${props => props.knownLanguage ? props.languageColor : 'transparent'};
+    background-color: ${props => props.knownlanguage ? props.languagecolor : 'transparent'};
   }
 `
 const colorCombinations = {
@@ -45,8 +45,8 @@ export const AttendeeCard = ({data, type}) => {
           {languages.map(language =>
             <LanguageButton
               key={language}
-              languageColor={colorCombinations[language]}
-              knownLanguage={data.languages.includes(language)}
+              languagecolor={colorCombinations[language]}
+              knownlanguage={data.languages.includes(language)}
               variant='contained'
             >
               {language}

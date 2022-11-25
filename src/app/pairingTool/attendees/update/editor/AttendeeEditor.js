@@ -41,10 +41,10 @@ const LanguagesContainer = styled.div`
   text-align: left;
 `
 const LanguageButton = styled(Button)`
-  color: ${props => props.knownLanguage ? 'white' : props.languageColor};
-  background-color: ${props => props.knownLanguage ? props.languageColor : 'transparent'};
+  color: ${props => props.knownlanguage ? 'white' : props.languagecolor};
+  background-color: ${props => props.knownlanguage ? props.languagecolor : 'transparent'};
   &:hover {
-    background-color: ${props => props.knownLanguage ? props.languageColor : 'transparent'};
+    background-color: ${props => props.knownlanguage ? props.languagecolor : 'transparent'};
   }
 `
 const colorCombinations = {
@@ -166,8 +166,8 @@ export const AttendeeEditor = ({attendee}) => {
       {globalLanguages.map(language =>
         <LanguageButton
           key={language}
-          languageColor={colorCombinations[language]}
-          knownLanguage={languages.includes(language)}
+          languagecolor={colorCombinations[language]}
+          knownlanguage={languages.includes(language)}
           variant='contained'
           onClick={() => {
             if (!languages.includes(language))
