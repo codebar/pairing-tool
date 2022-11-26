@@ -14,21 +14,21 @@ export const initialState = {
   ]
 }
 
-const configurationSlice = createSlice({
-  name: 'configuration',
+const settingsSlice = createSlice({
+  name: 'settings',
   initialState,
   reducers: {
     // todo: future steps add a config UI where languages can be added
     // colors for each language could also be configured
   }
 })
-export const configurationReducer = configurationSlice.reducer
+export const settingsReducer = settingsSlice.reducer
 
 export const selectLanguageNames = state =>
-  state.configuration.languages.map(language => language.name)
+  state.settings.languages.map(language => language.name)
 
 export const selectLanguageDetectionRules = state =>
-  state.configuration.languages.map(language => ({
+  state.settings.languages.map(language => ({
     name: language.name,
     alias: language.alias,
     exclusions: language.exclusions

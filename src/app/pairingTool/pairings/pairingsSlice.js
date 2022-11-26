@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {selectLanguageNames} from '../../configuration/configurationSlice'
+import {selectLanguageNames} from '../../settings/settingsSlice'
 import {reviewAttendeesAgain} from '../attendees/attendeesSlice'
 
 export const initialState = {

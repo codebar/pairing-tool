@@ -188,7 +188,7 @@ describe('The Attendees Slice', () => {
 
   describe('Parsing the attendees list file', () => {
     const dispatch = jest.fn()
-    const getState = () => ({configuration: {languages: []}})
+    const getState = () => ({settings: {languages: []}})
 
     it('adds a new attendee for each input in the file', async () => {
       const file = {

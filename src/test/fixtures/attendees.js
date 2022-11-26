@@ -1,4 +1,4 @@
-import { initialState as configuration } from '../../app/configuration/configurationSlice'
+import { initialState as settings } from '../../app/settings/settingsSlice'
 import { featureToggles as toggles } from '../../config/featureToggles'
 
 export const student = {
@@ -25,7 +25,7 @@ export const coach = {
 
 export const stateAfterParsingCsv = {
   toggles,
-  configuration,
+  settings,
   attendees: {
     list: [
       {

@@ -1,21 +1,21 @@
 import {
-  configurationReducer,
+  settingsReducer,
   initialState,
   selectLanguageDetectionRules,
   selectLanguageNames
-} from './configurationSlice'
+} from './settingsSlice'
 
-describe('The Configuration Slice', () => {
+describe('The Settings Slice', () => {
 
   it('contains the list of languages to work with', () => {
-    const nextState = configurationReducer(initialState, {})
-    const languageNames = selectLanguageNames({configuration: nextState})
+    const nextState = settingsReducer(initialState, {})
+    const languageNames = selectLanguageNames({settings: nextState})
     expect(languageNames).toEqual(['HTML', 'CSS', 'JS', 'Python', 'Ruby', 'SQL', 'Java', 'PHP', 'Other'])
   })
 
   it('can see the language detection rules', () => {
-    const nextState = configurationReducer(initialState, {})
-    const languageDetectionRules = selectLanguageDetectionRules({configuration: nextState})
+    const nextState = settingsReducer(initialState, {})
+    const languageDetectionRules = selectLanguageDetectionRules({settings: nextState})
     expect(languageDetectionRules).toContainEqual({name: 'Java', alias: [], exclusions:['javascript']})
   })
 

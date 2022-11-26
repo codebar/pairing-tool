@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import styled from '@emotion/styled'
 import {useDispatch, useSelector} from 'react-redux'
-import {selectLanguageNames} from '../../../../configuration/configurationSlice'
+import {selectLanguageNames} from '../../../../settings/settingsSlice'
 import {
   toggleAttendance,
   toggleLanguage,

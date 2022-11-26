@@ -31,7 +31,7 @@ describe('Pairing CSV parser', () => {
       expect(student.languages).toContain('HTML')
     })
 
-    it('do not match exclusions from the configuration', () => {
+    it('do not match exclusions from the settings', () => {
       expect(student.languages).not.toContain('Java')
     })
   })
