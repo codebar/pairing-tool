@@ -12,6 +12,16 @@ If you have any issue, feedback, question, suggestion or request, contact the ma
 
 ## Change Log
 
+#### November 26th 2022
+ * Technical: Updated to React 18
+
+#### November 11th 2022
+ * Technical: Update to Material UI 5
+ * Technical: Drop SASS in favor of CSS in JS with styled components
+
+#### May 20th 2021 
+ * Auto-assign pairs - Using Hopcroft-Karp algorithm
+
 #### May 9th 2021
  * Improved the language detection for Javascript and Java
 
