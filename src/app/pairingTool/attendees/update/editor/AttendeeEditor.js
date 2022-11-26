@@ -12,7 +12,6 @@ import {
   updateAttendeeTutorial
 } from '../../attendeesSlice'
 import {
-  Button,
   FormControl,
   FormControlLabel,
   Radio,
@@ -20,6 +19,7 @@ import {
   TextField,
   Switch
 } from '@mui/material'
+import {LanguageButton} from '../../../../components/LanguageButton'
 
 const Container = styled.div`
   margin: 48px 20px 20px 20px;
@@ -40,24 +40,6 @@ const LanguagesContainer = styled.div`
   padding: 20px 0;
   text-align: left;
 `
-const LanguageButton = styled(Button)`
-  color: ${props => props.knownlanguage ? 'white' : props.languagecolor};
-  background-color: ${props => props.knownlanguage ? props.languagecolor : 'transparent'};
-  &:hover {
-    background-color: ${props => props.knownlanguage ? props.languagecolor : 'transparent'};
-  }
-`
-const colorCombinations = {
-  HTML:'#DC4B26',
-  CSS:'#026DB3',
-  JS:'#E8A22A',
-  Python:'#F8D248',
-  Ruby:'#A21401',
-  SQL:'#30638B',
-  Java:'#E52B29',
-  PHP:'#7300E2',
-  Other:'#111111'
-}
 
 export const AttendeeEditor = ({attendee}) => {
   const globalLanguages = useSelector(selectLanguageNames)
@@ -166,8 +148,8 @@ export const AttendeeEditor = ({attendee}) => {
       {globalLanguages.map(language =>
         <LanguageButton
           key={language}
-          languagecolor={colorCombinations[language]}
-          knownlanguage={languages.includes(language)}
+          language={language}
+          active={languages.includes(language).toString()}
           variant='contained'
           onClick={() => {
             if (!languages.includes(language))

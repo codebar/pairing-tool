@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import {useSelector} from 'react-redux'
 import {selectLanguageNames} from '../../../configuration/configurationSlice'
 import {AttendeeDraggableName} from './AttendeeDraggableName'
-import Button from '@mui/material/Button'
+import {LanguageButton} from '../../../components/LanguageButton'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 
@@ -17,24 +17,6 @@ const StyledCardContent = styled(CardContent)`
   justify-content: space-between;
   align-items: center;
 `
-const LanguageButton = styled(Button)`
-  color: ${props => props.knownlanguage ? 'white' : props.languagecolor};
-  background-color: ${props => props.knownlanguage ? props.languagecolor : 'transparent'};
-  &:hover {
-    background-color: ${props => props.knownlanguage ? props.languagecolor : 'transparent'};
-  }
-`
-const colorCombinations = {
-  HTML:'#DC4B26',
-  CSS:'#026DB3',
-  JS:'#E8A22A',
-  Python:'#F8D248',
-  Ruby:'#A21401',
-  SQL:'#30638B',
-  Java:'#E52B29',
-  PHP:'#7300E2',
-  Other:'#111111'
-}
 
 export const AttendeeCard = ({data, type}) => {
   const languages = useSelector(selectLanguageNames)
@@ -45,8 +27,8 @@ export const AttendeeCard = ({data, type}) => {
           {languages.map(language =>
             <LanguageButton
               key={language}
-              languagecolor={colorCombinations[language]}
-              knownlanguage={data.languages.includes(language)}
+              language={language}
+              active={data.languages.includes(language).toString()}
               variant='contained'
             >
               {language}
