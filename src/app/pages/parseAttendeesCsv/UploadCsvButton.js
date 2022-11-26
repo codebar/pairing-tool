@@ -1,7 +1,7 @@
 import React, {useRef} from 'react'
 import styled from '@emotion/styled'
 import {useDispatch} from 'react-redux'
-import {parseAttendeeList} from '../attendeesSlice'
+import {parseAttendeeList} from '../../features/attendeesSlice'
 import {Button} from '@mui/material'
 
 const StyledButton = styled(Button)`

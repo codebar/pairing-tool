@@ -8,7 +8,7 @@ import {
   selectAvailableStudents, selectNextGroupId,
   selectPairingGroups
 } from './pairingsSlice'
-import { initialState as settings } from '../../settings/settingsSlice'
+import { initialState as settings } from '../settings/settingsSlice'
 
 describe('The Pairings Slice', () => {
 

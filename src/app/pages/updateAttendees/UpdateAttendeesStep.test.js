@@ -1,8 +1,8 @@
 import {screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import {renderComponent, testStore} from '../../../../test/testUtils'
-import {stateAfterParsingCsv} from '../../../../test/fixtures/attendees'
-import {addAttendee} from '../attendeesSlice'
+import {renderComponent, testStore} from '../../../test/testUtils'
+import {stateAfterParsingCsv} from '../../../test/fixtures/attendees'
+import {addAttendee} from '../../features/attendeesSlice'
 import {UpdateAttendeesStep} from './UpdateAttendeesStep'
 
 describe('The Update Attendees Step', () => {

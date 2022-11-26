@@ -18,8 +18,8 @@ import {
   parseAttendeeList,
   goToPairingStep
 } from './attendeesSlice'
-import {addPeopleForPairings} from '../pairings/pairingsSlice'
-import pairingCsvParser from './csv/pairingCsvParser'
+import {addPeopleForPairings} from './pairingsSlice'
+import pairingCsvParser from '../pages/parseAttendeesCsv/pairingCsvParser'
 
 describe('The Attendees Slice', () => {
 

@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react'
 import {AttendeeMiniCard} from './AttendeeMiniCard'
-import {coach, student} from '../../../../../test/fixtures/attendees'
+import {coach, student} from '../../../../test/fixtures/attendees'
 
 describe('The attendee mini card', () => {
   const renderComponent = (attendee, selected = false) => {

@@ -10,7 +10,7 @@ import {
   selectAvailableCoaches,
   selectAvailableStudents,
   selectPairingGroups
-} from './pairingsSlice'
+} from '../../features/pairingsSlice'
 import {AttendeeCard} from './dragAndDrop/AttendeeCard'
 import {AttendeeDraggableName} from './dragAndDrop/AttendeeDraggableName'
 import {StudentDropzone} from './dragAndDrop/StudentDropzone'

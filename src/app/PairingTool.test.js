@@ -1,6 +1,6 @@
 import React from 'react'
 import {PairingTool} from './PairingTool'
-import {renderComponent} from '../../test/testUtils'
+import {renderComponent} from '../test/testUtils'
 
 describe('The Workshop Attendees component', () => {
 

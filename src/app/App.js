@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import {NavigationBar} from './navigation/NavigationBar'
-import {PairingTool} from './pairingTool/PairingTool'
+import {PairingTool} from './PairingTool'
 
 const AppContainer = styled.div`
   height: 100vh;

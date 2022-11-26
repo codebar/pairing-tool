@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import {screen} from '@testing-library/react'
-import {renderComponent, testStore} from '../../../../../test/testUtils'
-import {coach, stateAfterParsingCsv, student} from '../../../../../test/fixtures/attendees'
+import {renderComponent, testStore} from '../../../../test/testUtils'
+import {coach, stateAfterParsingCsv, student} from '../../../../test/fixtures/attendees'
 import {
   toggleAttendance,
   toggleLanguage,
@@ -10,7 +10,7 @@ import {
   updateAttendeeNotes,
   updateAttendeeSkills,
   updateAttendeeTutorial
-} from '../../attendeesSlice'
+} from '../../../features/attendeesSlice'
 import {AttendeeEditor} from './AttendeeEditor'
 
 describe('The Attendee Editor', () => {

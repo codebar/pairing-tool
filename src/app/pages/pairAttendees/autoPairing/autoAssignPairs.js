@@ -4,7 +4,7 @@ import {
   selectAvailableCoaches,
   selectAvailableStudents,
   selectNextGroupId
-} from '../pairingsSlice'
+} from '../../../features/pairingsSlice'
 import {hopcroftKarp} from 'hopcroft-karp'
 
 export const autoAssignPairs = () => (dispatch, getState) => {

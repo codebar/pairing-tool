@@ -1,7 +1,7 @@
 import {testStore} from '../../../../test/testUtils'
 import {storeInitialState} from '../../../../config/store'
 import {autoAssignPairs} from './autoAssignPairs'
-import {selectPairingGroups} from '../pairingsSlice'
+import {selectPairingGroups} from '../../../features/pairingsSlice'
 
 describe('Auto assign pairs', () => {
 

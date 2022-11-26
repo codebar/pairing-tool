@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import styled from '@emotion/styled'
 import {useDispatch, useSelector} from 'react-redux'
-import {selectLanguageNames} from '../../../../settings/settingsSlice'
+import {selectLanguageNames} from '../../../settings/settingsSlice'
 import {
   toggleAttendance,
   toggleLanguage,
@@ -10,7 +10,7 @@ import {
   updateAttendeeNotes,
   updateAttendeeSkills,
   updateAttendeeTutorial
-} from '../../attendeesSlice'
+} from '../../../features/attendeesSlice'
 import {
   FormControl,
   FormControlLabel,
@@ -19,7 +19,7 @@ import {
   TextField,
   Switch
 } from '@mui/material'
-import {LanguageButton} from '../../../../components/LanguageButton'
+import {LanguageButton} from '../../../components/LanguageButton'
 
 const Container = styled.div`
   margin: 48px 20px 20px 20px;

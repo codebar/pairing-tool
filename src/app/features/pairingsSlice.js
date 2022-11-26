@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {selectLanguageNames} from '../../settings/settingsSlice'
-import {reviewAttendeesAgain} from '../attendees/attendeesSlice'
+import {selectLanguageNames} from '../settings/settingsSlice'
+import {reviewAttendeesAgain} from './attendeesSlice'
 
 export const initialState = {
   students: [],

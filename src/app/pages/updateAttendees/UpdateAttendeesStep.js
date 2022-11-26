@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import styled from '@emotion/styled'
 import {useDispatch, useSelector} from 'react-redux'
-import {addAttendee, goToPairingStep, selectAttendees} from '../attendeesSlice'
+import {addAttendee, goToPairingStep, selectAttendees} from '../../features/attendeesSlice'
 import {AttendeeEditor} from './editor/AttendeeEditor'
 import {AttendeeMiniCard} from './list/AttendeeMiniCard'
 import {Button, IconButton} from '@mui/material'
