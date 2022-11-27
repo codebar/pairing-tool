@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import {useDispatch, useSelector} from 'react-redux'
+import {useFeatureToggle} from '../../../config/togglesSlice'
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
-import {useDispatch, useSelector} from 'react-redux'
 import {DraggableType} from '../../../config/dnd'
 import {autoAssignPairs} from './autoPairing/autoAssignPairs'
 import {
@@ -75,11 +76,53 @@ const CommonLanguages = styled.div`
   padding: 10px;
 `
 
-export const PairingsStep = () => {
+const LegacyDndPairingContent = () => {
   const availableStudents = useSelector(selectAvailableStudents)
   const availableCoaches = useSelector(selectAvailableCoaches)
   const groups = useSelector(selectPairingGroups)
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <AvailableAttendeeGroups>
+        <h4>Students</h4>
+        <StudentDropzone groupId={0}>
+          {availableStudents.map(student => <AttendeeCard data={student} type={DraggableType.STUDENT}/>)}
+          {availableStudents.length === 0 && <EmptyGroup>Drag a student here</EmptyGroup>}
+        </StudentDropzone>
+        <h4>Coaches</h4>
+        <CoachDropzone groupId={0}>
+          {availableCoaches.map(coach => <AttendeeCard data={coach} type={DraggableType.COACH}/>)}
+          {availableCoaches.length === 0 && <EmptyGroup>Drag a coach here</EmptyGroup>}
+        </CoachDropzone>
+      </AvailableAttendeeGroups>
+      <PairedAttendeeGroups>
+        <h4>Pairs</h4>
+        {groups.map(group =>
+          <PairedGroup>
+            <StudentDropzone groupId={group.id}>
+              {group.students.map(student => <AttendeeDraggableName attendee={student} type={DraggableType.STUDENT}/>)}
+              {group.students.length === 0 && <EmptyGroup>Drag a student here</EmptyGroup>}
+            </StudentDropzone>
+            <CoachDropzone groupId={group.id}>
+              {group.coaches.map(coach => <AttendeeDraggableName attendee={coach} type={DraggableType.COACH}/>)}
+              {group.coaches.length === 0 && <EmptyGroup>Drag a coach here</EmptyGroup>}
+            </CoachDropzone>
+            <CommonLanguages>
+              {group.languages.map(language => <Button variant='contained' color='primary'>{language}</Button>)}
+            </CommonLanguages>
+          </PairedGroup>
+        )}
+      </PairedAttendeeGroups>
+    </DndProvider>
+  )
+}
+
+const NewDndPairingContent = () => {
+
+}
+
+export const PairingsStep = () => {
   const dispatch = useDispatch()
+  const newDnd = useFeatureToggle('useNewDragAndDrop')
 
   return (
     <Container>
@@ -105,38 +148,7 @@ export const PairingsStep = () => {
         </Button>
       </Header>
       <Content>
-        <DndProvider backend={HTML5Backend}>
-          <AvailableAttendeeGroups>
-            <h4>Students</h4>
-            <StudentDropzone groupId={0}>
-              {availableStudents.map(student => <AttendeeCard data={student} type={DraggableType.STUDENT}/>)}
-              {availableStudents.length === 0 && <EmptyGroup>Drag a student here</EmptyGroup>}
-            </StudentDropzone>
-            <h4>Coaches</h4>
-            <CoachDropzone groupId={0}>
-              {availableCoaches.map(coach => <AttendeeCard data={coach} type={DraggableType.COACH}/>)}
-              {availableCoaches.length === 0 && <EmptyGroup>Drag a coach here</EmptyGroup>}
-            </CoachDropzone>
-          </AvailableAttendeeGroups>
-          <PairedAttendeeGroups>
-            <h4>Pairs</h4>
-            {groups.map(group =>
-              <PairedGroup>
-                <StudentDropzone groupId={group.id}>
-                  {group.students.map(student => <AttendeeDraggableName attendee={student} type={DraggableType.STUDENT}/>)}
-                  {group.students.length === 0 && <EmptyGroup>Drag a student here</EmptyGroup>}
-                </StudentDropzone>
-                <CoachDropzone groupId={group.id}>
-                  {group.coaches.map(coach => <AttendeeDraggableName attendee={coach} type={DraggableType.COACH}/>)}
-                  {group.coaches.length === 0 && <EmptyGroup>Drag a coach here</EmptyGroup>}
-                </CoachDropzone>
-                <CommonLanguages>
-                  {group.languages.map(language => <Button variant='contained' color='primary'>{language}</Button>)}
-                </CommonLanguages>
-              </PairedGroup>
-            )}
-          </PairedAttendeeGroups>
-        </DndProvider>
+        {newDnd ? <NewDndPairingContent /> : <LegacyDndPairingContent/>}
       </Content>
     </Container>
   )
