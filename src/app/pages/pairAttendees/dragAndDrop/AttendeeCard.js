@@ -29,10 +29,7 @@ export const AttendeeCard = ({data, type}) => {
               key={language}
               language={language}
               active={data.languages.includes(language).toString()}
-              variant='contained'
-            >
-              {language}
-            </LanguageButton>
+            />
           )}
         </section>
         <AttendeeDraggableName attendee={data} type={type}/>

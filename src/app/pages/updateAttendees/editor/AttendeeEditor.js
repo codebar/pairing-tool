@@ -150,7 +150,6 @@ export const AttendeeEditor = ({attendee}) => {
           key={language}
           language={language}
           active={languages.includes(language).toString()}
-          variant='contained'
           onClick={() => {
             if (!languages.includes(language))
               setLanguages([...languages, language])
@@ -163,9 +162,7 @@ export const AttendeeEditor = ({attendee}) => {
             }
             dispatch(toggleLanguage({id: attendee.id, language}))
           }}
-        >
-          {language}
-        </LanguageButton>
+        />
       )}
     </LanguagesContainer>
 
