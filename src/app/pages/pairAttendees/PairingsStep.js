@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import {useDispatch, useSelector} from 'react-redux'
 import {useFeatureToggle} from '../../../config/togglesSlice'
+import {DragDropContext} from 'react-beautiful-dnd'
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 import {DraggableType} from '../../../config/dnd'
@@ -20,6 +21,8 @@ import Button from '@mui/material/Button'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious'
 import Tooltip from '@mui/material/Tooltip'
+import {AvailableCoaches, AvailableStudents} from './AvailableAttendees'
+import {AttendeeGroup} from './AttendeeGroup'
 
 const Container = styled.div`
   display: flex;
@@ -85,12 +88,12 @@ const LegacyDndPairingContent = () => {
       <AvailableAttendeeGroups>
         <h4>Students</h4>
         <StudentDropzone groupId={0}>
-          {availableStudents.map(student => <AttendeeCard data={student} type={DraggableType.STUDENT}/>)}
+          {availableStudents.map((student, index) => <AttendeeCard key={index} data={student} type={DraggableType.STUDENT}/>)}
           {availableStudents.length === 0 && <EmptyGroup>Drag a student here</EmptyGroup>}
         </StudentDropzone>
         <h4>Coaches</h4>
         <CoachDropzone groupId={0}>
-          {availableCoaches.map(coach => <AttendeeCard data={coach} type={DraggableType.COACH}/>)}
+          {availableCoaches.map((coach, index) => <AttendeeCard key={index} data={coach} type={DraggableType.COACH}/>)}
           {availableCoaches.length === 0 && <EmptyGroup>Drag a coach here</EmptyGroup>}
         </CoachDropzone>
       </AvailableAttendeeGroups>
@@ -117,7 +120,28 @@ const LegacyDndPairingContent = () => {
 }
 
 const NewDndPairingContent = () => {
+  const availableStudents = useSelector(selectAvailableStudents)
+  const availableCoaches = useSelector(selectAvailableCoaches)
+  const groups = useSelector(selectPairingGroups)
 
+  return (
+    <DragDropContext
+      onDragEnd={(dragResult) => {
+        console.log(JSON.stringify(dragResult))
+      }}
+    >
+      <AvailableAttendeeGroups>
+        <h4>Students</h4>
+        <AvailableStudents students={availableStudents} />
+        <h4>Coaches</h4>
+        <AvailableCoaches coaches={availableCoaches} />
+      </AvailableAttendeeGroups>
+      <PairedAttendeeGroups>
+        <h4>Pairs</h4>
+        {groups.map((group, index) => <AttendeeGroup key={index} group={group} />)}
+      </PairedAttendeeGroups>
+    </DragDropContext>
+  )
 }
 
 export const PairingsStep = () => {
