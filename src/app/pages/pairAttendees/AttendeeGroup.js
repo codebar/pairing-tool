@@ -28,6 +28,7 @@ const CommonLanguages = styled.div`
 `
 
 export const AttendeeGroup = ({group}) =>
+
   <Container>
     <Droppable droppableId={`student-${group.id}`}>
       {provided => (

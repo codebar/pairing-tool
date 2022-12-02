@@ -20,7 +20,7 @@ const CardContent = styled(MuiCardContent)`
   align-items: center;
 `
 const Languages = styled.div``
-const AttendeeName = styled(Button)`
+const AttendeeName = styled.div`
   background-color: whitesmoke;
   &:hover {
     background-color: whitesmoke;
@@ -30,9 +30,13 @@ const AttendeeName = styled(Button)`
 export const Attendee = ({index, attendee}) => {
   const languages = useSelector(selectLanguageNames)
   return (
-    <Draggable key={attendee.id} draggableId={attendee.name} index={index}>
-      {provided => (
-        <Card ref={provided.innerRef} {...provided.draggableProps}>
+    <Draggable key={attendee.id} draggableId={attendee.id.toString()} index={index}>
+      {(provided, snapshot) => (
+        <Card
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
           <CardContent>
             <Languages>
               {languages.map(language =>
@@ -43,7 +47,7 @@ export const Attendee = ({index, attendee}) => {
                 />
               )}
             </Languages>
-            <AttendeeName variant='outlined' endIcon={<OpenWithIcon/>} {...provided.dragHandleProps}>
+            <AttendeeName>
               {attendee.name}
             </AttendeeName>
           </CardContent>
@@ -56,7 +60,7 @@ export const Attendee = ({index, attendee}) => {
 
 export const AttendeeMini = ({index, attendee}) => {
   return (
-    <Draggable key={attendee.id} draggableId={attendee.name} index={index}>
+    <Draggable key={attendee.id} draggableId={attendee.id.toString()} index={index}>
       {provided => (
         <AttendeeName
           ref={provided.innerRef}
@@ -64,6 +68,7 @@ export const AttendeeMini = ({index, attendee}) => {
           endIcon={<OpenWithIcon/>}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          disabled
         >
           {attendee.name}
         </AttendeeName>

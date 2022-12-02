@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import {useSelector} from 'react-redux'
+import {selectAvailableCoaches, selectAvailableStudents} from '../../features/pairingsSlice'
 import {Droppable} from 'react-beautiful-dnd'
 import {Attendee} from './Attendee'
 
@@ -16,17 +18,27 @@ const EmptyGroup = styled.span`
 
 const AvailableAttendees = ({type, attendees}) => (
   <Droppable droppableId={`${type}-0`}>
-    {(provided, snapshot) => (
+    { provided => (
       <AttendeeDropArea
         ref={provided.innerRef}
         {...provided.droppableProps}
       >
-        {attendees.map((attendee, index) => <Attendee key={index} index={index} attendee={attendee}/>)}
         {attendees.length === 0 && <EmptyGroup>Drag a {type} here</EmptyGroup>}
+        {attendees.map((attendee, index) => <Attendee key={attendee.id} index={index} attendee={attendee}/>)}
         {provided.placeholder}
       </AttendeeDropArea>
     )}
   </Droppable>
 )
-export const AvailableStudents = ({students}) => <AvailableAttendees type='student' attendees={students}/>
-export const AvailableCoaches = ({coaches}) => <AvailableAttendees type='coach' attendees={coaches}/>
+export const AvailableStudents = () => {
+  const availableStudents = useSelector(selectAvailableStudents)
+  return (
+    <AvailableAttendees type={'Student'} attendees={availableStudents}/>
+  )
+}
+export const AvailableCoaches = () => {
+  const availableCoaches = useSelector(selectAvailableCoaches)
+  return (
+    <AvailableAttendees type={'Coach'} attendees={availableCoaches}/>
+  )
+}

@@ -9,6 +9,7 @@ import {DraggableType} from '../../../config/dnd'
 import {autoAssignPairs} from './autoPairing/autoAssignPairs'
 import {
   goToReviewAttendeesStep,
+  moveStudentToGroup,
   selectAvailableCoaches,
   selectAvailableStudents,
   selectPairingGroups
@@ -120,21 +121,27 @@ const LegacyDndPairingContent = () => {
 }
 
 const NewDndPairingContent = () => {
-  const availableStudents = useSelector(selectAvailableStudents)
-  const availableCoaches = useSelector(selectAvailableCoaches)
+  const dispatch = useDispatch()
   const groups = useSelector(selectPairingGroups)
-
   return (
     <DragDropContext
+      onDragStart={(draggable) => console.log(JSON.stringify(draggable))}
       onDragEnd={(dragResult) => {
         console.log(JSON.stringify(dragResult))
+        if (!dragResult.destination)
+          return
+          
+        const groupId = parseInt(dragResult.destination.droppableId.substring(8))
+        const studentId = parseInt(dragResult.draggableId)
+        dispatch(moveStudentToGroup({studentId, groupId}))
+        // {"draggableId":"Luke Skywalker","type":"DEFAULT","source":{"index":0,"droppableId":"Student-0"},"reason":"DROP","mode":"FLUID","destination":{"droppableId":"Student-0","index":0},"combine":null}
       }}
     >
       <AvailableAttendeeGroups>
         <h4>Students</h4>
-        <AvailableStudents students={availableStudents} />
+        <AvailableStudents />
         <h4>Coaches</h4>
-        <AvailableCoaches coaches={availableCoaches} />
+        <AvailableCoaches />
       </AvailableAttendeeGroups>
       <PairedAttendeeGroups>
         <h4>Pairs</h4>
