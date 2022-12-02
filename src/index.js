@@ -14,10 +14,8 @@ new URLSearchParams(window.location.search)
 const appContainer = document.getElementById('root')
 const root = createRoot(appContainer)
 root.render(
-  <React.StrictMode>
-    <Provider store={reduxStore}>
-      <App/>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={reduxStore}>
+    <App/>
+  </Provider>
 )
 
