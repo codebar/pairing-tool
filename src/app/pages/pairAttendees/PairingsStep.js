@@ -9,6 +9,7 @@ import {DraggableType} from '../../../config/dnd'
 import {autoAssignPairs} from './autoPairing/autoAssignPairs'
 import {
   goToReviewAttendeesStep,
+  moveCoachToGroup,
   moveStudentToGroup,
   selectAvailableCoaches,
   selectAvailableStudents,
@@ -125,16 +126,25 @@ const NewDndPairingContent = () => {
   const groups = useSelector(selectPairingGroups)
   return (
     <DragDropContext
-      onDragStart={(draggable) => console.log(JSON.stringify(draggable))}
       onDragEnd={(dragResult) => {
-        console.log(JSON.stringify(dragResult))
-        if (!dragResult.destination)
+        console.debug(JSON.stringify(dragResult))
+        if (!dragResult.destination || dragResult.reason !== 'DROP')
           return
-          
-        const groupId = parseInt(dragResult.destination.droppableId.substring(8))
-        const studentId = parseInt(dragResult.draggableId)
-        dispatch(moveStudentToGroup({studentId, groupId}))
-        // {"draggableId":"Luke Skywalker","type":"DEFAULT","source":{"index":0,"droppableId":"Student-0"},"reason":"DROP","mode":"FLUID","destination":{"droppableId":"Student-0","index":0},"combine":null}
+
+        const parts = dragResult.destination.droppableId.split('-')
+        const type = parts[0]
+        const groupId = parseInt(parts[1])
+        const attendeeId = parseInt(dragResult.draggableId)
+        console.debug(`type: ${type}, groupId: ${groupId}, attendeeId: ${attendeeId}`)
+
+        if (type === 'Student') {
+          console.debug('dispatching move student')
+          dispatch(moveStudentToGroup({studentId: attendeeId, groupId}))
+        }
+        if (type === 'Coach') {
+          console.debug('dispatching move coach')
+          dispatch(moveCoachToGroup({coachId: attendeeId, groupId}))
+        }
       }}
     >
       <AvailableAttendeeGroups>

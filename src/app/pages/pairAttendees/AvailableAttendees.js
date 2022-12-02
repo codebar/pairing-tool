@@ -24,7 +24,7 @@ const AvailableAttendees = ({type, attendees}) => (
         {...provided.droppableProps}
       >
         {attendees.length === 0 && <EmptyGroup>Drag a {type} here</EmptyGroup>}
-        {attendees.map((attendee, index) => <Attendee key={attendee.id} index={index} attendee={attendee}/>)}
+        {attendees.map((attendee, index) => <Attendee key={attendee.id} index={index} attendee={attendee} />)}
         {provided.placeholder}
       </AttendeeDropArea>
     )}

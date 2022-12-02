@@ -4,7 +4,6 @@ import {useSelector} from 'react-redux'
 import {selectLanguageNames} from '../../settings/settingsSlice'
 import {Draggable} from 'react-beautiful-dnd'
 import {LanguageButton} from '../../components/LanguageButton'
-import Button from '@mui/material/Button'
 import MuiCard from '@mui/material/Card'
 import MuiCardContent from '@mui/material/CardContent'
 import OpenWithIcon from '@mui/icons-material/OpenWith'
@@ -21,6 +20,13 @@ const CardContent = styled(MuiCardContent)`
 `
 const Languages = styled.div``
 const AttendeeName = styled.div`
+  padding: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  min-width: 100px;
+  min-height: 35px;
   background-color: whitesmoke;
   &:hover {
     background-color: whitesmoke;
@@ -30,7 +36,11 @@ const AttendeeName = styled.div`
 export const Attendee = ({index, attendee}) => {
   const languages = useSelector(selectLanguageNames)
   return (
-    <Draggable key={attendee.id} draggableId={attendee.id.toString()} index={index}>
+    <Draggable
+      key={attendee.id}
+      draggableId={attendee.id.toString()}
+      index={index}
+    >
       {(provided, snapshot) => (
         <Card
           ref={provided.innerRef}
@@ -48,6 +58,7 @@ export const Attendee = ({index, attendee}) => {
               )}
             </Languages>
             <AttendeeName>
+              <OpenWithIcon/>
               {attendee.name}
             </AttendeeName>
           </CardContent>
@@ -60,16 +71,18 @@ export const Attendee = ({index, attendee}) => {
 
 export const AttendeeMini = ({index, attendee}) => {
   return (
-    <Draggable key={attendee.id} draggableId={attendee.id.toString()} index={index}>
+    <Draggable
+      key={attendee.id}
+      draggableId={attendee.id.toString()}
+      index={index}
+    >
       {provided => (
         <AttendeeName
           ref={provided.innerRef}
-          variant='outlined'
-          endIcon={<OpenWithIcon/>}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          disabled
         >
+          <OpenWithIcon/>
           {attendee.name}
         </AttendeeName>
       )}

@@ -30,7 +30,7 @@ const CommonLanguages = styled.div`
 export const AttendeeGroup = ({group}) =>
 
   <Container>
-    <Droppable droppableId={`student-${group.id}`}>
+    <Droppable droppableId={`Student-${group.id}`}>
       {provided => (
         <AttendeeDropArea
           ref={provided.innerRef}
@@ -41,7 +41,7 @@ export const AttendeeGroup = ({group}) =>
         </AttendeeDropArea>
       )}
     </Droppable>
-    <Droppable droppableId={`coach-${group.id}`}>
+    <Droppable droppableId={`Coach-${group.id}`}>
       {provided => (
         <AttendeeDropArea
           ref={provided.innerRef}
