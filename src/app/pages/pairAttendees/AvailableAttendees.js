@@ -10,6 +10,7 @@ const AttendeeDropArea = styled.div`
   border: 1px solid #888;
   border-radius: 5px;
   padding: 8px;
+  background-color: ${props => props.draggingOver ? 'rgba(0,126,104,0.64)' : 'whitesmoke'};
 `
 const EmptyGroup = styled.span`
   padding:10px;
@@ -18,10 +19,11 @@ const EmptyGroup = styled.span`
 
 const AvailableAttendees = ({type, attendees}) => (
   <Droppable droppableId={`${type}-0`}>
-    { provided => (
+    { (provided, snapshot) => (
       <AttendeeDropArea
         ref={provided.innerRef}
         {...provided.droppableProps}
+        draggingOver={snapshot.isDraggingOver}
       >
         {attendees.length === 0 && <EmptyGroup>Drag a {type} here</EmptyGroup>}
         {attendees.map((attendee, index) => <Attendee key={attendee.id} index={index} attendee={attendee} />)}

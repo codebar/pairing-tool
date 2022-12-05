@@ -127,7 +127,6 @@ const NewDndPairingContent = () => {
   return (
     <DragDropContext
       onDragEnd={(dragResult) => {
-        console.debug(JSON.stringify(dragResult))
         if (!dragResult.destination || dragResult.reason !== 'DROP')
           return
 
@@ -135,14 +134,11 @@ const NewDndPairingContent = () => {
         const type = parts[0]
         const groupId = parseInt(parts[1])
         const attendeeId = parseInt(dragResult.draggableId)
-        console.debug(`type: ${type}, groupId: ${groupId}, attendeeId: ${attendeeId}`)
 
         if (type === 'Student') {
-          console.debug('dispatching move student')
           dispatch(moveStudentToGroup({studentId: attendeeId, groupId}))
         }
         if (type === 'Coach') {
-          console.debug('dispatching move coach')
           dispatch(moveCoachToGroup({coachId: attendeeId, groupId}))
         }
       }}

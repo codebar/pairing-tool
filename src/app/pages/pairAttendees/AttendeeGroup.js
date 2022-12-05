@@ -21,6 +21,7 @@ const AttendeeDropArea = styled.div`
   border: 1px solid #888;
   border-radius: 5px;
   padding: 8px;
+  background-color: ${props => props.draggingOver ? 'rgba(0,126,104,0.64)' : 'whitesmoke'};
 `
 const CommonLanguages = styled.div`
   width: 100%;
@@ -31,10 +32,11 @@ export const AttendeeGroup = ({group}) =>
 
   <Container>
     <Droppable droppableId={`Student-${group.id}`}>
-      {provided => (
+      { (provided, snapshot) => (
         <AttendeeDropArea
           ref={provided.innerRef}
           {...provided.droppableProps}
+          draggingOver={snapshot.isDraggingOver}
         >
           {group.students.map((student, index) => <AttendeeMini index={index} attendee={student} /> )}
           {provided.placeholder}
@@ -42,10 +44,11 @@ export const AttendeeGroup = ({group}) =>
       )}
     </Droppable>
     <Droppable droppableId={`Coach-${group.id}`}>
-      {provided => (
+      { (provided, snapshot) => (
         <AttendeeDropArea
           ref={provided.innerRef}
           {...provided.droppableProps}
+          draggingOver={snapshot.isDraggingOver}
         >
           {group.coaches.map((coach, index) => <AttendeeMini index={index} attendee={coach} /> )}
           {provided.placeholder}
