@@ -38,7 +38,7 @@ export const AttendeeGroup = ({group}) =>
           {...provided.droppableProps}
           draggingOver={snapshot.isDraggingOver}
         >
-          {group.students.map((student, index) => <AttendeeMini index={index} attendee={student} /> )}
+          {group.students.map((student, index) => <AttendeeMini key={index} index={index} attendee={student} /> )}
           {provided.placeholder}
         </AttendeeDropArea>
       )}
@@ -50,7 +50,7 @@ export const AttendeeGroup = ({group}) =>
           {...provided.droppableProps}
           draggingOver={snapshot.isDraggingOver}
         >
-          {group.coaches.map((coach, index) => <AttendeeMini index={index} attendee={coach} /> )}
+          {group.coaches.map((coach, index) => <AttendeeMini key={index} index={index} attendee={coach} /> )}
           {provided.placeholder}
         </AttendeeDropArea>
       )}

@@ -21,6 +21,8 @@ const CardContent = styled(MuiCardContent)`
 const Languages = styled.div``
 const AttendeeName = styled.div`
   padding: 10px;
+  border: 1px solid #757575;
+  border-radius: 4px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
