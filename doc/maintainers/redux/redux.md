@@ -46,7 +46,7 @@ On the high level overview, the store for this application has been designed wit
 
 ### Toggles 
 
-This slice is purely to manage the feature toggle infrastructure, more information on the [Feature Toggles]() documentation
+This slice is purely to manage the feature toggle infrastructure, more information on the [Feature Toggles](../feature-toggles/feature-toggles.md) documentation
 
 ### Settings
 
