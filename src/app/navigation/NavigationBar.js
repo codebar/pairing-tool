@@ -38,7 +38,7 @@ const RightNav = styled.div`
 
 const UserManualLink = (props) =>
   <a
-    href='https://github.com/codebar/pairing-tool/blob/main/doc/UserManual.md'
+    href='https://github.com/codebar/pairing-tool/blob/main/doc/user-manual/UserManual.md'
     target='_blank'
     rel='noreferrer'
   >
