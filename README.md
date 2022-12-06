@@ -7,8 +7,8 @@
 If you have any issue, feedback, question, suggestion or request, contact the maintainers [here](https://github.com/codebar/pairing-tool/issues/new/choose).
 
 ## Useful Links
-* [User manual](doc/UserManual.md)
-* [Developer guide](doc/Development.md)
+* [User manual](doc/user-manual/UserManual.md)
+* [Developer guide](doc/maintainers/Development.md)
 
 ## Change Log
 
