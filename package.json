@@ -7,7 +7,7 @@
     "test": "react-scripts test",
     "test:e2e": "cypress run --env url=http://localhost:3000/pairing-tool/",
     "smoke": "cypress run --env url=https://codebar.github.io/pairing-tool/",
-    "cypress": "cypress open",
+    "cypress": "cypress open --env url=http://localhost:3000/pairing-tool/",
     "clean": "eslint \"src/**/*.js\" --fix",
     "start": "react-scripts start",
     "build": "react-scripts build"
@@ -35,7 +35,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
-    "cypress": "^11.2.0",
+    "cypress": "^12.0.1",
     "cypress-file-upload": "^5.0.8",
     "react-scripts": "5.0.1"
   },

@@ -1,11 +1,12 @@
-describe('The Pairing Tool', () => {
+describe('The Pairing Tool', { testIsolation: false }, () => {
 
   it('Open the main page', () => {
-    cy.visit(Cypress.env('url'))
+    const pairingToolUrl = Cypress.env('url')
+    cy.visit(pairingToolUrl)
+    cy.contains('Pairing Tool')
   })
 
   it('Upload a workshop CSV file', () => {
-    cy.contains('Pairing Tool')
     cy.get('input[type=file]').attachFile('workshop-csv-file.csv')
   })
 
